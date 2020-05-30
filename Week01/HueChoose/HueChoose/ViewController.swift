@@ -12,13 +12,10 @@ class ViewController: UIViewController {
 
   @IBOutlet weak var colourNameLabel: UILabel!
   @IBOutlet var mainView: UIView!
-  @IBOutlet weak var slider1: UISlider!
-  @IBOutlet weak var slider2: UISlider!
-  @IBOutlet weak var slider3: UISlider!
-  @IBOutlet weak var sliderLabel1: UILabel!
-  @IBOutlet weak var sliderLabel2: UILabel!
-  @IBOutlet weak var sliderLabel3: UILabel!
-  
+  @IBOutlet weak var previewView: UIView!
+  @IBOutlet var sliders: [UISlider]!
+  @IBOutlet var sliderLabels: [UILabel]!
+
   var colourValues: [CGFloat] = [0,0,0]
   
   override func viewDidLoad() {
@@ -34,7 +31,7 @@ class ViewController: UIViewController {
     let setColourAction = UIAlertAction(title: "Set Colour", style: .default) { action in
       guard let textFields = setColourAlert.textFields, let colourNameField = textFields[0].text else { return }
       self.colourNameLabel.text = colourNameField
-      self.mainView.backgroundColor = UIColor(red: self.colourValues[0], green: self.colourValues[1], blue: self.colourValues[2], alpha: 1.0)
+      self.mainView.backgroundColor = self.previewView.backgroundColor!
     }
     let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
     
@@ -44,30 +41,28 @@ class ViewController: UIViewController {
     present(setColourAlert, animated: true)
 
   }
+  
   @IBAction func resetPressed() {
     colourNameLabel.text = "No colour set"
     mainView.backgroundColor = .systemBackground
     
-    slider1.value = 0
-    slider2.value = 0
-    slider3.value = 0
+    _ = colourValues.map { _ in 0 }
+    _ = sliderLabels.map { $0.text = "0" }
+    _ = sliders.map { $0.value = 0 }
+    previewView.backgroundColor = .black
+
     
   }
   
   @IBAction func sliderMoved(_ sender: UISlider) {
-    switch sender.tag {
-    case 100:
-      colourValues[0] = CGFloat(sender.value)
-      sliderLabel1.text = ("\(Int(255 * sender.value))")
-      case 200:
-        colourValues[1] = CGFloat(sender.value)
-      sliderLabel2.text = ("\(Int(255 * sender.value))")
-      case 300:
-        colourValues[2] = CGFloat(sender.value)
-      sliderLabel3.text = ("\(Int(255 * sender.value))")
-    default:
-      return
-    }
+    let index = sender.tag
+    colourValues[index] = CGFloat(sender.value)
+    updateUI(for: index)
+  }
+  
+  func updateUI(for index: Int) {
+    sliderLabels[index].text = ("\(Int(255 * colourValues[index]))")
+    previewView.backgroundColor = UIColor(red: colourValues[0], green: colourValues[1], blue: colourValues[2], alpha: 1.0)
   }
 }
 
