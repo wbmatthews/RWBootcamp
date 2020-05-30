@@ -50,7 +50,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pth-Zj-lCU">
-                                <rect key="frame" x="383" y="438" width="11" height="21"/>
+                                <rect key="frame" x="363" y="438" width="31" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -71,7 +71,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n9F-ha-zo0">
-                                <rect key="frame" x="383" y="372" width="11" height="21"/>
+                                <rect key="frame" x="363" y="372" width="31" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -92,7 +92,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="roj-bX-u9y">
-                                <rect key="frame" x="383" y="306" width="11" height="21"/>
+                                <rect key="frame" x="363" y="306" width="31" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -116,6 +116,9 @@
                         <outlet property="slider1" destination="DUr-5W-9JV" id="VsI-pm-lJd"/>
                         <outlet property="slider2" destination="YEb-bH-VOq" id="ceM-Og-qqG"/>
                         <outlet property="slider3" destination="A1c-e8-BnF" id="rL4-Jf-cQH"/>
+                        <outlet property="sliderLabel1" destination="roj-bX-u9y" id="bvd-HS-etm"/>
+                        <outlet property="sliderLabel2" destination="n9F-ha-zo0" id="jCw-Gr-1qh"/>
+                        <outlet property="sliderLabel3" destination="pth-Zj-lCU" id="YHb-vR-MJA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

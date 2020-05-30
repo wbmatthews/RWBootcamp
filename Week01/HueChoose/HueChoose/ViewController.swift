@@ -15,6 +15,9 @@ class ViewController: UIViewController {
   @IBOutlet weak var slider1: UISlider!
   @IBOutlet weak var slider2: UISlider!
   @IBOutlet weak var slider3: UISlider!
+  @IBOutlet weak var sliderLabel1: UILabel!
+  @IBOutlet weak var sliderLabel2: UILabel!
+  @IBOutlet weak var sliderLabel3: UILabel!
   
   var colourValues: [CGFloat] = [0,0,0]
   
@@ -55,11 +58,13 @@ class ViewController: UIViewController {
     switch sender.tag {
     case 100:
       colourValues[0] = CGFloat(sender.value)
-      print(colourValues[0])
+      sliderLabel1.text = ("\(Int(255 * sender.value))")
       case 200:
         colourValues[1] = CGFloat(sender.value)
+      sliderLabel2.text = ("\(Int(255 * sender.value))")
       case 300:
         colourValues[2] = CGFloat(sender.value)
+      sliderLabel3.text = ("\(Int(255 * sender.value))")
     default:
       return
     }
