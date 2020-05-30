@@ -51,7 +51,6 @@ class ViewController: UIViewController {
     _ = sliders.map { $0.value = 0 }
     previewView.backgroundColor = .black
 
-    
   }
   
   @IBAction func sliderMoved(_ sender: UISlider) {
