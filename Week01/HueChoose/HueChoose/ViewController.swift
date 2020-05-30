@@ -11,6 +11,7 @@ import UIKit
 class ViewController: UIViewController {
 
   @IBOutlet weak var colourNameLabel: UILabel!
+  @IBOutlet var mainView: UIView!
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -25,6 +26,7 @@ class ViewController: UIViewController {
     let setColourAction = UIAlertAction(title: "Set Colour", style: .default) { action in
       guard let textFields = setColourAlert.textFields, let colourNameField = textFields[0].text else { return }
       self.colourNameLabel.text = colourNameField
+      self.mainView.backgroundColor = .blue
       // set colour here
     }
     let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
@@ -34,6 +36,10 @@ class ViewController: UIViewController {
     
     present(setColourAlert, animated: true)
 
+  }
+  @IBAction func resetPressed() {
+    colourNameLabel.text = "No colour set"
+    mainView.backgroundColor = .systemBackground
   }
   
 }
