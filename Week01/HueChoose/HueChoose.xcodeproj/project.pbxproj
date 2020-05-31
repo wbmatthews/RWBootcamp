@@ -73,11 +73,11 @@
 				6976A8A424828FEA0027DE32 /* AppDelegate.swift */,
 				6976A8A624828FEA0027DE32 /* SceneDelegate.swift */,
 				6976A8A824828FEA0027DE32 /* ViewController.swift */,
+				6932AB922483B61E00E59C32 /* InfoViewController.swift */,
 				6976A8AA24828FEA0027DE32 /* Main.storyboard */,
 				6976A8AD24828FEC0027DE32 /* Assets.xcassets */,
 				6976A8AF24828FEC0027DE32 /* LaunchScreen.storyboard */,
 				6976A8B224828FEC0027DE32 /* Info.plist */,
-				6932AB922483B61E00E59C32 /* InfoViewController.swift */,
 			);
 			path = HueChoose;
 			sourceTree = "<group>";

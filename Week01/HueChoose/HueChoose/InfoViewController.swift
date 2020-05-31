@@ -12,10 +12,11 @@ import WebKit
 class InfoViewController: UIViewController, WKUIDelegate {
   
   @IBOutlet var webView: WKWebView!
+  var mode: ViewController.ColourMode?
   
     override func viewDidLoad() {
         super.viewDidLoad()
-      let webURL = URL(string: "https://en.wikipedia.org/wiki/RGB_color_model")
+      let webURL = URL(string: mode == .rgb ? "https://en.wikipedia.org/wiki/RGB_color_model" : "https://en.wikipedia.org/wiki/HSL_and_HSV")
       let webRequest = URLRequest(url: webURL!)
       webView.load(webRequest)
     }

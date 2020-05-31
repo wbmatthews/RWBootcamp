@@ -31,6 +31,10 @@ class ViewController: UIViewController {
         return [360,100,100]
       }
     }
+    
+    func value(_ value: CGFloat, at index: Int) -> Int {
+          Int(CGFloat(self.maxValues()[index]) * value)
+    }
   }
 
   @IBOutlet weak var colourNameLabel: UILabel!
@@ -48,6 +52,12 @@ class ViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     // Do any additional setup after loading the view.
+  }
+  
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    if let nextView = segue.destination as? InfoViewController {
+      nextView.mode = colourMode
+    }
   }
 
   @IBAction func setColourPressed() {
@@ -89,12 +99,50 @@ class ViewController: UIViewController {
   }
   
   @IBAction func modeSwitched() {
+    let currentColour = previewView.backgroundColor!
+    var value0: CGFloat = 0
+    var value1: CGFloat = 0
+    var value2: CGFloat = 0
     
+    if colourMode == .rgb {
+      colourMode = .hsb
+      currentColour.getHue(&value0, saturation: &value1, brightness: &value2, alpha: nil)
+    } else {
+      colourMode = .rgb
+      currentColour.getRed(&value0, green: &value1, blue: &value2, alpha: nil)
+    }
+    
+    colourValues[0] = value0
+    colourValues[1] = value1
+    colourValues[2] = value2
+    
+    for index in sliderLabels.indices {
+      sliderLabels[index].text = colourMode.componentNames()[index]
+    }
+    
+    uiModeSwitch()
   }
   
   func updateUI(for index: Int) {
-    sliderValueLabels[index].text = ("\(Int(255 * colourValues[index]))")
-    previewView.backgroundColor = UIColor(red: colourValues[0], green: colourValues[1], blue: colourValues[2], alpha: 1.0)
+      setSliderValueLabel(at: index)
+
+//        sliderValueLabels[index].text = ("\(Int(CGFloat(colourMode.maxValues()[index]) * colourValues[index]))")
+    if colourMode == .rgb {
+      previewView.backgroundColor = UIColor(red: colourValues[0], green: colourValues[1], blue: colourValues[2], alpha: 1.0)
+    } else {
+      previewView.backgroundColor = UIColor(hue: colourValues[0], saturation: colourValues[1], brightness: colourValues[2], alpha: 1.0)
+    }
+  }
+  
+  func uiModeSwitch() {
+    for index in sliders.indices {
+      sliders[index].value = Float(colourValues[index])
+      setSliderValueLabel(at: index)
+    }
+  }
+  
+  func setSliderValueLabel(at index: Int) {
+      sliderValueLabels[index].text = ("\(colourMode.value(colourValues[index], at: index))")
   }
   
 }
