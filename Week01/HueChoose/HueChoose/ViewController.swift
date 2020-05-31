@@ -9,14 +9,41 @@
 import UIKit
 
 class ViewController: UIViewController {
+  
+  enum ColourMode {
+    case rgb
+    case hsb
+    
+    func componentNames() -> [String] {
+      switch self {
+      case .rgb:
+        return ["Red","Green","Blue"]
+      case .hsb:
+        return ["Hue","Saturation","Brightness"]
+      }
+    }
+    
+    func maxValues() -> [Int] {
+      switch self {
+      case .rgb:
+        return [255,255,255]
+      case .hsb:
+        return [360,100,100]
+      }
+    }
+  }
 
   @IBOutlet weak var colourNameLabel: UILabel!
   @IBOutlet var mainView: UIView!
   @IBOutlet weak var previewView: UIView!
+  @IBOutlet weak var modeSwitch: UISegmentedControl!
+
   @IBOutlet var sliders: [UISlider]!
   @IBOutlet var sliderLabels: [UILabel]!
-
+  @IBOutlet var sliderValueLabels: [UILabel]!
+  
   var colourValues: [CGFloat] = [0,0,0]
+  var colourMode: ColourMode = .rgb
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -49,7 +76,7 @@ class ViewController: UIViewController {
     mainView.backgroundColor = .systemBackground
     
     colourValues = [0,0,0]
-    _ = sliderLabels.map { $0.text = "0" }
+    _ = sliderValueLabels.map { $0.text = "0" }
     _ = sliders.map { $0.value = 0 }
     previewView.backgroundColor = .black
 
@@ -61,8 +88,12 @@ class ViewController: UIViewController {
     updateUI(for: index)
   }
   
+  @IBAction func modeSwitched() {
+    
+  }
+  
   func updateUI(for index: Int) {
-    sliderLabels[index].text = ("\(Int(255 * colourValues[index]))")
+    sliderValueLabels[index].text = ("\(Int(255 * colourValues[index]))")
     previewView.backgroundColor = UIColor(red: colourValues[0], green: colourValues[1], blue: colourValues[2], alpha: 1.0)
   }
   

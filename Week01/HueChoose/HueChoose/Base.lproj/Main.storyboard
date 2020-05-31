@@ -49,7 +49,7 @@
                                         <rect key="frame" x="135" y="0.0" width="100" height="33"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="100" id="15k-i8-6Xs"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="44" id="15k-i8-6Xs"/>
                                             <constraint firstAttribute="height" constant="33" id="Pfy-tf-0fu"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="16"/>
@@ -243,16 +243,28 @@
                                     <constraint firstAttribute="bottom" secondItem="SMq-qP-4Z6" secondAttribute="bottom" id="wLg-Cr-LqI"/>
                                 </constraints>
                             </stackView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="tBo-Fc-syK">
+                                <rect key="frame" x="161.66666666666666" y="109" width="91" height="32"/>
+                                <segments>
+                                    <segment title="RGB"/>
+                                    <segment title="HSB"/>
+                                </segments>
+                                <connections>
+                                    <action selector="modeSwitched" destination="BYZ-38-t0r" eventType="valueChanged" id="KQ6-M6-IBV"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="VN0-xk-3oi" firstAttribute="top" secondItem="bB3-CM-nIQ" secondAttribute="bottom" constant="19" id="2se-Qo-NQa"/>
                             <constraint firstItem="aJQ-ai-TYH" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="5KU-8M-IvY"/>
+                            <constraint firstItem="tBo-Fc-syK" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="H50-L2-snL"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="VN0-xk-3oi" secondAttribute="trailing" constant="20" id="Wqo-r6-nFn"/>
                             <constraint firstItem="bB3-CM-nIQ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="24" id="a7E-gI-KNh"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="bB3-CM-nIQ" secondAttribute="trailing" constant="16" id="ai8-qm-xGh"/>
                             <constraint firstItem="VN0-xk-3oi" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="24" id="cs1-Bc-VBr"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="VN0-xk-3oi" secondAttribute="bottom" constant="20" id="ieO-oS-3Hp"/>
+                            <constraint firstItem="tBo-Fc-syK" firstAttribute="top" secondItem="aJQ-ai-TYH" secondAttribute="bottom" constant="8" id="ir4-Jd-Svm"/>
                             <constraint firstItem="aJQ-ai-TYH" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="69" id="wKS-61-YZq"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -260,13 +272,17 @@
                     <connections>
                         <outlet property="colourNameLabel" destination="aJQ-ai-TYH" id="Xeq-09-fht"/>
                         <outlet property="mainView" destination="8bC-Xf-vdC" id="xQd-jB-MVt"/>
+                        <outlet property="modeSwitch" destination="tBo-Fc-syK" id="3tt-jh-1HB"/>
                         <outlet property="previewView" destination="mtM-op-lN7" id="i7P-ek-3Cq"/>
                         <outletCollection property="sliders" destination="A1c-e8-BnF" collectionClass="NSMutableArray" id="cEe-7Z-6yd"/>
                         <outletCollection property="sliders" destination="DUr-5W-9JV" collectionClass="NSMutableArray" id="ZZo-8T-5vd"/>
                         <outletCollection property="sliders" destination="YEb-bH-VOq" collectionClass="NSMutableArray" id="wER-Im-nmR"/>
-                        <outletCollection property="sliderLabels" destination="roj-bX-u9y" collectionClass="NSMutableArray" id="b83-lw-C11"/>
-                        <outletCollection property="sliderLabels" destination="n9F-ha-zo0" collectionClass="NSMutableArray" id="wqB-D6-pIa"/>
-                        <outletCollection property="sliderLabels" destination="pth-Zj-lCU" collectionClass="NSMutableArray" id="DEU-Xq-6Y9"/>
+                        <outletCollection property="sliderValueLabels" destination="roj-bX-u9y" collectionClass="NSMutableArray" id="b83-lw-C11"/>
+                        <outletCollection property="sliderValueLabels" destination="n9F-ha-zo0" collectionClass="NSMutableArray" id="wqB-D6-pIa"/>
+                        <outletCollection property="sliderValueLabels" destination="pth-Zj-lCU" collectionClass="NSMutableArray" id="DEU-Xq-6Y9"/>
+                        <outletCollection property="sliderLabels" destination="yI2-5W-POY" collectionClass="NSMutableArray" id="Tlj-lj-yGi"/>
+                        <outletCollection property="sliderLabels" destination="TDv-cb-uBA" collectionClass="NSMutableArray" id="cuh-X7-aap"/>
+                        <outletCollection property="sliderLabels" destination="E9Y-6p-zbW" collectionClass="NSMutableArray" id="juC-Fh-fz4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
