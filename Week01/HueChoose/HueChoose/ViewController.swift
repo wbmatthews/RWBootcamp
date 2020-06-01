@@ -74,6 +74,7 @@ class ViewController: UIViewController {
     let setColourAlert = UIAlertController(title: "Name your colour", message: nil, preferredStyle: .alert)
     setColourAlert.addTextField { (colourNameField) in
       colourNameField.placeholder = "Enter colour name"
+      colourNameField.autocapitalizationType = .words
     }
     
     let setColourAction = UIAlertAction(title: "Set Colour", style: .default) { action in
