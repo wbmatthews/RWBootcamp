@@ -126,7 +126,6 @@ class ViewController: UIViewController {
   func updateUI(for index: Int) {
       setSliderValueLabel(at: index)
 
-//        sliderValueLabels[index].text = ("\(Int(CGFloat(colourMode.maxValues()[index]) * colourValues[index]))")
     if colourMode == .rgb {
       previewView.backgroundColor = UIColor(red: colourValues[0], green: colourValues[1], blue: colourValues[2], alpha: 1.0)
     } else {
