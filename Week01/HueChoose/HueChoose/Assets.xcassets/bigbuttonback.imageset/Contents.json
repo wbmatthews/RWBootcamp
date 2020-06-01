@@ -7,11 +7,33 @@
     {
       "filename" : "bigbuttonback@2x.png",
       "idiom" : "universal",
+      "resizing" : {
+        "cap-insets" : {
+          "left" : 16,
+          "right" : 15
+        },
+        "center" : {
+          "mode" : "stretch",
+          "width" : 1
+        },
+        "mode" : "3-part-horizontal"
+      },
       "scale" : "2x"
     },
     {
       "filename" : "bigbuttonback@3x.png",
       "idiom" : "universal",
+      "resizing" : {
+        "cap-insets" : {
+          "left" : 23,
+          "right" : 23
+        },
+        "center" : {
+          "mode" : "stretch",
+          "width" : 1
+        },
+        "mode" : "3-part-horizontal"
+      },
       "scale" : "3x"
     }
   ],

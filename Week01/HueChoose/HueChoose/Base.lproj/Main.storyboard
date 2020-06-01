@@ -352,7 +352,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="bigbuttonback" width="100" height="33"/>
+        <image name="bigbuttonback" width="15.666666984558105" height="33"/>
         <image name="buttonback" width="33" height="33"/>
         <image name="info" width="99" height="99"/>
         <image name="reset" width="99" height="99"/>
