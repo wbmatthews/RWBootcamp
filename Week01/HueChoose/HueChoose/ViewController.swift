@@ -32,8 +32,17 @@ class ViewController: UIViewController {
       }
     }
     
+    func tintColours() -> [UIColor] {
+      switch self {
+      case .rgb:
+        return [.systemRed,.systemGreen,.systemBlue]
+      case .hsb:
+        return [.systemGray,.systemGray2,.systemGray3]
+      }
+    }
+    
     func value(_ value: CGFloat, at index: Int) -> Int {
-          Int(CGFloat(self.maxValues()[index]) * value)
+      Int(CGFloat(self.maxValues()[index]) * value)
     }
   }
 
@@ -52,6 +61,7 @@ class ViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     // Do any additional setup after loading the view.
+    previewView.layer.cornerRadius = 5
   }
   
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -137,6 +147,8 @@ class ViewController: UIViewController {
     for index in sliders.indices {
       sliders[index].value = Float(colourValues[index])
       setSliderValueLabel(at: index)
+      sliders[index].thumbTintColor = colourMode.tintColours()[index]
+      sliders[index].minimumTrackTintColor = colourMode.tintColours()[index]
     }
   }
   
