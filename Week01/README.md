@@ -1,4 +1,4 @@
-# ![willmatthews](/Users/billm/Documents/Bootcamp/RWBootcamp/Images/willmatthews.jpeg)**Will Matthews**
+# ![willmatthews](Images/willmatthews.jpeg)**Will Matthews**
 
 **Discord Username:** billmatthews#5097
 
