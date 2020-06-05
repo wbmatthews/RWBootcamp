@@ -10,10 +10,7 @@ import UIKit
 
 class ViewController: UIViewController {
 
-  var currentValue = 0
-  var targetValue = 0
-  var score = 0
-  var round = 0
+  var game = BullsEyeGame(rangeMin: 1, rangeMax: 100)
   
   @IBOutlet weak var slider: UISlider!
   @IBOutlet weak var targetLabel: UILabel!
@@ -22,40 +19,22 @@ class ViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    let roundedValue = slider.value.rounded()
-    currentValue = Int(roundedValue)
+
     startNewGame()
   }
-
+  
   @IBAction func showAlert() {
     
-    let difference = abs(targetValue - currentValue)
-    var points = 100 - difference
+    let roundResult = game.scoreRound()
     
-    score += points
+    let message = "You scored \(roundResult.points) points"
     
-    let title: String
-    if difference == 0 {
-      title = "Perfect!"
-      points += 100
-    } else if difference < 5 {
-      title = "You almost had it!"
-      if difference == 1 {
-        points += 50
-      }
-    } else if difference < 10 {
-      title = "Pretty good!"
-    } else {
-      title = "Not even close..."
-    }
-    
-    let message = "You scored \(points) points"
-    
-    let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+    let alert = UIAlertController(title: roundResult.string, message: message, preferredStyle: .alert)
     
     let action = UIAlertAction(title: "OK", style: .default, handler: {
       action in
-      self.startNewRound()
+      self.game.newRound()
+      self.updateView(target: self.game.targetValueInRange, score: self.game.score, round: self.game.round, sliderValue: self.game.currentValue)
     })
     
     alert.addAction(action)
@@ -65,28 +44,20 @@ class ViewController: UIViewController {
   }
   
   @IBAction func sliderMoved(_ slider: UISlider) {
-    let roundedValue = slider.value.rounded()
-    currentValue = Int(roundedValue)
+    game.currentValue = slider.value
   }
   
-  func startNewRound() {
-    round += 1
-    targetValue = Int.random(in: 1...100)
-    currentValue = 50
-    slider.value = Float(currentValue)
-    updateLabels()
-  }
-  
-  func updateLabels() {
-    targetLabel.text = String(targetValue)
+  func updateView(target: Int, score: Int, round: Int, sliderValue: Float) {
+    targetLabel.text = String(target)
     scoreLabel.text = String(score)
     roundLabel.text = String(round)
+    slider.value = sliderValue
   }
   
   @IBAction func startNewGame() {
-    score = 0
-    round = 0
-    startNewRound()
+    game.start()
+    updateView(target: game.targetValueInRange, score: game.score, round: game.round, sliderValue: game.currentValue)
+    
   }
   
 }
