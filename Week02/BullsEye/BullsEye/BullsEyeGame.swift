@@ -8,15 +8,16 @@
 
 import Foundation
 
-protocol BullsEyeGameDelegate {
-  
-}
-
 struct BullsEyeGame {
   
   struct RoundResult {
-    let title: String
-    let message: String
+    
+    enum ResultType {
+      case bullseye, within1percent, within5percent, within10percent, miss
+    }
+    
+    let points: Int
+    let resultType: ResultType
   }
   
   let rangeMin: Int
@@ -61,30 +62,29 @@ struct BullsEyeGame {
   }
   
   mutating func scoreRound() -> RoundResult {
-    let titleString: String
-    let messageString: String
+    let resultType: RoundResult.ResultType
     
     let difference = abs(scaledCurrent - targetValue)
     let percentageDiff = 100 * difference / scale
     var points = 100 - percentageDiff
-
+    
     if difference == 0 {
-      titleString = "Perfect!"
+      resultType = .bullseye
       points += 100
-    } else if difference <= Int(scale / 20) {
-      titleString = "You almost had it!"
-      if difference <= Int(scale / 100) {
-        points += 50
-      }
+    } else if difference <= Int(scale / 100) {
+      points += 50
+      resultType = .within1percent
+    }
+    else if difference <= Int(scale / 20) {
+      resultType = .within5percent
     } else if difference <= Int(scale / 10) {
-      titleString = "Pretty good!"
+      resultType = .within10percent
     } else {
-      titleString = "Not even close..."
+      resultType = .miss
     }
     
     score += points
-    messageString = "You scored \(points) points."
-    return RoundResult(title: titleString, message: messageString)
+    return RoundResult(points: points, resultType: resultType)
   }
-  
+ 
 }

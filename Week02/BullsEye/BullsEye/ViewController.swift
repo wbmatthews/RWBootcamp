@@ -10,7 +10,7 @@ import UIKit
 
 class ViewController: UIViewController {
   
-  var game = BullsEyeGame(rangeMin: 1, rangeMax: 100)
+  var game = BullsEyeGame(rangeMin: 0, rangeMax: 255)
   
   @IBOutlet weak var slider: UISlider!
   @IBOutlet weak var targetLabel: UILabel!
@@ -27,8 +27,9 @@ class ViewController: UIViewController {
   @IBAction func showAlert() {
     
     let roundResult = game.scoreRound()
+    let (title, message) = generateRoundResultFrom(roundResult)
     
-    let alert = UIAlertController(title: roundResult.title, message: roundResult.message, preferredStyle: .alert)
+    let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
     
     let action = UIAlertAction(title: "OK", style: .default, handler: {
       action in
@@ -51,6 +52,25 @@ class ViewController: UIViewController {
     scoreLabel.text = String(game.score)
     roundLabel.text = String(game.round)
     slider.value = game.currentValue
+  }
+  
+  func generateRoundResultFrom(_ result:BullsEyeGame.RoundResult) -> (String, String) {
+    let title: String
+    let message = "You scored \(result.points) points"
+    
+    switch result.resultType {
+    case .bullseye:
+      title = "Bullseye!"
+    case .within1percent:
+      title = "You almost had it!"
+    case .within5percent:
+      title = "So close!"
+    case .within10percent:
+      title = "Pretty good"
+    case .miss:
+      title = "Not even close"
+    }
+    return (title, message)
   }
   
   @IBAction func startNewGame() {
