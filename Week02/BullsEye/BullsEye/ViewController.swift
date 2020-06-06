@@ -14,7 +14,6 @@ class ViewController: UIViewController {
   let rangeMin = 1
   let rangeMax = 100
   
-  var round: BullsEyeRound!
   var game = BullsEyeGame()
   
   @IBOutlet weak var slider: UISlider!
@@ -31,14 +30,14 @@ class ViewController: UIViewController {
   
   @IBAction func showAlert() {
     
-    let roundResult = round.score()
+    let roundResult = game.round.score()
     let (title, message) = generateRoundResultFrom(roundResult)
     
     let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
     
     let action = UIAlertAction(title: "OK", style: .default, handler: {
       action in
-      self.round = BullsEyeRound(rangeMin: self.rangeMin, rangeMax: self.rangeMax)
+      self.game.round = BullsEyeRound(rangeMin: self.rangeMin, rangeMax: self.rangeMax)
       self.game.endRoundwith(points: roundResult.points)
       self.updateView()
     })
@@ -49,15 +48,15 @@ class ViewController: UIViewController {
   }
   
   @IBAction func sliderMoved(_ slider: UISlider) {
-    round.currentValue = slider.value
-    print("target: \(round.targetValue), current: \(round.currentValue), currentAdjusted: \(round.scaledCurrent)")
+    game.round.currentValue = slider.value
+    print("target: \(game.round.targetValue), current: \(game.round.currentValue), currentAdjusted: \(game.round.scaledCurrent)")
   }
   
   func updateView() {
-    targetLabel.text = String(round.targetValueInRange)
+    targetLabel.text = String(game.round.targetValueInRange)
     scoreLabel.text = String(game.scoreTotal)
     roundLabel.text = String(game.roundNumber)
-    slider.value = round.currentValue
+    slider.value = game.round.currentValue
   }
   
   func generateRoundResultFrom(_ result:BullsEyeRound.RoundResult) -> (String, String) {
@@ -81,7 +80,6 @@ class ViewController: UIViewController {
   
   @IBAction func startNewGame() {
     game.restart()
-    round = BullsEyeRound(rangeMin: rangeMin, rangeMax: rangeMax)
     updateView()
   }
   
