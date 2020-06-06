@@ -15,8 +15,8 @@ protocol BullsEyeGameDelegate {
 struct BullsEyeGame {
   
   struct RoundResult {
-    let points: Int
-    let string : String
+    let title: String
+    let message: String
   }
   
   let rangeMin: Int
@@ -42,7 +42,7 @@ struct BullsEyeGame {
   var scaledCurrent: Int {
     Int(currentValue * Float(scaledMax))
   }
-    
+  
   init(rangeMin: Int, rangeMax: Int) {
     self.rangeMin = rangeMin
     self.rangeMax = rangeMax
@@ -61,26 +61,30 @@ struct BullsEyeGame {
   }
   
   mutating func scoreRound() -> RoundResult {
+    let titleString: String
+    let messageString: String
+    
     let difference = abs(scaledCurrent - targetValue)
     let percentageDiff = 100 * difference / scale
-       var points = 100 - percentageDiff
-       let resultString: String
-       if difference == 0 {
-         resultString = "Perfect!"
-         points += 100
-       } else if difference <= Int(scale / 20) {
-         resultString = "You almost had it!"
-         if difference <= Int(scale / 100) {
-           points += 50
-         }
-       } else if difference <= Int(scale / 10) {
-         resultString = "Pretty good!"
-       } else {
-         resultString = "Not even close..."
-       }
+    var points = 100 - percentageDiff
+
+    if difference == 0 {
+      titleString = "Perfect!"
+      points += 100
+    } else if difference <= Int(scale / 20) {
+      titleString = "You almost had it!"
+      if difference <= Int(scale / 100) {
+        points += 50
+      }
+    } else if difference <= Int(scale / 10) {
+      titleString = "Pretty good!"
+    } else {
+      titleString = "Not even close..."
+    }
     
     score += points
-    return RoundResult(points: points, string: resultString)
+    messageString = "You scored \(points) points."
+    return RoundResult(title: titleString, message: messageString)
   }
   
 }

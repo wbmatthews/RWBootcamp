@@ -9,7 +9,7 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+  
   var game = BullsEyeGame(rangeMin: 1, rangeMax: 100)
   
   @IBOutlet weak var slider: UISlider!
@@ -20,7 +20,7 @@ class ViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-
+    
     startNewGame()
   }
   
@@ -28,18 +28,15 @@ class ViewController: UIViewController {
     
     let roundResult = game.scoreRound()
     
-    let message = "You scored \(roundResult.points) points"
-    
-    let alert = UIAlertController(title: roundResult.string, message: message, preferredStyle: .alert)
+    let alert = UIAlertController(title: roundResult.title, message: roundResult.message, preferredStyle: .alert)
     
     let action = UIAlertAction(title: "OK", style: .default, handler: {
       action in
       self.game.newRound()
-      self.updateView(target: self.game.targetValueInRange, score: self.game.score, round: self.game.round, sliderValue: self.game.currentValue)
+      self.updateView()
     })
     
     alert.addAction(action)
-    
     present(alert, animated: true, completion: nil)
     
   }
@@ -49,16 +46,16 @@ class ViewController: UIViewController {
     print("target: \(game.targetValue), current: \(game.currentValue), currentAdjusted: \(game.scaledCurrent)")
   }
   
-  func updateView(target: Int, score: Int, round: Int, sliderValue: Float) {
-    targetLabel.text = String(target)
-    scoreLabel.text = String(score)
-    roundLabel.text = String(round)
-    slider.value = sliderValue
+  func updateView() {
+    targetLabel.text = String(game.targetValueInRange)
+    scoreLabel.text = String(game.score)
+    roundLabel.text = String(game.round)
+    slider.value = game.currentValue
   }
   
   @IBAction func startNewGame() {
     game.start()
-    updateView(target: game.targetValueInRange, score: game.score, round: game.round, sliderValue: game.currentValue)
+    updateView()
     
   }
   
