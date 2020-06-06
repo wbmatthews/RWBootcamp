@@ -16,6 +16,7 @@ class ViewController: UIViewController {
   @IBOutlet weak var targetLabel: UILabel!
   @IBOutlet weak var scoreLabel: UILabel!
   @IBOutlet weak var roundLabel: UILabel!
+  @IBOutlet weak var cheatLabel: UILabel!
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -45,6 +46,7 @@ class ViewController: UIViewController {
   
   @IBAction func sliderMoved(_ slider: UISlider) {
     game.currentValue = slider.value
+    print("target: \(game.targetValue), current: \(game.currentValue), currentAdjusted: \(game.scaledCurrent)")
   }
   
   func updateView(target: Int, score: Int, round: Int, sliderValue: Float) {

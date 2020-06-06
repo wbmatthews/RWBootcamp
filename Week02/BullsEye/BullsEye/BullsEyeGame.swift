@@ -23,18 +23,26 @@ struct BullsEyeGame {
   let rangeMax: Int
   
   var currentValue: Float = 0
-  private var targetValue: Float = 0
+  var targetValue: Int = 0
   private (set) var score: Int = 0
   private (set) var round: Int = 0
   
-  var rangeSpread: Int {
+  var scale: Int {
     rangeMax - rangeMin + 1
   }
   
-  var targetValueInRange: Int {
-    Int(targetValue * Float(rangeSpread))
+  var scaledMax: Int {
+    rangeMax - rangeMin
   }
   
+  var targetValueInRange: Int {
+    targetValue + rangeMin
+  }
+  
+  var scaledCurrent: Int {
+    Int(currentValue * Float(scaledMax))
+  }
+    
   init(rangeMin: Int, rangeMax: Int) {
     self.rangeMin = rangeMin
     self.rangeMax = rangeMax
@@ -48,24 +56,24 @@ struct BullsEyeGame {
   
   mutating func newRound() {
     round += 1
-    targetValue = Float.random(in: 0...1)
+    targetValue = Int.random(in: 0...scaledMax)
     currentValue = 0.5
   }
   
   mutating func scoreRound() -> RoundResult {
-    let difference = Int(abs(targetValue - currentValue) * Float(rangeSpread))
-       var points = rangeSpread - difference
-       
+    let difference = abs(scaledCurrent - targetValue)
+    let percentageDiff = 100 * difference / scale
+       var points = 100 - percentageDiff
        let resultString: String
        if difference == 0 {
          resultString = "Perfect!"
-         points += rangeSpread
-       } else if difference < (rangeSpread / 20) {
+         points += 100
+       } else if difference <= Int(scale / 20) {
          resultString = "You almost had it!"
-         if difference == 1 {
-           points += rangeSpread / 2
+         if difference <= Int(scale / 100) {
+           points += 50
          }
-       } else if difference < (rangeSpread / 10) {
+       } else if difference <= Int(scale / 10) {
          resultString = "Pretty good!"
        } else {
          resultString = "Not even close..."
