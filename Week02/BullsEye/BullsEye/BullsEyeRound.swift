@@ -8,7 +8,23 @@
 
 import Foundation
 
-struct BullsEyeGame {
+class BullsEyeGame {
+  var scoreTotal: Int = 0
+  var roundNumber: Int = 0
+  
+  func restart() {
+    scoreTotal = 0
+    roundNumber = 1
+  }
+  
+  func endRoundwith(points: Int) {
+    roundNumber += 1
+    scoreTotal += points
+  }
+  
+}
+
+struct BullsEyeRound {
   
   struct RoundResult {
     
@@ -23,10 +39,8 @@ struct BullsEyeGame {
   let rangeMin: Int
   let rangeMax: Int
   
-  var currentValue: Float = 0
+  var currentValue: Float = 0.5
   var targetValue: Int = 0
-  private (set) var score: Int = 0
-  private (set) var round: Int = 0
   
   var scale: Int {
     rangeMax - rangeMin + 1
@@ -47,21 +61,10 @@ struct BullsEyeGame {
   init(rangeMin: Int, rangeMax: Int) {
     self.rangeMin = rangeMin
     self.rangeMax = rangeMax
-  }
-  
-  mutating func start() {
-    score = 0
-    round = 0
-    newRound()
-  }
-  
-  mutating func newRound() {
-    round += 1
     targetValue = Int.random(in: 0...scaledMax)
-    currentValue = 0.5
   }
   
-  mutating func scoreRound() -> RoundResult {
+  func score() -> RoundResult {
     let resultType: RoundResult.ResultType
     
     let difference = abs(scaledCurrent - targetValue)
@@ -74,8 +77,7 @@ struct BullsEyeGame {
     } else if difference <= Int(scale / 100) {
       points += 50
       resultType = .within1percent
-    }
-    else if difference <= Int(scale / 20) {
+    } else if difference <= Int(scale / 20) {
       resultType = .within5percent
     } else if difference <= Int(scale / 10) {
       resultType = .within10percent
@@ -83,7 +85,6 @@ struct BullsEyeGame {
       resultType = .miss
     }
     
-    score += points
     return RoundResult(points: points, resultType: resultType)
   }
  

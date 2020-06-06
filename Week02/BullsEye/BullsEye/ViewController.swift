@@ -10,7 +10,12 @@ import UIKit
 
 class ViewController: UIViewController {
   
-  var game = BullsEyeGame(rangeMin: 0, rangeMax: 255)
+//  var game = BullsEyeGame(rangeMin: 1, rangeMax: 100)
+  let rangeMin = 1
+  let rangeMax = 100
+  
+  var round: BullsEyeRound!
+  var game = BullsEyeGame()
   
   @IBOutlet weak var slider: UISlider!
   @IBOutlet weak var targetLabel: UILabel!
@@ -26,14 +31,15 @@ class ViewController: UIViewController {
   
   @IBAction func showAlert() {
     
-    let roundResult = game.scoreRound()
+    let roundResult = round.score()
     let (title, message) = generateRoundResultFrom(roundResult)
     
     let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
     
     let action = UIAlertAction(title: "OK", style: .default, handler: {
       action in
-      self.game.newRound()
+      self.round = BullsEyeRound(rangeMin: self.rangeMin, rangeMax: self.rangeMax)
+      self.game.endRoundwith(points: roundResult.points)
       self.updateView()
     })
     
@@ -43,18 +49,18 @@ class ViewController: UIViewController {
   }
   
   @IBAction func sliderMoved(_ slider: UISlider) {
-    game.currentValue = slider.value
-    print("target: \(game.targetValue), current: \(game.currentValue), currentAdjusted: \(game.scaledCurrent)")
+    round.currentValue = slider.value
+    print("target: \(round.targetValue), current: \(round.currentValue), currentAdjusted: \(round.scaledCurrent)")
   }
   
   func updateView() {
-    targetLabel.text = String(game.targetValueInRange)
-    scoreLabel.text = String(game.score)
-    roundLabel.text = String(game.round)
-    slider.value = game.currentValue
+    targetLabel.text = String(round.targetValueInRange)
+    scoreLabel.text = String(game.scoreTotal)
+    roundLabel.text = String(game.roundNumber)
+    slider.value = round.currentValue
   }
   
-  func generateRoundResultFrom(_ result:BullsEyeGame.RoundResult) -> (String, String) {
+  func generateRoundResultFrom(_ result:BullsEyeRound.RoundResult) -> (String, String) {
     let title: String
     let message = "You scored \(result.points) points"
     
@@ -74,9 +80,9 @@ class ViewController: UIViewController {
   }
   
   @IBAction func startNewGame() {
-    game.start()
+    game.restart()
+    round = BullsEyeRound(rangeMin: rangeMin, rangeMax: rangeMax)
     updateView()
-    
   }
   
 }
