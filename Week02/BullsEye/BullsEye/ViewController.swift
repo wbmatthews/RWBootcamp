@@ -11,8 +11,8 @@ import UIKit
 class ViewController: UIViewController {
   
 //  var game = BullsEyeGame(rangeMin: 1, rangeMax: 100)
-  let rangeMin = 0
-  let rangeMax = 1000
+  let rangeMin = 1
+  let rangeMax = 100
   
   var game: BullsEyeGame!
     

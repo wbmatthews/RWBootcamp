@@ -41,27 +41,61 @@ class ViewController: UIViewController {
   let game = BullsEyeGame()
   var rgb = RGB()
   
-  let rangeMin = 0
-  let RangeMax = 255
-  
   @IBAction func aSliderMoved(sender: UISlider) {
-    
+    let r = Int(redSlider.value)
+    let g = Int(greenSlider.value)
+    let b = Int(blueSlider.value)
+
+    game.round.currentRGBValue = RGB(r: r, g: g, b: b)
+    updateView()
   }
   
   @IBAction func showAlert(sender: AnyObject) {
-
-  }
-  
-  @IBAction func startOver(sender: AnyObject) {
+    
+    let result = game.roundResults()
+        
+    let alert = UIAlertController(title: result.title, message: result.message, preferredStyle: .alert)
+    
+    let action = UIAlertAction(title: "OK", style: .default, handler: {
+      action in
+      self.game.newRound()
+      self.resetSliders()
+      self.updateView()
+    })
+    
+    alert.addAction(action)
+    present(alert, animated: true, completion: nil)
     
   }
   
+  @IBAction func startOver(sender: AnyObject) {
+    game.restart()
+    resetSliders()
+    self.updateView()
+  }
+  
+  func resetSliders() {
+    redSlider.value = 127
+    greenSlider.value = 127
+    blueSlider.value = 127
+  }
+  
   func updateView() {
-
+    targetLabel.backgroundColor = UIColor(rgbStruct: game.round.targetRGBValue)
+    guessLabel.backgroundColor = UIColor(rgbStruct: game.round.currentRGBValue)
+    
+    redLabel.text = String(Int(redSlider.value))
+    greenLabel.text = String(Int(greenSlider.value))
+    blueLabel.text = String(Int(blueSlider.value))
+    
+    roundLabel.text = String(game.roundNumber)
+    scoreLabel.text = String(game.scoreTotal)
   }
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    game.restart()
+    updateView()
   }
 }
 
