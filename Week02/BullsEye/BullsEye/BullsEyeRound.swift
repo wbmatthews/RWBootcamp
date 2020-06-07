@@ -9,20 +9,28 @@
 import Foundation
 
 class BullsEyeGame {
+  let rangeMin: Int
+  let rangeMax: Int
+  
   var scoreTotal: Int = 0
   var roundNumber: Int = 0
   var round: BullsEyeRound!
   
+  init(rangeMin: Int, rangeMax: Int) {
+    self.rangeMin = rangeMin
+    self.rangeMax = rangeMax
+  }
+  
   func restart() {
     scoreTotal = 0
     roundNumber = 1
-    round = BullsEyeRound(rangeMin: 1, rangeMax: 100)
+    round = BullsEyeRound(rangeMin: rangeMin, rangeMax: rangeMax)
   }
   
   func endRoundwith(points: Int) {
     roundNumber += 1
     scoreTotal += points
-    round = BullsEyeRound(rangeMin: 1, rangeMax: 100)
+    round = BullsEyeRound(rangeMin: rangeMin, rangeMax: rangeMax)
   }
 }
 
@@ -44,11 +52,11 @@ struct BullsEyeRound {
   var currentValue: Float = 0.5
   var targetValue: Int = 0
   
-  var scale: Int {
+  var rangeSpan: Int {
     rangeMax - rangeMin + 1
   }
   
-  var scaledMax: Int {
+  var zeroedRangeMax: Int {
     rangeMax - rangeMin
   }
   
@@ -57,31 +65,33 @@ struct BullsEyeRound {
   }
   
   var scaledCurrent: Int {
-    Int(currentValue * Float(scaledMax))
+    Int(currentValue * Float(zeroedRangeMax))
   }
   
   init(rangeMin: Int, rangeMax: Int) {
     self.rangeMin = rangeMin
     self.rangeMax = rangeMax
-    targetValue = Int.random(in: 0...scaledMax)
+    targetValue = Int.random(in: 0...zeroedRangeMax)
   }
+  
+  
   
   func score() -> RoundResult {
     let resultType: RoundResult.ResultType
     
     let difference = abs(scaledCurrent - targetValue)
-    let percentageDiff = 100 * difference / scale
+    let percentageDiff = 100 * difference / rangeSpan
     var points = 100 - percentageDiff
     
     if difference == 0 {
       resultType = .bullseye
       points += 100
-    } else if difference <= Int(scale / 100) {
+    } else if difference <= Int(rangeSpan / 100) {
       points += 50
       resultType = .within1percent
-    } else if difference <= Int(scale / 20) {
+    } else if difference <= Int(rangeSpan / 20) {
       resultType = .within5percent
-    } else if difference <= Int(scale / 10) {
+    } else if difference <= Int(rangeSpan / 10) {
       resultType = .within10percent
     } else {
       resultType = .miss

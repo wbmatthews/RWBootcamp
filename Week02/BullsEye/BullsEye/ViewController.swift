@@ -11,20 +11,23 @@ import UIKit
 class ViewController: UIViewController {
   
 //  var game = BullsEyeGame(rangeMin: 1, rangeMax: 100)
-  let rangeMin = 1
-  let rangeMax = 100
+  let rangeMin = 0
+  let rangeMax = 1000
   
-  var game = BullsEyeGame()
-  
+  var game: BullsEyeGame!
+    
   @IBOutlet weak var slider: UISlider!
   @IBOutlet weak var targetLabel: UILabel!
   @IBOutlet weak var scoreLabel: UILabel!
   @IBOutlet weak var roundLabel: UILabel!
-  @IBOutlet weak var cheatLabel: UILabel!
+  @IBOutlet weak var rangeMinLabel: UILabel!
+  @IBOutlet weak var rangeMaxLabel: UILabel!
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
+    game = BullsEyeGame(rangeMin: rangeMin, rangeMax: rangeMax)
+    rangeMinLabel.text = String(rangeMin)
+    rangeMaxLabel.text = String(rangeMax)
     startNewGame()
   }
   
