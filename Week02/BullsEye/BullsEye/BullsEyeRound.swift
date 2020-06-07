@@ -9,28 +9,28 @@
 import Foundation
 
 class BullsEyeGame {
-  let rangeMin: Int
-  let rangeMax: Int
-  
+
   var scoreTotal: Int = 0
   var roundNumber: Int = 0
   var round: BullsEyeRound!
   
-  init(rangeMin: Int, rangeMax: Int) {
-    self.rangeMin = rangeMin
-    self.rangeMax = rangeMax
-  }
-  
   func restart() {
     scoreTotal = 0
-    roundNumber = 1
-    round = BullsEyeRound(rangeMin: rangeMin, rangeMax: rangeMax)
+    roundNumber = 0
+    newRound()
   }
   
-  func endRoundwith(points: Int) {
+  func roundResults() -> BullsEyeRound.RoundResult {
+    
+    let result = round.score()
+    scoreTotal += result.points
+    
+    return result
+  }
+  
+  func newRound() {
     roundNumber += 1
-    scoreTotal += points
-    round = BullsEyeRound(rangeMin: rangeMin, rangeMax: rangeMax)
+    round = BullsEyeRound()
   }
 }
 
@@ -44,60 +44,67 @@ struct BullsEyeRound {
     
     let points: Int
     let resultType: ResultType
+    let title: String
+    let message: String
+    
+    init(points: Int, resultType: ResultType) {
+      self.resultType = resultType
+      self.points = points
+      self.message = "You scored \(points) points"
+      
+      switch resultType {
+      case .bullseye:
+        self.title = "Bullseye!"
+      case .within1percent:
+        self.title = "You almost had it!"
+      case .within5percent:
+        self.title = "So close!"
+      case .within10percent:
+        self.title = "Pretty good"
+      case .miss:
+        self.title = "Not even close"
+      }
+    }
+    
   }
   
-  let rangeMin: Int
-  let rangeMax: Int
-  
-  var currentValue: Float = 0.5
+  var currentValue: Int = 0
   var targetValue: Int = 0
   
-  var rangeSpan: Int {
-    rangeMax - rangeMin + 1
+  init() {
+    targetValue = Int.random(in: 1...100)
   }
-  
-  var zeroedRangeMax: Int {
-    rangeMax - rangeMin
-  }
-  
-  var targetValueInRange: Int {
-    targetValue + rangeMin
-  }
-  
-  var scaledCurrent: Int {
-    Int(currentValue * Float(zeroedRangeMax))
-  }
-  
-  init(rangeMin: Int, rangeMax: Int) {
-    self.rangeMin = rangeMin
-    self.rangeMax = rangeMax
-    targetValue = Int.random(in: 0...zeroedRangeMax)
-  }
-  
-  
   
   func score() -> RoundResult {
     let resultType: RoundResult.ResultType
     
-    let difference = abs(scaledCurrent - targetValue)
-    let percentageDiff = 100 * difference / rangeSpan
+    let difference = targetValue.difference(target: currentValue)
+    
+    let percentageDiff = Int(100 * difference)
     var points = 100 - percentageDiff
     
-    if difference == 0 {
+    switch percentageDiff {
+    case 0:
       resultType = .bullseye
       points += 100
-    } else if difference <= Int(rangeSpan / 100) {
+    case 1:
       points += 50
       resultType = .within1percent
-    } else if difference <= Int(rangeSpan / 20) {
+    case 2...5:
       resultType = .within5percent
-    } else if difference <= Int(rangeSpan / 10) {
+    case 6...10:
       resultType = .within10percent
-    } else {
+    default:
       resultType = .miss
     }
     
     return RoundResult(points: points, resultType: resultType)
   }
  
+}
+
+extension Int {
+  func difference(target: Int) -> Double {
+    Double(abs(self - target)) / 100.0
+  }
 }

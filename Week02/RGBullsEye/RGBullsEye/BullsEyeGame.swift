@@ -82,20 +82,20 @@ struct BullsEyeRound {
     
   }
   
-  var currentRGBValue: RGB = RGB()
-  var targetRGBValue: RGB = RGB()
+  var currentValue: RGB = RGB()
+  var targetValue: RGB = RGB()
   
   init() {
-    targetRGBValue = RGB(r: Int.random(in: 0...255), g: Int.random(in: 0...255), b: Int.random(in: 0...255))
+    targetValue = RGB(r: Int.random(in: 0...255), g: Int.random(in: 0...255), b: Int.random(in: 0...255))
   }
   
   func score() -> RoundResult {
     let resultType: RoundResult.ResultType
     
 //    let difference = abs(scaledCurrent - targetValue)
-    let differenceRGB = targetRGBValue.difference(target: currentRGBValue)
+    let difference = targetValue.difference(target: currentValue)
     
-    let percentageDiff = Int(100 * differenceRGB)
+    let percentageDiff = Int(100 * difference)
     var points = 100 - percentageDiff
     
     switch percentageDiff {

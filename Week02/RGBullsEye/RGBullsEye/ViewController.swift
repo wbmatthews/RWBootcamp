@@ -46,11 +46,13 @@ class ViewController: UIViewController {
     let g = Int(greenSlider.value)
     let b = Int(blueSlider.value)
 
-    game.round.currentRGBValue = RGB(r: r, g: g, b: b)
+    game.round.currentValue = RGB(r: r, g: g, b: b)
     updateView()
   }
   
   @IBAction func showAlert(sender: AnyObject) {
+    
+    targetTextLabel.text = "r: \(game.round.targetValue.r) g: \(game.round.targetValue.g) b: \(game.round.targetValue.b)"
     
     let result = game.roundResults()
         
@@ -59,7 +61,7 @@ class ViewController: UIViewController {
     let action = UIAlertAction(title: "OK", style: .default, handler: {
       action in
       self.game.newRound()
-      self.resetSliders()
+      self.resetView()
       self.updateView()
     })
     
@@ -70,19 +72,20 @@ class ViewController: UIViewController {
   
   @IBAction func startOver(sender: AnyObject) {
     game.restart()
-    resetSliders()
+    resetView()
     self.updateView()
   }
   
-  func resetSliders() {
-    redSlider.value = 127
-    greenSlider.value = 127
-    blueSlider.value = 127
+  func resetView() {
+    targetTextLabel.text = "match this color"
+    redSlider.value = 128
+    greenSlider.value = 128
+    blueSlider.value = 128
   }
   
   func updateView() {
-    targetLabel.backgroundColor = UIColor(rgbStruct: game.round.targetRGBValue)
-    guessLabel.backgroundColor = UIColor(rgbStruct: game.round.currentRGBValue)
+    targetLabel.backgroundColor = UIColor(rgbStruct: game.round.targetValue)
+    guessLabel.backgroundColor = UIColor(rgbStruct: game.round.currentValue)
     
     redLabel.text = String(Int(redSlider.value))
     greenLabel.text = String(Int(greenSlider.value))

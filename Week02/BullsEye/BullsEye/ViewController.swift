@@ -9,39 +9,29 @@
 import UIKit
 
 class ViewController: UIViewController {
-  
-//  var game = BullsEyeGame(rangeMin: 1, rangeMax: 100)
-  let rangeMin = 1
-  let rangeMax = 100
-  
-  var game: BullsEyeGame!
     
   @IBOutlet weak var slider: UISlider!
   @IBOutlet weak var targetLabel: UILabel!
   @IBOutlet weak var scoreLabel: UILabel!
   @IBOutlet weak var roundLabel: UILabel!
-  @IBOutlet weak var rangeMinLabel: UILabel!
-  @IBOutlet weak var rangeMaxLabel: UILabel!
+  
+  var game = BullsEyeGame()
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    game = BullsEyeGame(rangeMin: rangeMin, rangeMax: rangeMax)
-    rangeMinLabel.text = String(rangeMin)
-    rangeMaxLabel.text = String(rangeMax)
     startNewGame()
   }
   
   @IBAction func showAlert() {
     
-    let roundResult = game.round.score()
-    let (title, message) = generateRoundResultFrom(roundResult)
-    
-    let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+    let result = game.roundResults()
+        
+    let alert = UIAlertController(title: result.title, message: result.message, preferredStyle: .alert)
     
     let action = UIAlertAction(title: "OK", style: .default, handler: {
       action in
-      self.game.round = BullsEyeRound(rangeMin: self.rangeMin, rangeMax: self.rangeMax)
-      self.game.endRoundwith(points: roundResult.points)
+      self.game.newRound()
+      self.slider.value = 50
       self.updateView()
     })
     
@@ -50,16 +40,14 @@ class ViewController: UIViewController {
     
   }
   
-  @IBAction func sliderMoved(_ slider: UISlider) {
-    game.round.currentValue = slider.value
-    print("target: \(game.round.targetValue), current: \(game.round.currentValue), currentAdjusted: \(game.round.scaledCurrent)")
+  @IBAction func aSliderMoved(_ slider: UISlider) {
+    game.round.currentValue = Int(slider.value)
   }
   
   func updateView() {
-    targetLabel.text = String(game.round.targetValueInRange)
+    targetLabel.text = String(game.round.targetValue)
     scoreLabel.text = String(game.scoreTotal)
     roundLabel.text = String(game.roundNumber)
-    slider.value = game.round.currentValue
   }
   
   func generateRoundResultFrom(_ result:BullsEyeRound.RoundResult) -> (String, String) {
