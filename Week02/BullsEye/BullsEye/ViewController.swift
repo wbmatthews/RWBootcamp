@@ -17,9 +17,14 @@ class ViewController: UIViewController {
   
   var game = BullsEyeGame()
   
+  var quickDiff: Int {
+    return abs(game.round.targetValue - game.round.currentValue)
+  }
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     startNewGame()
+    slider.minimumTrackTintColor = UIColor.blue.withAlphaComponent(CGFloat(quickDiff)/100.0)
   }
   
   @IBAction func showAlert() {
@@ -41,6 +46,7 @@ class ViewController: UIViewController {
   }
   
   @IBAction func aSliderMoved(_ slider: UISlider) {
+    slider.minimumTrackTintColor = UIColor.blue.withAlphaComponent(CGFloat(quickDiff)/100.0)
     game.round.currentValue = Int(slider.value)
   }
   
@@ -48,25 +54,7 @@ class ViewController: UIViewController {
     targetLabel.text = String(game.round.targetValue)
     scoreLabel.text = String(game.scoreTotal)
     roundLabel.text = String(game.roundNumber)
-  }
-  
-  func generateRoundResultFrom(_ result:BullsEyeRound.RoundResult) -> (String, String) {
-    let title: String
-    let message = "You scored \(result.points) points"
-    
-    switch result.resultType {
-    case .bullseye:
-      title = "Bullseye!"
-    case .within1percent:
-      title = "You almost had it!"
-    case .within5percent:
-      title = "So close!"
-    case .within10percent:
-      title = "Pretty good"
-    case .miss:
-      title = "Not even close"
-    }
-    return (title, message)
+    slider.minimumTrackTintColor = UIColor.blue.withAlphaComponent(CGFloat(quickDiff)/100.0)
   }
   
   @IBAction func startNewGame() {
