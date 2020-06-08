@@ -40,9 +40,7 @@ class BullsEyeGame<Element: BullsEyeableType> {
   }
   
   struct BullsEyeRound<Element: BullsEyeableType> {
-    
-    typealias Element = BullsEyeableType
-        
+            
     var currentValue: Element
     private (set) var targetValue: Element
     
@@ -107,7 +105,5 @@ class BullsEyeGame<Element: BullsEyeableType> {
         self.title = "Not even close"
       }
     }
-    
   }
-  
 }

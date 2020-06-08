@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class BullsEyeClassicController: UIViewController {
     
   @IBOutlet weak var slider: UISlider!
   @IBOutlet weak var targetLabel: UILabel!

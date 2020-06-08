@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITextFieldDelegate {
+class RevBullsEyeController: UIViewController, UITextFieldDelegate {
 
   @IBOutlet weak var guessField: UITextField! {
     didSet {
