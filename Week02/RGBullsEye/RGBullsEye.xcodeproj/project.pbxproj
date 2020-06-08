@@ -8,11 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		181A114F22AD925B003EA9CF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 181A114E22AD925B003EA9CF /* LaunchScreen.storyboard */; };
+		6965A3D2248E71C8007BA501 /* BullsEyeGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6965A3D1248E71C8007BA501 /* BullsEyeGame.swift */; };
 		CDCB57E51BED8F4800003224 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDCB57E41BED8F4800003224 /* AppDelegate.swift */; };
 		CDCB57E71BED8F4800003224 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDCB57E61BED8F4800003224 /* ViewController.swift */; };
 		CDCB57EA1BED8F4800003224 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CDCB57E81BED8F4800003224 /* Main.storyboard */; };
 		CDCB57EC1BED8F4800003224 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CDCB57EB1BED8F4800003224 /* Assets.xcassets */; };
-		CDCB57F81BED941D00003224 /* BullsEyeGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDCB57F61BED941D00003224 /* BullsEyeGame.swift */; };
+		CDCB57F81BED941D00003224 /* OldBullsEyeGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDCB57F61BED941D00003224 /* OldBullsEyeGame.swift */; };
 		CDCB57F91BED941D00003224 /* RGB.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDCB57F71BED941D00003224 /* RGB.swift */; };
 		CDCB57FB1BED986300003224 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDCB57FA1BED986300003224 /* AboutViewController.swift */; };
 /* End PBXBuildFile section */
@@ -32,13 +33,14 @@
 
 /* Begin PBXFileReference section */
 		181A114E22AD925B003EA9CF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		6965A3D1248E71C8007BA501 /* BullsEyeGame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BullsEyeGame.swift; path = ../../BullsEye/BullsEye/BullsEyeGame.swift; sourceTree = "<group>"; };
 		CDCB57E11BED8F4800003224 /* RGBullsEye.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RGBullsEye.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDCB57E41BED8F4800003224 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CDCB57E61BED8F4800003224 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		CDCB57E91BED8F4800003224 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CDCB57EB1BED8F4800003224 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CDCB57F01BED8F4800003224 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CDCB57F61BED941D00003224 /* BullsEyeGame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BullsEyeGame.swift; sourceTree = "<group>"; };
+		CDCB57F61BED941D00003224 /* OldBullsEyeGame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OldBullsEyeGame.swift; sourceTree = "<group>"; };
 		CDCB57F71BED941D00003224 /* RGB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RGB.swift; sourceTree = "<group>"; };
 		CDCB57FA1BED986300003224 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -75,7 +77,8 @@
 			children = (
 				CDCB57E41BED8F4800003224 /* AppDelegate.swift */,
 				CDCB57E61BED8F4800003224 /* ViewController.swift */,
-				CDCB57F61BED941D00003224 /* BullsEyeGame.swift */,
+				CDCB57F61BED941D00003224 /* OldBullsEyeGame.swift */,
+				6965A3D1248E71C8007BA501 /* BullsEyeGame.swift */,
 				CDCB57F71BED941D00003224 /* RGB.swift */,
 				CDCB57FA1BED986300003224 /* AboutViewController.swift */,
 				CDCB57E81BED8F4800003224 /* Main.storyboard */,
@@ -162,7 +165,8 @@
 			files = (
 				CDCB57E71BED8F4800003224 /* ViewController.swift in Sources */,
 				CDCB57E51BED8F4800003224 /* AppDelegate.swift in Sources */,
-				CDCB57F81BED941D00003224 /* BullsEyeGame.swift in Sources */,
+				6965A3D2248E71C8007BA501 /* BullsEyeGame.swift in Sources */,
+				CDCB57F81BED941D00003224 /* OldBullsEyeGame.swift in Sources */,
 				CDCB57FB1BED986300003224 /* AboutViewController.swift in Sources */,
 				CDCB57F91BED941D00003224 /* RGB.swift in Sources */,
 			);

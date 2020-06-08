@@ -32,7 +32,15 @@ extension UIColor {
   }
 }
 
-struct RGB {
+struct RGB: BullsEyeableType {
+  static func newRandom() -> RGB {
+    RGB(r: Int.random(in: 0...255), g: Int.random(in: 0...255), b: Int.random(in: 0...255))
+  }
+  
+  static var initialValue: RGB {
+    RGB()
+  }
+  
   var r = 127
   var g = 127
   var b = 127
@@ -44,3 +52,4 @@ struct RGB {
     return sqrt((rDiff * rDiff + gDiff * gDiff + bDiff * bDiff)/3) / 255.0
   }
 }
+

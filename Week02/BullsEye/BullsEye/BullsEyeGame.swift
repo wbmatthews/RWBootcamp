@@ -8,51 +8,51 @@
 
 import Foundation
 
-class BullsEyeGame {
+protocol BullsEyeableType {
+  func difference(target:Self) -> Double
+  static func newRandom() -> Self
+  static var initialValue:Self { get }
+}
+
+class BullsEyeGame<Element: BullsEyeableType> {
   
-  struct BullsEyeRound {
+  var scoreTotal: Int = 0
+  var roundNumber: Int = 0
+  var round: BullsEyeRound<Element>!
+  
+  func restart() {
+    scoreTotal = 0
+    roundNumber = 0
+    newRound()
+  }
+  
+  func roundResults() -> BullsEyeRoundResult {
     
-    struct RoundResult {
-      
-      enum ResultType {
-        case bullseye, within1percent, within5percent, within10percent, miss
-      }
-      
-      let points: Int
-      let resultType: ResultType
-      let title: String
-      let message: String
-      
-      init(points: Int, resultType: ResultType) {
-        self.resultType = resultType
-        self.points = points
-        self.message = "You scored \(points) points"
+    let result = round.score()
+    scoreTotal += result.points
+    
+    return result
+  }
+  
+  func newRound() {
+    roundNumber += 1
+    round = BullsEyeRound()
+  }
+  
+  struct BullsEyeRound<Element: BullsEyeableType> {
+    
+    typealias Element = BullsEyeableType
         
-        switch resultType {
-        case .bullseye:
-          self.title = "Bullseye!"
-        case .within1percent:
-          self.title = "You almost had it!"
-        case .within5percent:
-          self.title = "So close!"
-        case .within10percent:
-          self.title = "Pretty good"
-        case .miss:
-          self.title = "Not even close"
-        }
-      }
-      
-    }
-    
-    var currentValue: Int = 0
-    var targetValue: Int = 0
+    var currentValue: Element
+    private (set) var targetValue: Element
     
     init() {
-      targetValue = Int.random(in: 1...100)
+      targetValue = Element.newRandom()
+      currentValue = Element.initialValue
     }
     
-    func score() -> RoundResult {
-      let resultType: RoundResult.ResultType
+    func score() -> BullsEyeRoundResult {
+      let resultType: BullsEyeRoundResult.ResultType
       
       let difference = targetValue.difference(target: currentValue)
       
@@ -74,39 +74,40 @@ class BullsEyeGame {
         resultType = .miss
       }
       
-      return RoundResult(points: points, resultType: resultType)
+      return BullsEyeRoundResult(points: points, resultType: resultType)
     }
-   
   }
 
-  var scoreTotal: Int = 0
-  var roundNumber: Int = 0
-  var round: BullsEyeRound!
-  
-  func restart() {
-    scoreTotal = 0
-    roundNumber = 0
-    newRound()
-  }
-  
-  func roundResults() -> BullsEyeRound.RoundResult {
+  struct BullsEyeRoundResult {
     
-    let result = round.score()
-    scoreTotal += result.points
+    enum ResultType {
+      case bullseye, within1percent, within5percent, within10percent, miss
+    }
     
-    return result
+    let points: Int
+    let resultType: ResultType
+    let title: String
+    let message: String
+    
+    init(points: Int, resultType: ResultType) {
+      self.resultType = resultType
+      self.points = points
+      self.message = "You scored \(points) points"
+      
+      switch resultType {
+      case .bullseye:
+        self.title = "Bullseye!"
+      case .within1percent:
+        self.title = "You almost had it!"
+      case .within5percent:
+        self.title = "So close!"
+      case .within10percent:
+        self.title = "Pretty good"
+      case .miss:
+        self.title = "Not even close"
+      }
+    }
+    
   }
   
-  func newRound() {
-    roundNumber += 1
-    round = BullsEyeRound()
-  }
-}
-
-
-
-extension Int {
-  func difference(target: Int) -> Double {
-    Double(abs(self - target)) / 100.0
-  }
 }

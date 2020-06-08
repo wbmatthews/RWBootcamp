@@ -12,6 +12,7 @@
 		352A679E20D171E800D5BF05 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 352A679C20D171E800D5BF05 /* Main.storyboard */; };
 		352A67A020D171EA00D5BF05 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 352A679F20D171EA00D5BF05 /* Assets.xcassets */; };
 		352A67A320D171EA00D5BF05 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 352A67A120D171EA00D5BF05 /* LaunchScreen.storyboard */; };
+		6965A3CE248E7101007BA501 /* Int+BullsEyeableValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6965A3CD248E7101007BA501 /* Int+BullsEyeableValue.swift */; };
 		69B5074F248A82BE00C1F20E /* BullsEyeGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69B5074E248A82BE00C1F20E /* BullsEyeGame.swift */; };
 /* End PBXBuildFile section */
 
@@ -23,6 +24,7 @@
 		352A679F20D171EA00D5BF05 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		352A67A220D171EA00D5BF05 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		352A67A420D171EA00D5BF05 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6965A3CD248E7101007BA501 /* Int+BullsEyeableValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Int+BullsEyeableValue.swift"; path = "../../RevBullsEye/RevBullsEye/Int+BullsEyeableValue.swift"; sourceTree = "<group>"; };
 		69B5074E248A82BE00C1F20E /* BullsEyeGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BullsEyeGame.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -58,6 +60,7 @@
 			children = (
 				352A679820D171E800D5BF05 /* AppDelegate.swift */,
 				69B5074E248A82BE00C1F20E /* BullsEyeGame.swift */,
+				6965A3CD248E7101007BA501 /* Int+BullsEyeableValue.swift */,
 				352A679A20D171E800D5BF05 /* ViewController.swift */,
 				352A679C20D171E800D5BF05 /* Main.storyboard */,
 				352A679F20D171EA00D5BF05 /* Assets.xcassets */,
@@ -140,6 +143,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				352A679B20D171E800D5BF05 /* ViewController.swift in Sources */,
+				6965A3CE248E7101007BA501 /* Int+BullsEyeableValue.swift in Sources */,
 				352A679920D171E800D5BF05 /* AppDelegate.swift in Sources */,
 				69B5074F248A82BE00C1F20E /* BullsEyeGame.swift in Sources */,
 			);

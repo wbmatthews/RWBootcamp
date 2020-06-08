@@ -20,7 +20,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
   @IBOutlet weak var scoreLabel: UILabel!
   @IBOutlet weak var roundLabel: UILabel!
   
-  var game = BullsEyeGame()
+  var game = BullsEyeGame<Int>()
   
   override func viewDidLoad() {
     super.viewDidLoad()

@@ -38,8 +38,7 @@ class ViewController: UIViewController {
   @IBOutlet weak var roundLabel: UILabel!
   @IBOutlet weak var scoreLabel: UILabel!
   
-  let game = BullsEyeGame()
-  var rgb = RGB()
+  let game = BullsEyeGame<RGB>()
   
   @IBAction func aSliderMoved(sender: UISlider) {
     let r = Int(redSlider.value)
