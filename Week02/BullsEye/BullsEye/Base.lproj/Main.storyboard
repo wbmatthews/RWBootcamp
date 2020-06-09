@@ -139,7 +139,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="BullsEye Classic" id="sym-hg-Iq9"/>
+                    <tabBarItem key="tabBarItem" title="BullsEye Classic" image="classic" selectedImage="classic" id="sym-hg-Iq9"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="roundLabel" destination="kZC-Qn-43h" id="w0M-SF-y23"/>
@@ -392,7 +392,7 @@
                             </mask>
                         </variation>
                     </view>
-                    <tabBarItem key="tabBarItem" title="RGBullsEye" id="258-nS-oTO"/>
+                    <tabBarItem key="tabBarItem" title="RGBullsEye" image="rgbull" selectedImage="rgbull" id="258-nS-oTO"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="blueLabel" destination="J5n-Re-5bV" id="IiN-eR-UVs"/>
@@ -522,7 +522,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="xU0-Rp-3yM"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="RevBullsEye" id="0hz-x4-VwB"/>
+                    <tabBarItem key="tabBarItem" title="RevBullsEye" image="REvBull" selectedImage="REvBull" id="0hz-x4-VwB"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="guessField" destination="oBZ-Pm-rKC" id="qzZ-jF-vff"/>
@@ -597,6 +597,11 @@ Be the slider! Stop pushing a slider around to guess the number--now you can gue
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="l4k-75-0tb"/>
+        <segue reference="zTR-si-fSZ"/>
     </inferredMetricsTieBreakers>
+    <resources>
+        <image name="REvBull" width="100" height="100"/>
+        <image name="classic" width="100" height="100"/>
+        <image name="rgbull" width="100" height="100"/>
+    </resources>
 </document>
