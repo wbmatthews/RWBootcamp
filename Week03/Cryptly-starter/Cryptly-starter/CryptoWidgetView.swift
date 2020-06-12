@@ -34,12 +34,12 @@ import UIKit
 
 class CryptoWidgetView: UIView {
   
-  var theme: Theme
+  var theme: Theme = LightTheme()
   
-  override init(frame: CGRect) {
-    self.theme = LightTheme()
-    super.init(frame: frame)
+  required init?(coder: NSCoder) {
+    super.init(coder: coder)
     setupView(theme: theme)
+    print("Init by coder")
   }
   
   private func setupView(theme: Theme) {
@@ -50,10 +50,6 @@ class CryptoWidgetView: UIView {
     layer.shadowOffset = CGSize(width: 0, height: 2)
     layer.shadowRadius = 4
     layer.shadowOpacity = 0.8
-  }
-  
-  required init?(coder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
   }
   
 }

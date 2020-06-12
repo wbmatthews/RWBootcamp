@@ -34,16 +34,17 @@ import UIKit
 
 class HomeViewController: UIViewController{
 
-  @IBOutlet weak var view1: UIView!
-  @IBOutlet weak var view2: UIView!
-  @IBOutlet weak var view3: UIView!
+//  @IBOutlet weak var view1: UIView!
+//  @IBOutlet weak var view2: UIView!
+//  @IBOutlet weak var view3: UIView!
+//  @IBOutlet weak var view1TextLabel: UILabel!
+//  @IBOutlet weak var view2TextLabel: UILabel!
+//  @IBOutlet weak var view3TextLabel: UILabel!
   @IBOutlet weak var headingLabel: UILabel!
-  @IBOutlet weak var view1TextLabel: UILabel!
-  @IBOutlet weak var view2TextLabel: UILabel!
-  @IBOutlet weak var view3TextLabel: UILabel!
   @IBOutlet weak var themeSwitch: UISwitch!
   
   @IBOutlet var widgetViews: [CryptoWidgetView]!
+  @IBOutlet var widgetViewTextLabels: [UILabel]!
   
   let cryptoData = DataGenerator.shared.generateData()
   let commaConcatCryptoNames: (String, CryptoCurrency) -> String = { result, thisCrypto in
@@ -57,7 +58,6 @@ class HomeViewController: UIViewController{
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    setupViews()
     setupLabels()
     setView1Data()
     setView2Data()
@@ -73,58 +73,30 @@ class HomeViewController: UIViewController{
     super.viewWillDisappear(animated)
     unregisterForTheme()
   }
-
-  func setupViews() {
-    
-    ThemeManager.shared.currentTheme = LightTheme()
-      
-    view1.backgroundColor = .systemGray6
-    view1.layer.borderColor = UIColor.lightGray.cgColor
-    view1.layer.borderWidth = 1.0
-    view1.layer.shadowColor = UIColor.black.withAlphaComponent(0.2).cgColor
-    view1.layer.shadowOffset = CGSize(width: 0, height: 2)
-    view1.layer.shadowRadius = 4
-    view1.layer.shadowOpacity = 0.8
-    
-    view2.backgroundColor = .systemGray6
-    view2.layer.borderColor = UIColor.lightGray.cgColor
-    view2.layer.borderWidth = 1.0
-    view2.layer.shadowColor = UIColor.black.withAlphaComponent(0.2).cgColor
-    view2.layer.shadowOffset = CGSize(width: 0, height: 2)
-    view2.layer.shadowRadius = 4
-    view2.layer.shadowOpacity = 0.8
-    
-    view3.backgroundColor = .systemGray6
-    view3.layer.borderColor = UIColor.lightGray.cgColor
-    view3.layer.borderWidth = 1.0
-    view3.layer.shadowColor = UIColor.black.withAlphaComponent(0.2).cgColor
-    view3.layer.shadowOffset = CGSize(width: 0, height: 2)
-    view3.layer.shadowRadius = 4
-    view3.layer.shadowOpacity = 0.8
-  }
   
   func setupLabels() {
     headingLabel.font = UIFont.systemFont(ofSize: 20, weight: .medium)
-    view1TextLabel.font = UIFont.systemFont(ofSize: 18, weight: .regular)
-    view2TextLabel.font = UIFont.systemFont(ofSize: 18, weight: .regular)
+    _ = widgetViewTextLabels.map { $0.font = UIFont.systemFont(ofSize: 18, weight: .regular) }
+//    view1TextLabel.font = UIFont.systemFont(ofSize: 18, weight: .regular)
+//    view2TextLabel.font = UIFont.systemFont(ofSize: 18, weight: .regular)
   }
   
   func setView1Data() {
     guard let cryptoData = cryptoData else { return }
     let allCurrencyNames = cryptoData.reduce("", commaConcatCryptoNames)
-    view1TextLabel.text = allCurrencyNames
+    widgetViewTextLabels[0].text = allCurrencyNames
   }
   
   func setView2Data() {
     guard let cryptoData = cryptoData else { return }
     let increasingCurrencyNames = cryptoData.filter { $0.currentValue > $0.previousValue }.reduce("", commaConcatCryptoNames)
-    view2TextLabel.text = increasingCurrencyNames
+    widgetViewTextLabels[1].text = increasingCurrencyNames
   }
   
   func setView3Data() {
     guard let cryptoData = cryptoData else { return }
     let decreasingCurrencyNames = cryptoData.filter { $0.currentValue < $0.previousValue }.reduce("", commaConcatCryptoNames)
-    view3TextLabel.text = decreasingCurrencyNames
+    widgetViewTextLabels[2].text = decreasingCurrencyNames
   }
   
   @IBAction func switchPressed(_ sender: Any) {
@@ -144,13 +116,10 @@ extension HomeViewController: Themeable {
   @objc func themeChanged() {
     guard let theme = ThemeManager.shared.currentTheme else { return }
     
-    let views = [view1, view2, view3]
-    let viewTextLabels = [view1TextLabel, view2TextLabel, view3TextLabel]
+    _ = widgetViews.map { $0.backgroundColor = theme.widgetColor }
+    _ = widgetViews.map { $0.layer.borderColor = theme.borderColor.cgColor }
     
-    _ = views.map { $0?.backgroundColor = theme.widgetColor }
-    _ = views.map { $0?.layer.borderColor = theme.borderColor.cgColor }
-    
-    _ = viewTextLabels.map { $0?.textColor = theme.textColor }
+    _ = widgetViewTextLabels.map { $0.textColor = theme.textColor }
     self.view.backgroundColor = theme.backgroundColor
     
     headingLabel.textColor = theme.textColor

@@ -39,10 +39,10 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4oo-MW-3FZ">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4oo-MW-3FZ" userLabel="Crypto Widget View 1" customClass="CryptoWidgetView" customModule="Cryptly_starter" customModuleProvider="target">
                                 <rect key="frame" x="20" y="189" width="374" height="120"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2pP-O3-GIK">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2pP-O3-GIK" userLabel="Label1">
                                         <rect key="frame" x="20" y="20" width="334" height="80"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
@@ -58,10 +58,10 @@
                                     <constraint firstAttribute="trailing" secondItem="2pP-O3-GIK" secondAttribute="trailing" constant="20" id="sqv-6S-XbB"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DpI-h7-D97">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DpI-h7-D97" userLabel="Crypto Widget View 2" customClass="CryptoWidgetView" customModule="Cryptly_starter" customModuleProvider="target">
                                 <rect key="frame" x="20" y="329" width="374" height="120"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tPy-T8-YB9">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tPy-T8-YB9" userLabel="Label2">
                                         <rect key="frame" x="20" y="20" width="334" height="80"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
@@ -77,10 +77,10 @@
                                     <constraint firstItem="tPy-T8-YB9" firstAttribute="leading" secondItem="DpI-h7-D97" secondAttribute="leading" constant="20" id="mZE-Af-Pi5"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DNM-6D-sSb">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DNM-6D-sSb" userLabel="Crypto Widget View 3" customClass="CryptoWidgetView" customModule="Cryptly_starter" customModuleProvider="target">
                                 <rect key="frame" x="20" y="469" width="374" height="120"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UCh-Bb-EWS">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UCh-Bb-EWS" userLabel="Label3">
                                         <rect key="frame" x="20" y="20" width="334" height="80"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
@@ -128,12 +128,12 @@
                     <connections>
                         <outlet property="headingLabel" destination="zrp-g0-HX2" id="CEx-vX-zmI"/>
                         <outlet property="themeSwitch" destination="kW6-Ms-UCP" id="Vpv-W6-XtS"/>
-                        <outlet property="view1" destination="4oo-MW-3FZ" id="7mY-sa-8ZH"/>
-                        <outlet property="view1TextLabel" destination="2pP-O3-GIK" id="L2m-KB-P6Q"/>
-                        <outlet property="view2" destination="DpI-h7-D97" id="Y0z-cT-8qw"/>
-                        <outlet property="view2TextLabel" destination="tPy-T8-YB9" id="VJN-xd-312"/>
-                        <outlet property="view3" destination="DNM-6D-sSb" id="vA8-mC-2c7"/>
-                        <outlet property="view3TextLabel" destination="UCh-Bb-EWS" id="8RB-Dk-G3v"/>
+                        <outletCollection property="widgetViews" destination="4oo-MW-3FZ" collectionClass="NSMutableArray" id="w4k-uY-dGI"/>
+                        <outletCollection property="widgetViews" destination="DpI-h7-D97" collectionClass="NSMutableArray" id="t0W-ON-Zly"/>
+                        <outletCollection property="widgetViews" destination="DNM-6D-sSb" collectionClass="NSMutableArray" id="Jdp-iS-74c"/>
+                        <outletCollection property="widgetViewTextLabels" destination="2pP-O3-GIK" collectionClass="NSMutableArray" id="s7G-bD-Myb"/>
+                        <outletCollection property="widgetViewTextLabels" destination="tPy-T8-YB9" collectionClass="NSMutableArray" id="X3Q-iw-eD5"/>
+                        <outletCollection property="widgetViewTextLabels" destination="UCh-Bb-EWS" collectionClass="NSMutableArray" id="0Cc-CT-9vm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="szC-q4-zjU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
