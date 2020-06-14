@@ -73,4 +73,3 @@ class CryptoWidgetView: UIView {
 }
 
 extension CryptoWidgetView: Roundable { }
-extension UILabel: Roundable { }
