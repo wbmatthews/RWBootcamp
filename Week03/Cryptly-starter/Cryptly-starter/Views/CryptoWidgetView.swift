@@ -33,17 +33,15 @@
 import UIKit
 
 class CryptoWidgetView: UIView {
-  
-  var theme: Theme = LightTheme()
-  
+    
   required init?(coder: NSCoder) {
     super.init(coder: coder)
-    setupView(theme: theme)
+    setupView()
   }
   
-  private func setupView(theme: Theme) {
-    backgroundColor = theme.widgetColor
-    layer.borderColor = theme.borderColor.cgColor
+  private func setupView() {
+    backgroundColor = ThemeManager.shared.currentTheme?.widgetColor
+    layer.borderColor = ThemeManager.shared.currentTheme?.borderColor.cgColor
     layer.borderWidth = 1.0
     layer.shadowColor = UIColor.black.withAlphaComponent(0.2).cgColor
     layer.shadowOffset = CGSize(width: 0, height: 2)

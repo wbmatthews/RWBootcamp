@@ -51,7 +51,6 @@ class HomeViewController: UIViewController{
     
   override func viewDidLoad() {
     super.viewDidLoad()
-
     setupLabels()
     setView1Data()
     setView2Data()
@@ -108,10 +107,12 @@ extension HomeViewController: Themeable {
   @objc func themeChanged() {
     guard let theme = ThemeManager.shared.currentTheme else { return }
     
+    
     widgetViews.forEach { $0.backgroundColor = theme.widgetColor }
     widgetViews.forEach { $0.layer.borderColor = theme.borderColor.cgColor }
     
     widgetViewTextLabels.forEach { $0.textColor = theme.textColor }
+    
     self.view.backgroundColor = theme.backgroundColor
     
     headingLabel.textColor = theme.textColor
