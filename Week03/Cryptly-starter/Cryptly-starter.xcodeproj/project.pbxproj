@@ -72,11 +72,11 @@
 			children = (
 				A1F9E0552492697800323226 /* ThemeManager */,
 				A1F9E0542492696200323226 /* Data */,
+				6927CB762496515C001CDE49 /* Views */,
+				6927CB7524965148001CDE49 /* Models */,
 				185CB1FB23C78CE6009F7571 /* AppDelegate.swift */,
 				185CB1FD23C78CE6009F7571 /* SceneDelegate.swift */,
-				6927CB762496515C001CDE49 /* Views */,
 				185CB20123C78CE6009F7571 /* Main.storyboard */,
-				6927CB7524965148001CDE49 /* Models */,
 				185CB20423C78CE8009F7571 /* Assets.xcassets */,
 				180DC61423C78D9800486B1A /* LaunchScreen.storyboard */,
 				185CB20923C78CE8009F7571 /* Info.plist */,

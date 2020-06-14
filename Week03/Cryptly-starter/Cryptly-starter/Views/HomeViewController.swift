@@ -32,9 +32,11 @@
 
 import UIKit
 
-class HomeViewController: UIViewController{
+class HomeViewController: UIViewController {
 
   @IBOutlet weak var headingLabel: UILabel!
+  @IBOutlet weak var fallingTitleLabel: UILabel!
+  @IBOutlet weak var risingTitleLabel: UILabel!
   @IBOutlet weak var themeSwitch: UISwitch!
   
   @IBOutlet var widgetViews: [CryptoWidgetView]!
@@ -55,6 +57,8 @@ class HomeViewController: UIViewController{
     setView1Data()
     setView2Data()
     setView3Data()
+    setFallingView()
+    setRisingView()
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -69,6 +73,9 @@ class HomeViewController: UIViewController{
   
   func setupLabels() {
     headingLabel.font = UIFont.systemFont(ofSize: 20, weight: .medium)
+    fallingTitleLabel.font = UIFont.systemFont(ofSize: 18, weight: .medium)
+    risingTitleLabel.font = UIFont.systemFont(ofSize: 18, weight: .medium)
+
     widgetViewTextLabels.forEach { $0.font = UIFont.systemFont(ofSize: 18, weight: .regular) }
   }
   
@@ -80,14 +87,28 @@ class HomeViewController: UIViewController{
   
   func setView2Data() {
     guard let cryptoData = cryptoData else { return }
-    let increasingCurrencyNames = cryptoData.filter { $0.currentValue > $0.previousValue }.reduce("", commaConcatCryptoNames)
+//    let increasingCurrencyNames = cryptoData.filter { $0.currentValue > $0.previousValue }.reduce("", commaConcatCryptoNames)
+    let increasingCurrencyNames = cryptoData.filter { $0.trend == .rising }.reduce("", commaConcatCryptoNames)
     widgetViewTextLabels[1].text = increasingCurrencyNames
   }
   
   func setView3Data() {
     guard let cryptoData = cryptoData else { return }
-    let decreasingCurrencyNames = cryptoData.filter { $0.currentValue < $0.previousValue }.reduce("", commaConcatCryptoNames)
+//    let decreasingCurrencyNames = cryptoData.filter { $0.currentValue < $0.previousValue }.reduce("", commaConcatCryptoNames)
+    let decreasingCurrencyNames = cryptoData.filter { $0.trend == .falling }.reduce("", commaConcatCryptoNames)
     widgetViewTextLabels[2].text = decreasingCurrencyNames
+  }
+  
+  func setFallingView(){
+    guard let cryptoData = cryptoData else { return }
+    let mostFalling = cryptoData.min { $0.difference < $1.difference }
+    widgetViewTextLabels[3].text = "\(mostFalling!.name): \(mostFalling!.difference)"
+  }
+  
+  func setRisingView(){
+    guard let cryptoData = cryptoData else { return }
+    let mostRising = cryptoData.max { $0.difference < $1.difference }
+    widgetViewTextLabels[4].text = "\(mostRising!.name): \(mostRising!.difference)"
   }
   
   @IBAction func switchPressed(_ sender: Any) {
@@ -107,7 +128,6 @@ extension HomeViewController: Themeable {
   @objc func themeChanged() {
     guard let theme = ThemeManager.shared.currentTheme else { return }
     
-    
     widgetViews.forEach { $0.backgroundColor = theme.widgetColor }
     widgetViews.forEach { $0.layer.borderColor = theme.borderColor.cgColor }
     
@@ -115,6 +135,8 @@ extension HomeViewController: Themeable {
     
     self.view.backgroundColor = theme.backgroundColor
     
+    let headings = [headingLabel, risingTitleLabel, fallingTitleLabel]
+    headings.forEach { $0?.textColor = theme.textColor }
     headingLabel.textColor = theme.textColor
   }
   

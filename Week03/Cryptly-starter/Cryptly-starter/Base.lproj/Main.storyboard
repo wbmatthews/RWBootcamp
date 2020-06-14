@@ -102,13 +102,13 @@
                                     <view contentMode="scaleToFill" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="buT-xr-TZx" userLabel="Fall View" customClass="CryptoWidgetView" customModule="Cryptly_starter" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="177" height="120"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Most Falling" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l9m-SL-cZB">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Most Falling" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l9m-SL-cZB" userLabel="Most Falling title">
                                                 <rect key="frame" x="42.666666666666664" y="28" width="91.666666666666686" height="20.333333333333329"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9f4-QA-D8m">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9f4-QA-D8m" userLabel="Fall Label">
                                                 <rect key="frame" x="67.666666666666671" y="71.666666666666629" width="41.666666666666671" height="20.333333333333329"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
@@ -126,13 +126,13 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PN0-qR-xjB" userLabel="Rise View" customClass="CryptoWidgetView" customModule="Cryptly_starter" customModuleProvider="target">
                                         <rect key="frame" x="197" y="0.0" width="177" height="120"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Most Rising" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g2h-3G-Q1m">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Most Rising" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g2h-3G-Q1m" userLabel="Most Rising title">
                                                 <rect key="frame" x="43.999999999999993" y="28" width="89.333333333333314" height="20.333333333333329"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OIb-DO-FMX">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OIb-DO-FMX" userLabel="Rise Label">
                                                 <rect key="frame" x="67.666666666666686" y="71.666666666666629" width="41.666666666666657" height="20.333333333333329"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
@@ -189,7 +189,9 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="fallingTitleLabel" destination="l9m-SL-cZB" id="0aa-kp-zPC"/>
                         <outlet property="headingLabel" destination="zrp-g0-HX2" id="CEx-vX-zmI"/>
+                        <outlet property="risingTitleLabel" destination="g2h-3G-Q1m" id="zZT-Ep-PjR"/>
                         <outlet property="themeSwitch" destination="kW6-Ms-UCP" id="Vpv-W6-XtS"/>
                         <outletCollection property="widgetViews" destination="4oo-MW-3FZ" collectionClass="NSMutableArray" id="w4k-uY-dGI"/>
                         <outletCollection property="widgetViews" destination="DpI-h7-D97" collectionClass="NSMutableArray" id="t0W-ON-Zly"/>
@@ -197,6 +199,10 @@
                         <outletCollection property="widgetViewTextLabels" destination="2pP-O3-GIK" collectionClass="NSMutableArray" id="s7G-bD-Myb"/>
                         <outletCollection property="widgetViewTextLabels" destination="tPy-T8-YB9" collectionClass="NSMutableArray" id="X3Q-iw-eD5"/>
                         <outletCollection property="widgetViewTextLabels" destination="UCh-Bb-EWS" collectionClass="NSMutableArray" id="0Cc-CT-9vm"/>
+                        <outletCollection property="widgetViewTextLabels" destination="9f4-QA-D8m" collectionClass="NSMutableArray" id="46J-0i-5SB"/>
+                        <outletCollection property="widgetViewTextLabels" destination="OIb-DO-FMX" collectionClass="NSMutableArray" id="THC-bA-E5C"/>
+                        <outletCollection property="widgetViews" destination="buT-xr-TZx" collectionClass="NSMutableArray" id="erv-gw-Cik"/>
+                        <outletCollection property="widgetViews" destination="PN0-qR-xjB" collectionClass="NSMutableArray" id="kA1-o8-u1t"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="szC-q4-zjU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

@@ -32,7 +32,28 @@
 
 import UIKit
 
+protocol Roundable: UIView {
+  var cornerRadius: CGFloat { get }
+  func round()
+}
+
+extension Roundable {
+  var cornerRadius: CGFloat {
+    if let _ = self as? CryptoWidgetView {
+      return 10.0
+    } else {
+      return 0
+    }
+  }
+  
+  func round() {
+    layer.cornerRadius = cornerRadius
+  }
+
+}
+
 class CryptoWidgetView: UIView {
+  
     
   required init?(coder: NSCoder) {
     super.init(coder: coder)
@@ -47,6 +68,9 @@ class CryptoWidgetView: UIView {
     layer.shadowOffset = CGSize(width: 0, height: 2)
     layer.shadowRadius = 4
     layer.shadowOpacity = 0.8
+    round()
   }
-  
 }
+
+extension CryptoWidgetView: Roundable { }
+extension UILabel: Roundable { }

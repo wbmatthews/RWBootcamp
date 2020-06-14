@@ -48,7 +48,4 @@ struct CryptoCurrency: Codable {
   var trend: Trend {
     difference > 0 ? .rising : .falling
   }
-  var percentageRise: Float {
-    return Float(difference / previousValue) * 100
-  }
 }
