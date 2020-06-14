@@ -34,12 +34,6 @@ import UIKit
 
 class HomeViewController: UIViewController{
 
-//  @IBOutlet weak var view1: UIView!
-//  @IBOutlet weak var view2: UIView!
-//  @IBOutlet weak var view3: UIView!
-//  @IBOutlet weak var view1TextLabel: UILabel!
-//  @IBOutlet weak var view2TextLabel: UILabel!
-//  @IBOutlet weak var view3TextLabel: UILabel!
   @IBOutlet weak var headingLabel: UILabel!
   @IBOutlet weak var themeSwitch: UISwitch!
   
@@ -57,7 +51,7 @@ class HomeViewController: UIViewController{
     
   override func viewDidLoad() {
     super.viewDidLoad()
-    
+
     setupLabels()
     setView1Data()
     setView2Data()
@@ -76,9 +70,7 @@ class HomeViewController: UIViewController{
   
   func setupLabels() {
     headingLabel.font = UIFont.systemFont(ofSize: 20, weight: .medium)
-    _ = widgetViewTextLabels.map { $0.font = UIFont.systemFont(ofSize: 18, weight: .regular) }
-//    view1TextLabel.font = UIFont.systemFont(ofSize: 18, weight: .regular)
-//    view2TextLabel.font = UIFont.systemFont(ofSize: 18, weight: .regular)
+    widgetViewTextLabels.forEach { $0.font = UIFont.systemFont(ofSize: 18, weight: .regular) }
   }
   
   func setView1Data() {
@@ -116,10 +108,10 @@ extension HomeViewController: Themeable {
   @objc func themeChanged() {
     guard let theme = ThemeManager.shared.currentTheme else { return }
     
-    _ = widgetViews.map { $0.backgroundColor = theme.widgetColor }
-    _ = widgetViews.map { $0.layer.borderColor = theme.borderColor.cgColor }
+    widgetViews.forEach { $0.backgroundColor = theme.widgetColor }
+    widgetViews.forEach { $0.layer.borderColor = theme.borderColor.cgColor }
     
-    _ = widgetViewTextLabels.map { $0.textColor = theme.textColor }
+    widgetViewTextLabels.forEach { $0.textColor = theme.textColor }
     self.view.backgroundColor = theme.backgroundColor
     
     headingLabel.textColor = theme.textColor
