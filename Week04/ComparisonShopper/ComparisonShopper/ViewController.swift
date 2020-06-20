@@ -29,7 +29,6 @@ class ViewController: UIViewController {
         super.viewDidLoad()
       
       house1 = House(address: "123 Abc St.", price: "$12,000", bedrooms: "3 Bedrooms")
-      house2 = House()
       
         setUpLeftSideUI()
         setUpRightSideUI()
@@ -39,9 +38,23 @@ class ViewController: UIViewController {
     }
 
     func setUpLeftSideUI() {
-        titleLabelLeft.text = house1!.address!
-        priceLabelLeft.text = house1!.price!
-        roomLabelLeft.text = house1!.bedrooms!
+      if let house = house1 {
+        if let address = house.address {
+          titleLabelLeft.text = address
+        } else {
+          titleLabelLeft.text = "Unlisted address"
+        }
+        if let price = house.price {
+          priceLabelLeft.text = price
+        } else {
+          priceLabelLeft.text = "Call for price"
+        }
+        if let bedrooms = house.bedrooms{
+          roomLabelLeft.text = bedrooms
+        } else {
+          roomLabelLeft.text = "Unspecified # of bedrooms"
+        }
+      }
     }
 
     func setUpRightSideUI() {
@@ -51,6 +64,10 @@ class ViewController: UIViewController {
             priceLabelRight.alpha = 0
             roomLabelRight.alpha = 0
         } else {
+          titleLabelRight.alpha = 1
+             imageViewRight.alpha = 1
+             priceLabelRight.alpha = 1
+             roomLabelRight.alpha = 1
             titleLabelRight.text! = house2!.address!
             priceLabelRight.text! = house2!.price!
             roomLabelRight.text! = house2!.bedrooms!
