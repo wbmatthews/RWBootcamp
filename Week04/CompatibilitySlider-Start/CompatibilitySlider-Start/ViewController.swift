@@ -24,7 +24,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
       super.viewDidLoad()
       currentPerson = person1
-      
+      updateUI()
     }
 
     @IBAction func sliderValueChanged(_ sender: UISlider) {
@@ -32,7 +32,41 @@ class ViewController: UIViewController {
     }
 
     @IBAction func didPressNextItemButton(_ sender: Any) {
-      
+      currentPerson?.items[compatibilityItems[currentItemIndex]] = slider.value
+      currentItemIndex += 1
+      if currentItemIndex < compatibilityItems.count {
+        updateUI()
+      } else {
+        let alert: UIAlertController
+        if currentPerson == person1 {
+          
+          alert = UIAlertController(title: "All done!", message: "Thanks for your answers. Please pass the device to your potential soul mate so they can answer.", preferredStyle: .alert)
+          let action = UIAlertAction(title: "OK", style: .default) { alert in
+            self.currentPerson = self.person2
+            self.currentItemIndex = 0
+            self.updateUI()
+          }
+          alert.addAction(action)
+          
+        } else {
+          let compatibilityScore = calculateCompatibility()
+          print(compatibilityScore)
+          
+          alert = UIAlertController(title: "Results", message: "You two are \(compatibilityScore) compatible.", preferredStyle: .alert)
+          let action = UIAlertAction(title: "OK", style: .default) { alert in
+                      
+            self.person1 = Person(id: 1, items: [:])
+            self.person2 = Person(id: 2, items: [:])
+            self.currentPerson = self.person1
+            self.currentItemIndex = 0
+            self.updateUI()
+            
+          }
+          alert.addAction(action)
+        }
+        
+        present(alert, animated: true, completion: nil)
+      }
     }
   
   func updateUI() {
