@@ -22,7 +22,9 @@ class ViewController: UIViewController {
     var currentPerson: Person?
 
     override func viewDidLoad() {
-        super.viewDidLoad()
+      super.viewDidLoad()
+      currentPerson = person1
+      
     }
 
     @IBAction func sliderValueChanged(_ sender: UISlider) {
@@ -30,7 +32,15 @@ class ViewController: UIViewController {
     }
 
     @IBAction func didPressNextItemButton(_ sender: Any) {
+      
     }
+  
+  func updateUI() {
+    guard let currentPerson = currentPerson else { return }
+    questionLabel.text = "User \(String(currentPerson.id)), what do you think about..."
+    compatibilityItemLabel.text = compatibilityItems[currentItemIndex]
+    slider.value = 3
+  }
 
     func calculateCompatibility() -> String {
         // If diff 0.0 is 100% and 5.0 is 0%, calculate match percentage
