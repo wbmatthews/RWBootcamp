@@ -14,7 +14,20 @@ class ViewController: UIViewController {
     @IBOutlet weak var slider: UISlider!
     @IBOutlet weak var questionLabel: UILabel!
 
-    var compatibilityItems = ["Cats", "Dogs"] // Add more!
+  var compatibilityItems = [
+    "Cats",
+    "Dogs",
+    "Travel",
+    "Spicy Food",
+    "Sci-Fi",
+    "Rom-Coms",
+    "Sports",
+    "Spirituality",
+    "Physical Fitness",
+    "Hot weather",
+    "Snow",
+    "Politics"
+  ]
     var currentItemIndex = 0
 
     var person1 = Person(id: 1, items: [:])
@@ -30,7 +43,13 @@ class ViewController: UIViewController {
     @IBAction func sliderValueChanged(_ sender: UISlider) {
         print(sender.value)
     }
-
+  
+  @IBAction func didTapIcon(_ sender: UITapGestureRecognizer) {
+    if let value = sender.view?.tag {
+      slider.value = Float(value)
+    }
+  }
+  
     @IBAction func didPressNextItemButton(_ sender: Any) {
       currentPerson?.items[compatibilityItems[currentItemIndex]] = slider.value
       currentItemIndex += 1
