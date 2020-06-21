@@ -59,15 +59,14 @@
                                     <constraint firstItem="CHL-cB-N1q" firstAttribute="width" secondItem="Qva-iw-efA" secondAttribute="width" multiplier="0.85" id="8kq-ih-Yph"/>
                                 </constraints>
                             </stackView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="How do you feel about..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="vPk-A6-VfC">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="How do you feel about..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vPk-A6-VfC">
                                 <rect key="frame" x="355" y="20" width="186" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="7bA-Qb-iSa" userLabel="Item label stack">
-                                <rect key="frame" x="360" y="61" width="176.5" height="40"/>
+                                <rect key="frame" x="360" y="60.5" width="176.5" height="40"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="252" verticalHuggingPriority="251" image="star" translatesAutoresizingMaskIntoConstraints="NO" id="Q30-xt-i6I">
                                         <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
@@ -107,12 +106,12 @@
                             <constraint firstItem="Qva-iw-efA" firstAttribute="width" secondItem="6Tk-OE-BBY" secondAttribute="width" multiplier="0.95" id="2Ma-K0-Rdu"/>
                             <constraint firstItem="d1w-P6-8nd" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="7xe-Tb-7bd"/>
                             <constraint firstItem="vPk-A6-VfC" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Doz-CC-Yay"/>
-                            <constraint firstItem="vPk-A6-VfC" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="FK1-PW-bwF"/>
                             <constraint firstItem="7bA-Qb-iSa" firstAttribute="top" secondItem="vPk-A6-VfC" secondAttribute="bottom" constant="20" id="PRo-jC-qGy"/>
                             <constraint firstItem="ocK-9U-YL9" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="PbS-8z-yto"/>
                             <constraint firstItem="7bA-Qb-iSa" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="aQz-gW-95E"/>
                             <constraint firstItem="vPk-A6-VfC" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="c2q-Ac-hO6"/>
                             <constraint firstAttribute="bottomMargin" secondItem="d1w-P6-8nd" secondAttribute="bottom" constant="24" id="i58-nX-Qvx"/>
+                            <constraint firstItem="vPk-A6-VfC" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="qdz-Cd-dV7"/>
                             <constraint firstItem="ocK-9U-YL9" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="yyS-o3-wkP"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
