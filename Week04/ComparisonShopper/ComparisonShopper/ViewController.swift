@@ -9,6 +9,12 @@
 import UIKit
 
 class ViewController: UIViewController {
+  
+  enum MissingHouseAttributeMessage: String {
+    case noAddress = "Unlisted address"
+    case noPrice = "Call for price"
+    case noRooms = "Bedrooms not listed"
+  }
 
     // Left
     @IBOutlet weak var titleLabelLeft: UILabel!
@@ -28,7 +34,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
       
-      house1 = House(address: "123 Abc St.", price: "$12,000", bedrooms: "3 Bedrooms")
+      house1 = House(address: "123 Abc St.", price: "$12,000", bedrooms: "3 bedrooms")
       
         setUpLeftSideUI()
         setUpRightSideUI()
@@ -38,41 +44,44 @@ class ViewController: UIViewController {
     }
 
     func setUpLeftSideUI() {
-      if let house = house1 {
-        if let address = house.address {
-          titleLabelLeft.text = address
-        } else {
-          titleLabelLeft.text = "Unlisted address"
-        }
-        if let price = house.price {
-          priceLabelLeft.text = price
-        } else {
-          priceLabelLeft.text = "Call for price"
-        }
-        if let bedrooms = house.bedrooms{
-          roomLabelLeft.text = bedrooms
-        } else {
-          roomLabelLeft.text = "Unspecified # of bedrooms"
-        }
-      }
-    }
+      guard let house = house1 else { return }
+      titleLabelLeft.text = house.address ?? MissingHouseAttributeMessage.noAddress.rawValue
+      priceLabelLeft.text = house.price ?? MissingHouseAttributeMessage.noPrice.rawValue
+      roomLabelLeft.text = house.bedrooms ?? MissingHouseAttributeMessage.noRooms.rawValue
+  }
 
     func setUpRightSideUI() {
-        if house2 == nil {
-            titleLabelRight.alpha = 0
-            imageViewRight.alpha = 0
-            priceLabelRight.alpha = 0
-            roomLabelRight.alpha = 0
-        } else {
-          titleLabelRight.alpha = 1
-             imageViewRight.alpha = 1
-             priceLabelRight.alpha = 1
-             roomLabelRight.alpha = 1
-            titleLabelRight.text! = house2!.address!
-            priceLabelRight.text! = house2!.price!
-            roomLabelRight.text! = house2!.bedrooms!
-        }
+      guard let house = house2 else {
+        toggleRightSideUI(isHidden: true)
+        return
+      }
+      toggleRightSideUI(isHidden: false)
+      if let address = house.address {
+        titleLabelRight.text = (address != "" ? address : MissingHouseAttributeMessage.noAddress.rawValue)
+      } else {
+        titleLabelRight.text = MissingHouseAttributeMessage.noAddress.rawValue
+      }
+      
+      if let price = house.price {
+        priceLabelRight.text = (price != "" ? price : MissingHouseAttributeMessage.noPrice.rawValue)
+      } else {
+        priceLabelRight.text = MissingHouseAttributeMessage.noPrice.rawValue
+      }
+      
+      if let rooms = house.bedrooms {
+        roomLabelRight.text = (rooms != "" ? rooms : MissingHouseAttributeMessage.noRooms.rawValue)
+      } else {
+        roomLabelRight.text = MissingHouseAttributeMessage.noRooms.rawValue
+      }
+      
     }
+  
+  func toggleRightSideUI(isHidden: Bool) {
+    titleLabelRight.isHidden = isHidden
+    imageViewRight.isHidden = isHidden
+    priceLabelRight.isHidden = isHidden
+    roomLabelRight.isHidden = isHidden
+  }
 
     @IBAction func didPressAddRightHouseButton(_ sender: Any) {
         openAlertView()
