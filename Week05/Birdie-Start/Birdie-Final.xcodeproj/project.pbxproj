@@ -9,8 +9,8 @@
 /* Begin PBXBuildFile section */
 		6993015124A67C0E00C34604 /* TextPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6993014F24A67C0E00C34604 /* TextPostCell.swift */; };
 		6993015224A67C0E00C34604 /* TextPostCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6993015024A67C0E00C34604 /* TextPostCell.xib */; };
-		6993015424A67DEE00C34604 /* ImagePostCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6993015324A67DEE00C34604 /* ImagePostCell.xib */; };
 		6993015624A67E0100C34604 /* ImagePostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6993015524A67E0100C34604 /* ImagePostCell.swift */; };
+		6993015A24A8EAFA00C34604 /* ImagePostCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6993015924A8EAFA00C34604 /* ImagePostCell.xib */; };
 		C3C9D35E249B324B001F55A6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C9D35D249B324B001F55A6 /* AppDelegate.swift */; };
 		C3C9D360249B324B001F55A6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C9D35F249B324B001F55A6 /* SceneDelegate.swift */; };
 		C3C9D362249B324B001F55A6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C9D361249B324B001F55A6 /* ViewController.swift */; };
@@ -46,8 +46,8 @@
 /* Begin PBXFileReference section */
 		6993014F24A67C0E00C34604 /* TextPostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextPostCell.swift; sourceTree = "<group>"; };
 		6993015024A67C0E00C34604 /* TextPostCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextPostCell.xib; sourceTree = "<group>"; };
-		6993015324A67DEE00C34604 /* ImagePostCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImagePostCell.xib; sourceTree = "<group>"; };
 		6993015524A67E0100C34604 /* ImagePostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePostCell.swift; sourceTree = "<group>"; };
+		6993015924A8EAFA00C34604 /* ImagePostCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImagePostCell.xib; sourceTree = "<group>"; };
 		C3C9D35A249B324B001F55A6 /* Birdie-Final.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Birdie-Final.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3C9D35D249B324B001F55A6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C3C9D35F249B324B001F55A6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -164,7 +164,7 @@
 				6993014F24A67C0E00C34604 /* TextPostCell.swift */,
 				6993015524A67E0100C34604 /* ImagePostCell.swift */,
 				6993015024A67C0E00C34604 /* TextPostCell.xib */,
-				6993015324A67DEE00C34604 /* ImagePostCell.xib */,
+				6993015924A8EAFA00C34604 /* ImagePostCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -300,7 +300,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6993015224A67C0E00C34604 /* TextPostCell.xib in Resources */,
-				6993015424A67DEE00C34604 /* ImagePostCell.xib in Resources */,
+				6993015A24A8EAFA00C34604 /* ImagePostCell.xib in Resources */,
 				C3C9D36D249B324C001F55A6 /* LaunchScreen.storyboard in Resources */,
 				C3C9D36A249B324C001F55A6 /* Assets.xcassets in Resources */,
 				C3C9D365249B324B001F55A6 /* Main.storyboard in Resources */,
