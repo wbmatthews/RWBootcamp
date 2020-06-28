@@ -63,6 +63,7 @@ class ViewController: UIViewController {
       if let textFields = newPostEntry.textFields, let userName = textFields[0].text, let postBody = textFields[1].text {
         if let image = self.imageForPost {
           MediaPostsHandler.shared.addImagePost(imagePost: ImagePost(textBody: postBody, userName: userName, timestamp: Date(), image: image))
+          self.imageForPost = nil
         } else {
           MediaPostsHandler.shared.addTextPost(textPost: TextPost(textBody: postBody, userName: userName, timestamp: Date()))
         }
@@ -120,6 +121,7 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
       imageForPost = image
     }
     dismiss(animated: true, completion: nil)
+    createNewPost()
   }
 }
 
