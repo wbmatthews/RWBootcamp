@@ -14,4 +14,8 @@ class TextPostCell: UITableViewCell {
   @IBOutlet weak var timestampLabel: UILabel!
   @IBOutlet weak var textBodyLabel: UILabel!
   
+  override func awakeFromNib() {
+    super.awakeFromNib()
+  }
+  
 }

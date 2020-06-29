@@ -11,11 +11,13 @@ import UIKit
 class ViewController: UIViewController {
   
   @IBOutlet weak var tableview: UITableView!
-  var imageForPost: UIImage?
+  
+  let mediaPostViewModel = MediaPostViewModel()
+  var imageSelectedFromPicker: UIImage?
+  
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    MediaPostsHandler.shared.getPosts()
     setUpTableView()
   }
   
@@ -28,6 +30,8 @@ class ViewController: UIViewController {
     
     tableview.register(textPostCell, forCellReuseIdentifier: "textPostCell")
     tableview.register(imagePostCell, forCellReuseIdentifier: "imagePostCell")
+    
+    MediaPostsHandler.shared.getPosts()
     
   }
   
@@ -48,7 +52,7 @@ class ViewController: UIViewController {
   
   func createNewPost() {
 
-    let newPostEntry = UIAlertController(title: imageForPost == nil ? "New Text Post" : "New Image Post", message: nil, preferredStyle: .alert)
+    let newPostEntry = UIAlertController(title: imageSelectedFromPicker == nil ? "New Text Post" : "New Image Post", message: nil, preferredStyle: .alert)
     
     newPostEntry.addTextField { (userNameField) in
       userNameField.placeholder = "User name"
@@ -61,9 +65,9 @@ class ViewController: UIViewController {
     let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
     let postAction = UIAlertAction(title: "Post", style: .default) { (alert) in
       if let textFields = newPostEntry.textFields, let userName = textFields[0].text, let postBody = textFields[1].text {
-        if let image = self.imageForPost {
+        if let image = self.imageSelectedFromPicker {
           MediaPostsHandler.shared.addImagePost(imagePost: ImagePost(textBody: postBody, userName: userName, timestamp: Date(), image: image))
-          self.imageForPost = nil
+          self.imageSelectedFromPicker = nil
         } else {
           MediaPostsHandler.shared.addTextPost(textPost: TextPost(textBody: postBody, userName: userName, timestamp: Date()))
         }
@@ -80,45 +84,19 @@ class ViewController: UIViewController {
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    MediaPostsHandler.shared.mediaPosts.count
+    mediaPostViewModel.numberOfCells
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    
     let post = MediaPostsHandler.shared.mediaPosts[indexPath.row]
-    
-    if post is TextPost {
-      guard let cell = tableView.dequeueReusableCell(withIdentifier: "textPostCell", for: indexPath) as? TextPostCell else { return UITableViewCell() }
-      cell.userNameLabel.text = post.userName
-      cell.timestampLabel.text = formatDate(post.timestamp)
-      cell.textBodyLabel.text = post.textBody
-      return cell
-    } else if post is ImagePost {
-      let imagePost = post as! ImagePost
-      guard let cell = tableView.dequeueReusableCell(withIdentifier: "imagePostCell", for: indexPath) as? ImagePostCell else { return UITableViewCell() }
-      cell.userNameLabel.text = imagePost.userName
-      cell.timestampLabel.text = formatDate(imagePost.timestamp)
-      cell.textBodyLabel.text = imagePost.textBody
-      cell.postImage.image = imagePost.image
-      return cell
-    } else {
-      return UITableViewCell()
-    }
-  }
-}
-
-extension ViewController {
-  func formatDate(_ date: Date) -> String {
-    let postDateFormatter = DateFormatter()
-    postDateFormatter.dateFormat = "MMM dd, yyyy HH:mm:ss"
-    return postDateFormatter.string(from: date)
+    return mediaPostViewModel.cellForPost(post, in: tableView)
   }
 }
 
 extension ViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
   func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
     if let image = info[.originalImage] as? UIImage {
-      imageForPost = image
+      imageSelectedFromPicker = image
     }
     dismiss(animated: true, completion: nil)
     createNewPost()

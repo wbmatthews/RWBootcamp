@@ -11,6 +11,7 @@
 		6993015224A67C0E00C34604 /* TextPostCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6993015024A67C0E00C34604 /* TextPostCell.xib */; };
 		6993015624A67E0100C34604 /* ImagePostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6993015524A67E0100C34604 /* ImagePostCell.swift */; };
 		6993015A24A8EAFA00C34604 /* ImagePostCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6993015924A8EAFA00C34604 /* ImagePostCell.xib */; };
+		6993015C24AA191800C34604 /* MediaPostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6993015B24AA191800C34604 /* MediaPostViewModel.swift */; };
 		C3C9D35E249B324B001F55A6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C9D35D249B324B001F55A6 /* AppDelegate.swift */; };
 		C3C9D360249B324B001F55A6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C9D35F249B324B001F55A6 /* SceneDelegate.swift */; };
 		C3C9D362249B324B001F55A6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C9D361249B324B001F55A6 /* ViewController.swift */; };
@@ -48,6 +49,7 @@
 		6993015024A67C0E00C34604 /* TextPostCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextPostCell.xib; sourceTree = "<group>"; };
 		6993015524A67E0100C34604 /* ImagePostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePostCell.swift; sourceTree = "<group>"; };
 		6993015924A8EAFA00C34604 /* ImagePostCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImagePostCell.xib; sourceTree = "<group>"; };
+		6993015B24AA191800C34604 /* MediaPostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPostViewModel.swift; sourceTree = "<group>"; };
 		C3C9D35A249B324B001F55A6 /* Birdie-Final.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Birdie-Final.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3C9D35D249B324B001F55A6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C3C9D35F249B324B001F55A6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -191,6 +193,7 @@
 		C3C9D39E249B3C30001F55A6 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				6993015B24AA191800C34604 /* MediaPostViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -329,6 +332,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C3C9D393249B3448001F55A6 /* TextPostModel.swift in Sources */,
+				6993015C24AA191800C34604 /* MediaPostViewModel.swift in Sources */,
 				C3C9D395249B3453001F55A6 /* ImagePostModel.swift in Sources */,
 				C3C9D362249B324B001F55A6 /* ViewController.swift in Sources */,
 				6993015124A67C0E00C34604 /* TextPostCell.swift in Sources */,

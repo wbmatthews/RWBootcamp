@@ -14,6 +14,8 @@ class ImagePostCell: UITableViewCell {
   @IBOutlet weak var timestampLabel: UILabel!
   @IBOutlet weak var textBodyLabel: UILabel!
   @IBOutlet weak var postImage: UIImageView!
-
-    
+  
+  override func awakeFromNib() {
+    super.awakeFromNib()
+  }
 }
