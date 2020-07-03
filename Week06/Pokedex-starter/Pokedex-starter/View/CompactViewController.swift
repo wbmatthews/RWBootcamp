@@ -34,10 +34,36 @@ import UIKit
 
 class CompactViewController: UIViewController {
 
-    override func viewDidLoad() {
+  @IBOutlet weak var collectionView: UICollectionView!
+  
+  var dataSource: UICollectionViewDiffableDataSource<Section, Int>!
+  
+  enum Section {
+    case main
+  }
+  
+  override func viewDidLoad() {
         super.viewDidLoad()
+    collectionView.collectionViewLayout = configureLayout()
+    configureDataSource()
 
-        // Do any additional setup after loading the view.
     }
-
+  
+  func configureLayout() -> UICollectionViewCompositionalLayout {
+    let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.333), heightDimension: .fractionalHeight(1.0))
+    let item = NSCollectionLayoutItem(layoutSize: itemSize)
+    item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 4)
+    
+    let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.333))
+    let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+    group.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4)
+    
+    let section = NSCollectionLayoutSection(group: group)
+    section.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0)
+    
+    return UICollectionViewCompositionalLayout(section: section)
+  }
+  func configureDataSource() {
+    
+  }
 }

@@ -32,33 +32,12 @@
 
 import Foundation
 
-class PokemonGenerator {
+struct Pokemon {
   
-  public static let shared = PokemonGenerator()
-  
-  private init () { }
-  
-  func generatePokemons() -> [Pokemon] {
-    var pokemons: [Pokemon] = []
-    let path = Bundle.main.path(forResource: "pokemon", ofType: "csv")
-    do {
-      let csv = try CSV(contentsOfURL: path ?? "")
-      let rows = csv.rows
-      for row in rows {
-        let pokeID = Int(row["id"] ?? "") ?? 0
-        let name = row["identifier"] ?? ""
-        let weight = Int(row["weight"] ?? "") ?? 0
-        let height = Int(row["height"] ?? "") ?? 0
-        let baseExp = Int(row["base_experience"] ?? "") ?? 0
-        
-        let pokemon = Pokemon(pokemonId: pokeID, pokemonName: name.capitalized, baseExperience: baseExp, weight: height, height: weight)
-        
-        pokemons.append(pokemon)
-      }
-      return pokemons
-    } catch let error {
-      print("\(error.localizedDescription)")
-    }
-    return pokemons
-  }
+  let pokemonId: Int
+  let pokemonName: String
+  let baseExperience: Int
+  let weight: Int
+  let height: Int
 }
+

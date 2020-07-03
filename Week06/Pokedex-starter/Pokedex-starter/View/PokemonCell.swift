@@ -30,8 +30,12 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import Foundation
+import UIKit
 
-struct Pokemon {
+class PokemonCell: UICollectionViewCell {
+  static let reuseIdentifier = String(describing: PokemonCell.self)
+  
+  @IBOutlet weak var nameLabel: UILabel!
+  @IBOutlet weak var image: UIImageView!
+  
 }
-
