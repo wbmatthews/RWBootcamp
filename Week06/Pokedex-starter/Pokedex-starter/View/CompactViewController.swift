@@ -36,7 +36,8 @@ class CompactViewController: UIViewController {
 
   @IBOutlet weak var collectionView: UICollectionView!
   
-  var dataSource: UICollectionViewDiffableDataSource<Section, Int>!
+  var dataSource: UICollectionViewDiffableDataSource<Section, Pokemon>!
+  let pokemons = PokemonGenerator.shared.generatePokemons()
   
   enum Section {
     case main
@@ -63,7 +64,20 @@ class CompactViewController: UIViewController {
     
     return UICollectionViewCompositionalLayout(section: section)
   }
+  
   func configureDataSource() {
-    
+    dataSource = UICollectionViewDiffableDataSource<Section, Pokemon>(collectionView: collectionView) { (collectionView, indexPath, pokemon) -> UICollectionViewCell? in
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PokemonCell.reuseIdentifier, for: indexPath) as? PokemonCell else {
+        fatalError("Unable to create PokemonCell")
+      }
+      cell.nameLabel.text = pokemon.pokemonName
+      cell.image.image = UIImage(named: String(pokemon.pokemonId))
+      return cell
+    }
+
+    var initialSnapshot = NSDiffableDataSourceSnapshot<Section, Pokemon>()
+    initialSnapshot.appendSections([.main])
+    initialSnapshot.appendItems(pokemons)
+    dataSource.apply(initialSnapshot, animatingDifferences: false)
   }
 }
