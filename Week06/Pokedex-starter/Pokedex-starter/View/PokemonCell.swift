@@ -38,4 +38,7 @@ class PokemonCell: UICollectionViewCell {
   @IBOutlet weak var nameLabel: UILabel!
   @IBOutlet weak var image: UIImageView!
   
+  override func layoutSubviews() {
+    self.layer.cornerRadius = (self.layer.bounds.size.width / 20)
+  }
 }
