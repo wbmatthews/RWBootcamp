@@ -16,7 +16,7 @@
         <!--Large View-->
         <scene sceneID="FtT-Ec-vGh">
             <objects>
-                <viewController id="fFy-LO-UBa" sceneMemberID="viewController">
+                <viewController id="fFy-LO-UBa" customClass="LargeViewController" customModule="Pokedex_starter" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Hu4-Pu-s6W">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -25,7 +25,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pokemon" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DQE-QV-E86">
-                                        <rect key="frame" x="145" y="16.5" width="85.5" height="23.5"/>
+                                        <rect key="frame" x="147" y="14" width="81" height="28"/>
                                         <fontDescription key="fontDescription" name="PokemonSolidNormal" family="Pokemon Solid" pointSize="20"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -41,24 +41,165 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg" translatesAutoresizingMaskIntoConstraints="NO" id="R2U-eA-Prs">
                                 <rect key="frame" x="0.0" y="56" width="375" height="562"/>
                             </imageView>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ppk-cT-8cM">
+                                <rect key="frame" x="0.0" y="86.5" width="375" height="494"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewLayout key="collectionViewLayout" id="hwe-cE-nfC"/>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" reuseIdentifier="PokemonCardCell" id="dzy-zh-yCk" customClass="PokemonCardCell" customModule="Pokedex_starter" customModuleProvider="target">
+                                        <rect key="frame" x="51" y="0.0" width="273" height="492"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="tjd-SU-YbU">
+                                            <rect key="frame" x="0.0" y="0.0" width="273" height="492"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="3Jh-fQ-aPP">
+                                                    <rect key="frame" x="0.0" y="0.0" width="273" height="492"/>
+                                                    <subviews>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="103" translatesAutoresizingMaskIntoConstraints="NO" id="0fV-SG-jBl">
+                                                            <rect key="frame" x="0.0" y="0.0" width="273" height="197"/>
+                                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </imageView>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XVd-KN-2IZ" userLabel="Label stack">
+                                                            <rect key="frame" x="0.0" y="197" width="273" height="295"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="255" verticalHuggingPriority="252" verticalCompressionResistancePriority="250" text="PokemonName" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="iDT-dN-RHx">
+                                                                    <rect key="frame" x="0.0" y="8" width="273" height="70"/>
+                                                                    <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="24"/>
+                                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                    <variation key="heightClass=compact">
+                                                                        <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="18"/>
+                                                                    </variation>
+                                                                </label>
+                                                                <stackView opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BID-iO-BQ8">
+                                                                    <rect key="frame" x="0.0" y="53.5" width="273" height="233.5"/>
+                                                                    <subviews>
+                                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rYi-Wy-PId" userLabel="Attribute names">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="106.5" height="233.5"/>
+                                                                            <subviews>
+                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Base Exp" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ouK-tM-fbE">
+                                                                                    <rect key="frame" x="16" y="0.0" width="90.5" height="93.5"/>
+                                                                                    <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="20"/>
+                                                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                    <nil key="highlightedColor"/>
+                                                                                    <variation key="heightClass=compact">
+                                                                                        <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="14"/>
+                                                                                    </variation>
+                                                                                </label>
+                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Height" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Muk-my-uLC">
+                                                                                    <rect key="frame" x="16" y="70" width="90.5" height="93.5"/>
+                                                                                    <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="20"/>
+                                                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                    <nil key="highlightedColor"/>
+                                                                                    <variation key="heightClass=compact">
+                                                                                        <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="14"/>
+                                                                                    </variation>
+                                                                                </label>
+                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weight" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jle-se-cIV">
+                                                                                    <rect key="frame" x="16" y="140" width="90.5" height="93.5"/>
+                                                                                    <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="20"/>
+                                                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                    <nil key="highlightedColor"/>
+                                                                                    <variation key="heightClass=compact">
+                                                                                        <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="14"/>
+                                                                                    </variation>
+                                                                                </label>
+                                                                            </subviews>
+                                                                            <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="16" bottom="0.0" trailing="0.0"/>
+                                                                        </stackView>
+                                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="v79-Mn-XLP" userLabel="Attribute values">
+                                                                            <rect key="frame" x="106.5" y="0.0" width="166.5" height="233.5"/>
+                                                                            <subviews>
+                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="999" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ls1-Bv-uIO">
+                                                                                    <rect key="frame" x="0.0" y="0.0" width="150.5" height="93.5"/>
+                                                                                    <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="20"/>
+                                                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                    <nil key="highlightedColor"/>
+                                                                                    <variation key="heightClass=compact">
+                                                                                        <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="14"/>
+                                                                                    </variation>
+                                                                                </label>
+                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="999" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="bfI-wm-cEb">
+                                                                                    <rect key="frame" x="0.0" y="70" width="150.5" height="93.5"/>
+                                                                                    <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="20"/>
+                                                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                    <nil key="highlightedColor"/>
+                                                                                    <variation key="heightClass=compact">
+                                                                                        <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="14"/>
+                                                                                    </variation>
+                                                                                </label>
+                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="999" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="MwY-nR-rF6">
+                                                                                    <rect key="frame" x="0.0" y="140" width="150.5" height="93.5"/>
+                                                                                    <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="20"/>
+                                                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                    <nil key="highlightedColor"/>
+                                                                                    <variation key="heightClass=compact">
+                                                                                        <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="14"/>
+                                                                                    </variation>
+                                                                                </label>
+                                                                            </subviews>
+                                                                            <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="0.0" bottom="0.0" trailing="16"/>
+                                                                        </stackView>
+                                                                    </subviews>
+                                                                </stackView>
+                                                            </subviews>
+                                                            <constraints>
+                                                                <constraint firstItem="iDT-dN-RHx" firstAttribute="height" secondItem="BID-iO-BQ8" secondAttribute="height" multiplier="0.3" id="A0m-8d-F8E"/>
+                                                            </constraints>
+                                                            <directionalEdgeInsets key="directionalLayoutMargins" top="8" leading="0.0" bottom="8" trailing="0.0"/>
+                                                        </stackView>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="0fV-SG-jBl" firstAttribute="height" secondItem="3Jh-fQ-aPP" secondAttribute="height" multiplier="0.4" id="1VS-14-6ZF"/>
+                                                    </constraints>
+                                                </stackView>
+                                            </subviews>
+                                            <color key="backgroundColor" red="0.92282801869999997" green="0.46792072060000001" blue="0.42350739240000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            <constraints>
+                                                <constraint firstItem="3Jh-fQ-aPP" firstAttribute="top" secondItem="tjd-SU-YbU" secondAttribute="top" id="GPi-Uu-VYF"/>
+                                                <constraint firstItem="3Jh-fQ-aPP" firstAttribute="leading" secondItem="tjd-SU-YbU" secondAttribute="leading" id="QPy-hc-Fcd"/>
+                                                <constraint firstAttribute="trailing" secondItem="3Jh-fQ-aPP" secondAttribute="trailing" id="lIj-Hj-7Ys"/>
+                                                <constraint firstAttribute="bottom" secondItem="3Jh-fQ-aPP" secondAttribute="bottom" id="q03-8Y-KKN"/>
+                                            </constraints>
+                                        </collectionViewCellContentView>
+                                        <size key="customSize" width="273" height="492"/>
+                                        <connections>
+                                            <outlet property="baseExpLabel" destination="ls1-Bv-uIO" id="v5H-4S-fo6"/>
+                                            <outlet property="heightLabel" destination="bfI-wm-cEb" id="Nvw-fx-xX6"/>
+                                            <outlet property="image" destination="0fV-SG-jBl" id="LVP-pf-ACW"/>
+                                            <outlet property="nameLabel" destination="iDT-dN-RHx" id="Taq-Hx-G8V"/>
+                                            <outlet property="weightLabel" destination="MwY-nR-rF6" id="3fh-Pt-Shz"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="R2U-eA-Prs" firstAttribute="leading" secondItem="xmN-FV-oZb" secondAttribute="leading" id="0Vs-VC-Kmr"/>
+                            <constraint firstItem="ppk-cT-8cM" firstAttribute="height" secondItem="xmN-FV-oZb" secondAttribute="height" multiplier="0.8" id="2mB-nn-eC3"/>
                             <constraint firstItem="xmN-FV-oZb" firstAttribute="bottom" secondItem="R2U-eA-Prs" secondAttribute="bottom" id="3Fb-Qh-ZSo"/>
+                            <constraint firstItem="ppk-cT-8cM" firstAttribute="leading" secondItem="xmN-FV-oZb" secondAttribute="leading" id="4nn-lQ-NtS"/>
                             <constraint firstItem="nVx-bH-q6Q" firstAttribute="trailing" secondItem="xmN-FV-oZb" secondAttribute="trailing" id="4wY-1N-h20"/>
+                            <constraint firstItem="xmN-FV-oZb" firstAttribute="trailing" secondItem="ppk-cT-8cM" secondAttribute="trailing" id="EqS-HL-dCD"/>
                             <constraint firstItem="R2U-eA-Prs" firstAttribute="top" secondItem="nVx-bH-q6Q" secondAttribute="bottom" id="IEk-Kd-OuJ"/>
                             <constraint firstItem="nVx-bH-q6Q" firstAttribute="top" secondItem="xmN-FV-oZb" secondAttribute="top" id="eih-Xy-7Oc"/>
                             <constraint firstItem="nVx-bH-q6Q" firstAttribute="leading" secondItem="xmN-FV-oZb" secondAttribute="leading" id="j2a-3d-n7W"/>
+                            <constraint firstItem="ppk-cT-8cM" firstAttribute="centerY" secondItem="Hu4-Pu-s6W" secondAttribute="centerY" id="sGr-7r-GGy"/>
                             <constraint firstItem="xmN-FV-oZb" firstAttribute="trailing" secondItem="R2U-eA-Prs" secondAttribute="trailing" id="yHR-8A-92c"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="xmN-FV-oZb"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Large View" image="unselected_up" selectedImage="selected_up" id="vB4-BO-Kkb"/>
+                    <navigationItem key="navigationItem" id="aGk-92-9VU"/>
+                    <connections>
+                        <outlet property="cardCollectionView" destination="ppk-cT-8cM" id="YAi-Cd-gaU"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QWO-Ic-qxD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="820" y="194.75262368815595"/>
+            <point key="canvasLocation" x="1010.4" y="296.40179910044981"/>
         </scene>
         <!--Compact View-->
         <scene sceneID="jfm-d7-A99">
@@ -155,7 +296,7 @@
                         <color key="badgeColor" red="1" green="0.34509803919999998" blue="0.33333333329999998" alpha="1" colorSpace="calibratedRGB"/>
                     </tabBarItem>
                     <connections>
-                        <outlet property="collectionView" destination="4dr-ft-hR2" id="cgd-ek-udc"/>
+                        <outlet property="indexCollectionView" destination="4dr-ft-hR2" id="cgd-ek-udc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rbO-wi-aa4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -185,6 +326,7 @@
     </scenes>
     <resources>
         <image name="1" width="120" height="120"/>
+        <image name="103" width="136" height="120"/>
         <image name="bg" width="1920" height="1200"/>
         <image name="selected_down" width="23" height="23"/>
         <image name="selected_up" width="23" height="23"/>

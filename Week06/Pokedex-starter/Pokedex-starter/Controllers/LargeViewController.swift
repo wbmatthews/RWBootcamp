@@ -32,11 +32,11 @@
 
 import UIKit
 
-class CompactViewController: UIViewController {
+class LargeViewController: UIViewController {
 
-  @IBOutlet weak var collectionView: UICollectionView!
+  @IBOutlet weak var cardCollectionView: UICollectionView!
   
-  var dataSource: UICollectionViewDiffableDataSource<Section, Pokemon>!
+  var cardDataSource: UICollectionViewDiffableDataSource<Section, Pokemon>!
   let pokemons = PokemonGenerator.shared.generatePokemons()
   
   enum Section {
@@ -44,40 +44,44 @@ class CompactViewController: UIViewController {
   }
   
   override func viewDidLoad() {
-        super.viewDidLoad()
-    collectionView.collectionViewLayout = configureLayout()
+    super.viewDidLoad()
+    cardCollectionView.collectionViewLayout = configureLayout()
     configureDataSource()
-
-    }
+  }
   
   func configureLayout() -> UICollectionViewCompositionalLayout {
-    let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.333), heightDimension: .fractionalHeight(1.0))
-    let item = NSCollectionLayoutItem(layoutSize: itemSize)
-    item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 4)
     
-    let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.333))
+    let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
+    let item = NSCollectionLayoutItem(layoutSize: itemSize)
+    
+    let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.7), heightDimension: .fractionalHeight(1.0))
     let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-    group.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4)
     
     let section = NSCollectionLayoutSection(group: group)
-    section.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0)
+    section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
+    section.interGroupSpacing = 20
+    section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20)
     
     return UICollectionViewCompositionalLayout(section: section)
   }
   
   func configureDataSource() {
-    dataSource = UICollectionViewDiffableDataSource<Section, Pokemon>(collectionView: collectionView) { (collectionView, indexPath, pokemon) -> UICollectionViewCell? in
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PokemonCell.reuseIdentifier, for: indexPath) as? PokemonCell else {
-        fatalError("Unable to create PokemonCell")
+    cardDataSource = UICollectionViewDiffableDataSource<Section, Pokemon>(collectionView: cardCollectionView) { (collectionView, indexPath, pokemon) -> UICollectionViewCell? in
+      guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PokemonCardCell.reuseIdentifier, for: indexPath) as? PokemonCardCell else {
+        fatalError("Unable to create PokemonCardCell")
       }
       cell.nameLabel.text = pokemon.pokemonName
       cell.image.image = UIImage(named: String(pokemon.pokemonId))
+      cell.baseExpLabel.text = String(pokemon.baseExperience)
+      cell.heightLabel.text = String(pokemon.height)
+      cell.weightLabel.text = String(pokemon.weight)
       return cell
     }
-
+    
     var initialSnapshot = NSDiffableDataSourceSnapshot<Section, Pokemon>()
     initialSnapshot.appendSections([.main])
     initialSnapshot.appendItems(pokemons)
-    dataSource.apply(initialSnapshot, animatingDifferences: false)
+    cardDataSource.apply(initialSnapshot, animatingDifferences: false)
   }
+
 }
