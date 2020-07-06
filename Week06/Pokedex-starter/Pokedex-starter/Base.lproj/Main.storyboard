@@ -42,7 +42,7 @@
                                 <rect key="frame" x="0.0" y="56" width="375" height="562"/>
                             </imageView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ppk-cT-8cM">
-                                <rect key="frame" x="0.0" y="86.5" width="375" height="494"/>
+                                <rect key="frame" x="0.0" y="102" width="375" height="463.5"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewLayout key="collectionViewLayout" id="hwe-cE-nfC"/>
                                 <cells>
@@ -153,6 +153,21 @@
                                                     <constraints>
                                                         <constraint firstItem="0fV-SG-jBl" firstAttribute="height" secondItem="3Jh-fQ-aPP" secondAttribute="height" multiplier="0.4" id="1VS-14-6ZF"/>
                                                     </constraints>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="1VS-14-6ZF"/>
+                                                        </mask>
+                                                    </variation>
+                                                    <variation key="heightClass=compact" axis="horizontal">
+                                                        <mask key="constraints">
+                                                            <exclude reference="1VS-14-6ZF"/>
+                                                        </mask>
+                                                    </variation>
+                                                    <variation key="heightClass=regular">
+                                                        <mask key="constraints">
+                                                            <include reference="1VS-14-6ZF"/>
+                                                        </mask>
+                                                    </variation>
                                                 </stackView>
                                             </subviews>
                                             <color key="backgroundColor" red="0.92282801869999997" green="0.46792072060000001" blue="0.42350739240000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -178,15 +193,15 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="R2U-eA-Prs" firstAttribute="leading" secondItem="xmN-FV-oZb" secondAttribute="leading" id="0Vs-VC-Kmr"/>
-                            <constraint firstItem="ppk-cT-8cM" firstAttribute="height" secondItem="xmN-FV-oZb" secondAttribute="height" multiplier="0.8" id="2mB-nn-eC3"/>
+                            <constraint firstItem="ppk-cT-8cM" firstAttribute="height" secondItem="xmN-FV-oZb" secondAttribute="height" multiplier="0.75" id="2mB-nn-eC3"/>
                             <constraint firstItem="xmN-FV-oZb" firstAttribute="bottom" secondItem="R2U-eA-Prs" secondAttribute="bottom" id="3Fb-Qh-ZSo"/>
-                            <constraint firstItem="ppk-cT-8cM" firstAttribute="leading" secondItem="xmN-FV-oZb" secondAttribute="leading" id="4nn-lQ-NtS"/>
                             <constraint firstItem="nVx-bH-q6Q" firstAttribute="trailing" secondItem="xmN-FV-oZb" secondAttribute="trailing" id="4wY-1N-h20"/>
-                            <constraint firstItem="xmN-FV-oZb" firstAttribute="trailing" secondItem="ppk-cT-8cM" secondAttribute="trailing" id="EqS-HL-dCD"/>
                             <constraint firstItem="R2U-eA-Prs" firstAttribute="top" secondItem="nVx-bH-q6Q" secondAttribute="bottom" id="IEk-Kd-OuJ"/>
+                            <constraint firstItem="ppk-cT-8cM" firstAttribute="centerX" secondItem="Hu4-Pu-s6W" secondAttribute="centerX" id="JmF-RC-yLY"/>
                             <constraint firstItem="nVx-bH-q6Q" firstAttribute="top" secondItem="xmN-FV-oZb" secondAttribute="top" id="eih-Xy-7Oc"/>
                             <constraint firstItem="nVx-bH-q6Q" firstAttribute="leading" secondItem="xmN-FV-oZb" secondAttribute="leading" id="j2a-3d-n7W"/>
                             <constraint firstItem="ppk-cT-8cM" firstAttribute="centerY" secondItem="Hu4-Pu-s6W" secondAttribute="centerY" id="sGr-7r-GGy"/>
+                            <constraint firstItem="ppk-cT-8cM" firstAttribute="width" secondItem="xmN-FV-oZb" secondAttribute="width" id="voC-2f-P3T"/>
                             <constraint firstItem="xmN-FV-oZb" firstAttribute="trailing" secondItem="R2U-eA-Prs" secondAttribute="trailing" id="yHR-8A-92c"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="xmN-FV-oZb"/>
