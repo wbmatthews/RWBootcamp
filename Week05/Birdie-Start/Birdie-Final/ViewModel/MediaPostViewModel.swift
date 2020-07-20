@@ -42,8 +42,5 @@ class MediaPostViewModel {
     postDateFormatter.dateFormat = "MMM dd h:mm a"
     return postDateFormatter.string(from: date)
   }
-  
-  
-  
 }
 

@@ -15,7 +15,6 @@ class ViewController: UIViewController {
   let mediaPostViewModel = MediaPostViewModel()
   var imageSelectedFromPicker: UIImage?
   
-  
   override func viewDidLoad() {
     super.viewDidLoad()
     setUpTableView()
@@ -32,7 +31,6 @@ class ViewController: UIViewController {
     tableview.register(imagePostCell, forCellReuseIdentifier: "imagePostCell")
     
     MediaPostsHandler.shared.getPosts()
-    
   }
   
   @IBAction func didPressCreateTextPostButton(_ sender: Any) {
