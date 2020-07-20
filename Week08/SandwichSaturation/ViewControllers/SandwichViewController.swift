@@ -23,17 +23,23 @@ class SandwichViewController: UITableViewController, SandwichDataSource {
   private var fetchedSandwichesRC: NSFetchedResultsController<Sandwich>!
   var query = ""
 
-  required init?(coder: NSCoder) {
-    super.init(coder: coder)
-    if UserDefaults.standard.object(forKey: "previouslyRun") as? Bool == nil {
-      _ = loadSandwiches()
-      // TODO: Set it up to put the JSON into CoreData and then set the default
-
-    }
-  }
+//  required init?(coder: NSCoder) {
+//    super.init(coder: coder)
+//
+//  }
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    if let previouslyRun = UserDefaults.standard.object(forKey: "previouslyRun") as? Bool, previouslyRun {
+      print("No data init needed")
+    } else {
+      let defaultSandwiches = loadSandwiches()
+      for sandwich in defaultSandwiches {
+        saveSandwich(sandwich)
+      }
+      UserDefaults.standard.set(true, forKey: "previouslyRun")
+    }
         
     let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(presentAddView(_:)))
     navigationItem.rightBarButtonItem = addButton
@@ -59,10 +65,10 @@ class SandwichViewController: UITableViewController, SandwichDataSource {
     refresh()
   }
   
-  func loadSandwiches() -> [SandwichData]? {
+  func loadSandwiches() -> [SandwichData] {
     
     //MARK: A2: Loading the sandwich data from the JSON file
-    guard let sandwichJSONURL = Bundle.main.url(forResource: "sandwiches", withExtension: "json") else { return nil }
+    guard let sandwichJSONURL = Bundle.main.url(forResource: "sandwiches", withExtension: "json") else { return [] }
     let decoder  = JSONDecoder()
     
     do {
@@ -73,7 +79,7 @@ class SandwichViewController: UITableViewController, SandwichDataSource {
       
     } catch let error as NSError {
       print("Unable to load data. \(error), \(error.userInfo)")
-      return nil
+      return []
     }
   }
   
@@ -134,7 +140,7 @@ class SandwichViewController: UITableViewController, SandwichDataSource {
 //          .contains(searchText.lowercased())
 //      }
 //    }
-//    
+//
     tableView.reloadData()
   }
   
