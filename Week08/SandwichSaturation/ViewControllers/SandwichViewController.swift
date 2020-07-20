@@ -30,12 +30,17 @@ class SandwichViewController: UITableViewController, SandwichDataSource {
     navigationItem.rightBarButtonItem = addButton
     
     // Setup Search Controller
+    
     searchController.searchResultsUpdater = self
     searchController.obscuresBackgroundDuringPresentation = false
     searchController.searchBar.placeholder = "Filter Sandwiches"
     navigationItem.searchController = searchController
     definesPresentationContext = true
     searchController.searchBar.scopeButtonTitles = SauceAmount.allCases.map { $0.rawValue }
+    
+    let scopeButtonIndex = UserDefaults.standard.object(forKey: "scopeButtonIndex") as? Int ?? 0
+    searchController.searchBar.selectedScopeButtonIndex = scopeButtonIndex
+    
     searchController.searchBar.delegate = self
   }
 
@@ -124,9 +129,8 @@ class SandwichViewController: UITableViewController, SandwichDataSource {
 extension SandwichViewController: UISearchResultsUpdating {
   func updateSearchResults(for searchController: UISearchController) {
     let searchBar = searchController.searchBar
-//    let sauceAmount = SauceAmount(rawValue:
-//      searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex])
-    let sauceAmount = SauceAmount.tooMuch
+    let sauceAmount = SauceAmount(rawValue:
+      searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex])
 
     filterContentForSearchText(searchBar.text!, sauceAmount: sauceAmount)
   }
@@ -136,6 +140,7 @@ extension SandwichViewController: UISearchResultsUpdating {
 extension SandwichViewController: UISearchBarDelegate {
   func searchBar(_ searchBar: UISearchBar,
       selectedScopeButtonIndexDidChange selectedScope: Int) {
+    UserDefaults.standard.set(selectedScope, forKey: "scopeButtonIndex")
     let sauceAmount = SauceAmount(rawValue:
       searchBar.scopeButtonTitles![selectedScope])
     filterContentForSearchText(searchBar.text!, sauceAmount: sauceAmount)
