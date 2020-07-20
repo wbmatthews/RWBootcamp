@@ -16,12 +16,12 @@ protocol SandwichDataSource {
 class SandwichViewController: UITableViewController, SandwichDataSource {
   let searchController = UISearchController(searchResultsController: nil)
 //  var sandwiches = [SandwichData]()
-  var filteredSandwiches = [SandwichData]()
+//  var filteredSandwiches = [SandwichData]()
   
   private let appDelegate = UIApplication.shared.delegate as! AppDelegate
   private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
   private var fetchedSandwichesRC: NSFetchedResultsController<Sandwich>!
-  var query = ""
+  private var filterForSauceAmount: SauceAmount!
 
 //  required init?(coder: NSCoder) {
 //    super.init(coder: coder)
@@ -85,19 +85,22 @@ class SandwichViewController: UITableViewController, SandwichDataSource {
   
   private func refresh() {
     let request = Sandwich.fetchRequest() as NSFetchRequest<Sandwich>
-     if !query.isEmpty {
-       request.predicate = NSPredicate(format: "name CONTAINS[cd] %@", query)
-     }
-     let nameSort = NSSortDescriptor(key: #keyPath(Sandwich.name), ascending: true, selector: #selector(NSString.caseInsensitiveCompare))
-     request.sortDescriptors = [nameSort]
-     
-     do {
-       fetchedSandwichesRC = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
-       try fetchedSandwichesRC.performFetch()
-     } catch let error as NSError {
-       print("Could not fetch. \(error), \(error.userInfo)")
-     }
-     
+         if isFiltering {
+          if isSearchBarEmpty {
+          }
+          let query = searchController.searchBar.text!
+          request.predicate = NSPredicate(format: "name CONTAINS[cd] %@", query)
+         }
+    let nameSort = NSSortDescriptor(key: #keyPath(Sandwich.name), ascending: true, selector: #selector(NSString.caseInsensitiveCompare))
+    request.sortDescriptors = [nameSort]
+    
+    do {
+      fetchedSandwichesRC = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+      try fetchedSandwichesRC.performFetch()
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+    
   }
 
   func saveSandwich(_ sandwich: SandwichData) {
@@ -128,8 +131,7 @@ class SandwichViewController: UITableViewController, SandwichDataSource {
     return searchController.searchBar.text?.isEmpty ?? true
   }
   
-  func filterContentForSearchText(_ searchText: String,
-                                  sauceAmount: SauceAmount? = nil) {
+//  func filterContentForSearchText(_ searchText: String, sauceAmount: SauceAmount? = nil) {
 //    filteredSandwiches = sandwiches.filter { (sandwhich: SandwichData) -> Bool in
 //      let doesSauceAmountMatch = sauceAmount == .any || sandwhich.sauceAmount == sauceAmount
 //
@@ -141,8 +143,8 @@ class SandwichViewController: UITableViewController, SandwichDataSource {
 //      }
 //    }
 //
-    tableView.reloadData()
-  }
+//    tableView.reloadData()
+//  }
   
   var isFiltering: Bool {
     let searchBarScopeIsFiltering =
@@ -185,7 +187,9 @@ extension SandwichViewController: UISearchResultsUpdating {
     let sauceAmount = SauceAmount(rawValue:
       searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex])
 
-    filterContentForSearchText(searchBar.text!, sauceAmount: sauceAmount)
+//    filterContentForSearchText(searchBar.text!, sauceAmount: sauceAmount)
+    refresh()
+    tableView.reloadData()
   }
 }
 
@@ -199,7 +203,9 @@ extension SandwichViewController: UISearchBarDelegate {
     
     let sauceAmount = SauceAmount(rawValue:
       searchBar.scopeButtonTitles![selectedScope])
-    filterContentForSearchText(searchBar.text!, sauceAmount: sauceAmount)
+//    filterContentForSearchText(searchBar.text!, sauceAmount: sauceAmount)
+    refresh()
+    tableView.reloadData()
   }
 }
 
