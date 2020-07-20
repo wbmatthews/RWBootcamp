@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class AddSandwichViewController: UIViewController {
   
@@ -28,6 +29,7 @@ class AddSandwichViewController: UIViewController {
   
   override func viewDidAppear(_ animated: Bool) {
     imageView.image = UIImage.init(imageLiteralResourceName: imageName)
+    
   }
   
   class func randomImageName() -> String {
