@@ -49,18 +49,21 @@ class SandwichViewController: UITableViewController, SandwichDataSource {
   }
   
   func loadSandwiches() {
-    let sandwichArray = [SandwichData(name: "Bagel Toast", sauceAmount: .none, imageName: "sandwich1"),
-                         SandwichData(name: "Bologna", sauceAmount: .none, imageName: "sandwich2"),
-                         SandwichData(name: "Breakfast Roll", sauceAmount: .none, imageName: "sandwich3"),
-                         SandwichData(name: "Club", sauceAmount: .none, imageName: "sandwich4"),
-                         SandwichData(name: "Sub", sauceAmount: .none, imageName: "sandwich5"),
-                         SandwichData(name: "Steak", sauceAmount: .tooMuch, imageName: "sandwich6"),
-                         SandwichData(name: "Dunno", sauceAmount: .tooMuch, imageName: "sandwich7"),
-                         SandwichData(name: "Torta", sauceAmount: .tooMuch, imageName: "sandwich8"),
-                         SandwichData(name: "Ham", sauceAmount: .tooMuch, imageName: "sandwich9"),
-                         SandwichData(name: "Lettuce", sauceAmount: .tooMuch, imageName: "sandwich10")]
-    sandwiches.append(contentsOf: sandwichArray)
+    
+    guard let sandwichJSONURL = Bundle.main.url(forResource: "sandwiches", withExtension: "json") else { return }
+    let decoder  = JSONDecoder()
+    
+    do {
+      
+      let sandwichJSONData = try Data(contentsOf: sandwichJSONURL)
+      sandwiches = try decoder.decode([SandwichData].self, from: sandwichJSONData)
+      
+    } catch let error as NSError {
+      print("Unable to load data. \(error), \(error.userInfo)")
+      return
+    }
   }
+
 
   func saveSandwich(_ sandwich: SandwichData) {
     sandwiches.append(sandwich)
