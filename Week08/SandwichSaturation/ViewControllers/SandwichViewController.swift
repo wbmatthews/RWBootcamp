@@ -88,8 +88,10 @@ class SandwichViewController: UITableViewController, SandwichDataSource {
          if isFiltering {
           if sauceAmount == SauceAmount.any {
             request.predicate = NSPredicate(format: "name CONTAINS[cd] %@", query!)
+          } else if isSearchBarEmpty {
+            request.predicate = NSPredicate(format: "sauceFactor.sauceFactor = %@", sauceAmount!.rawValue)
           } else {
-            request.predicate = NSPredicate(format: "name CONTAINS[cd] %@ AND sauceFactor = %@", query!, sauceAmount!.rawValue)
+            request.predicate = NSPredicate(format: "name CONTAINS[cd] %@ AND sauceFactor.sauceFactor = %@", query!, sauceAmount!.rawValue)
           }
          }
     let nameSort = NSSortDescriptor(key: #keyPath(Sandwich.name), ascending: true, selector: #selector(NSString.caseInsensitiveCompare))
