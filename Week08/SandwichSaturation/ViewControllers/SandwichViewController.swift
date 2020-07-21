@@ -16,7 +16,7 @@ protocol SandwichDataSource {
 class SandwichViewController: UITableViewController, SandwichDataSource {
   let searchController = UISearchController(searchResultsController: nil)
 //  var sandwiches = [SandwichData]()
-//  var filteredSandwiches = [SandwichData]()
+//  var filteredSandwiches = [SandwichData]()   These two no longer needed with the use of the results comntroller
   
   private let appDelegate = UIApplication.shared.delegate as! AppDelegate
   private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -99,6 +99,7 @@ class SandwichViewController: UITableViewController, SandwichDataSource {
     
     do {
       fetchedSandwichesRC = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+      fetchedSandwichesRC.delegate = self
       try fetchedSandwichesRC.performFetch()
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
@@ -119,8 +120,6 @@ class SandwichViewController: UITableViewController, SandwichDataSource {
     
     appDelegate.saveContext()
     refresh()
-
-   tableView.reloadData()
 
   }
 
@@ -181,6 +180,15 @@ class SandwichViewController: UITableViewController, SandwichDataSource {
 
     return cell
   }
+  
+  override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    if editingStyle == .delete {
+      let sandwich = fetchedSandwichesRC.object(at: indexPath)
+      context.delete(sandwich)
+      appDelegate.saveContext()
+      refresh()
+    }
+  }
 }
 
 // MARK: - UISearchResultsUpdating
@@ -212,3 +220,21 @@ extension SandwichViewController: UISearchBarDelegate {
   }
 }
 
+// MARK: - NSFetchedResultsControllerDelegate
+
+extension SandwichViewController: NSFetchedResultsControllerDelegate {
+  func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+    switch type {
+    case .insert:
+      if let indexPath = newIndexPath {
+        tableView.insertRows(at: [indexPath], with: .automatic)
+      }
+    case .delete:
+      if let indexPath = indexPath {
+        tableView.deleteRows(at: [indexPath], with: .automatic)
+      }
+    default:
+      break
+    }
+  }
+}
