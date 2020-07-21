@@ -83,13 +83,14 @@ class SandwichViewController: UITableViewController, SandwichDataSource {
     }
   }
   
-  private func refresh() {
+  private func refresh(withFilterText query: String? = nil, sauceAmount: SauceAmount? = nil) {
     let request = Sandwich.fetchRequest() as NSFetchRequest<Sandwich>
          if isFiltering {
-          if isSearchBarEmpty {
+          if sauceAmount == SauceAmount.any {
+            request.predicate = NSPredicate(format: "name CONTAINS[cd] %@", query!)
+          } else {
+            request.predicate = NSPredicate(format: "name CONTAINS[cd] %@ AND sauceFactor = %@", query!, sauceAmount!.rawValue)
           }
-          let query = searchController.searchBar.text!
-          request.predicate = NSPredicate(format: "name CONTAINS[cd] %@", query)
          }
     let nameSort = NSSortDescriptor(key: #keyPath(Sandwich.name), ascending: true, selector: #selector(NSString.caseInsensitiveCompare))
     request.sortDescriptors = [nameSort]
@@ -188,7 +189,7 @@ extension SandwichViewController: UISearchResultsUpdating {
       searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex])
 
 //    filterContentForSearchText(searchBar.text!, sauceAmount: sauceAmount)
-    refresh()
+    refresh(withFilterText: searchBar.text!, sauceAmount: sauceAmount)
     tableView.reloadData()
   }
 }
@@ -204,7 +205,7 @@ extension SandwichViewController: UISearchBarDelegate {
     let sauceAmount = SauceAmount(rawValue:
       searchBar.scopeButtonTitles![selectedScope])
 //    filterContentForSearchText(searchBar.text!, sauceAmount: sauceAmount)
-    refresh()
+    refresh(withFilterText: searchBar.text!, sauceAmount: sauceAmount)
     tableView.reloadData()
   }
 }
