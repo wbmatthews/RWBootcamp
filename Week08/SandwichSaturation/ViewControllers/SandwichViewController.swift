@@ -86,13 +86,26 @@ class SandwichViewController: UITableViewController, SandwichDataSource {
   private func refresh(withFilterText query: String? = nil, sauceAmount: SauceAmount? = nil) {
     let request = Sandwich.fetchRequest() as NSFetchRequest<Sandwich>
          if isFiltering {
-          if sauceAmount == SauceAmount.any {
-            request.predicate = NSPredicate(format: "name CONTAINS[cd] %@", query!)
-          } else if isSearchBarEmpty {
-            request.predicate = NSPredicate(format: "sauceFactor.sauceFactor = %@", sauceAmount!.rawValue)
-          } else {
-            request.predicate = NSPredicate(format: "name CONTAINS[cd] %@ AND sauceFactor.sauceFactor = %@", query!, sauceAmount!.rawValue)
+          let p1 = NSPredicate(format: "name CONTAINS[cd] %@", query!)
+          let p2 = NSPredicate(format: "sauceFactor.sauceFactor = %@", sauceAmount!.rawValue)
+          
+          var compoundPredicate: NSCompoundPredicate {
+            if sauceAmount == SauceAmount.any || self.isSearchBarEmpty {
+              return NSCompoundPredicate(orPredicateWithSubpredicates: [p1,p2])
+            } else {
+              return NSCompoundPredicate(andPredicateWithSubpredicates: [p1,p2])
+            }
           }
+          
+          request.predicate = compoundPredicate
+          
+//          if sauceAmount == SauceAmount.any {
+//            request.predicate = NSPredicate(format: "name CONTAINS[cd] %@", query!)
+//          } else if isSearchBarEmpty {
+//            request.predicate = NSPredicate(format: "sauceFactor.sauceFactor = %@", sauceAmount!.rawValue)
+//          } else {
+//            request.predicate = NSPredicate(format: "name CONTAINS[cd] %@ AND sauceFactor.sauceFactor = %@", query!, sauceAmount!.rawValue)
+//          }
          }
     let nameSort = NSSortDescriptor(key: #keyPath(Sandwich.name), ascending: true, selector: #selector(NSString.caseInsensitiveCompare))
     request.sortDescriptors = [nameSort]
