@@ -14,7 +14,6 @@ class Networking {
   
   private let baseURL = "http://www.jservice.io/api/"
   private let randomClueURLsegment = "random"
-//  private let cluesURLsegment = "clues?category="
   private let categoryURLSegment = "category?id="
   private let offsetURLsegment = "&offset="
     
@@ -35,7 +34,7 @@ class Networking {
           completionHandler(clue.categoryID)
         }
       } catch let error {
-        print(error)
+        print("Unable to process random seed clue, will try again. \(error)")
       }
     }
     task.resume()
@@ -55,12 +54,14 @@ class Networking {
       
       do {
         let category = try decoder.decode(Category.self, from: data)
-        print(category.title)
-        let clues = Array<Clue>(category.clues.shuffled().prefix(4))
+        print("selected \(category.title): id:\(category.id)")
+        let validClues = category.clues.filter { $0.question != nil && $0.answer != nil }
+        let clues = Array<Clue>(validClues.shuffled().prefix(4))
+        print("selected clue ids: \(clues.map { $0.id })")
         completionHandler(clues, category.title)
 
       } catch let error {
-        print(error)
+        print("Unable to decode category \(id): \(error)")
       }
     }
     task.resume()
