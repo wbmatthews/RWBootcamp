@@ -39,15 +39,6 @@ class ViewController: UIViewController {
       fetchClues()
         
     }
-  
-  func fetchClues() {
-    Networking.sharedInstance.getRandomCategory { (categoryID) in
-      Networking.sharedInstance.selectCluesFromCategory(id: categoryID) { (clues) in
-        self.clues = clues
-        print(clues[0].question)
-      }
-    }
-  }
 
     @IBAction func didPressVolumeButton(_ sender: Any) {
         SoundManager.shared.toggleSoundPreference()
@@ -57,6 +48,24 @@ class ViewController: UIViewController {
             soundButton.setImage(UIImage(systemName: "speaker"), for: .normal)
         }
     }
+  
+  
+  func fetchClues() {
+    Networking.sharedInstance.getRandomCategory { (categoryID) in
+      Networking.sharedInstance.selectCluesFromCategory(id: categoryID) { (clues, title) in
+        self.clues = clues
+        self.setUpRound(with: title)
+      }
+    }
+  }
+  
+  func setUpRound(with title: String) {
+    correctAnswerClue = clues.randomElement()
+    DispatchQueue.main.async {
+      self.categoryLabel.text = title
+      self.clueLabel.text = self.correctAnswerClue?.question
+    }
+  }
 
 }
 

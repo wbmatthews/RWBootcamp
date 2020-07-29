@@ -41,7 +41,7 @@ class Networking {
     task.resume()
   }
   
-  func selectCluesFromCategory(id: Int, completionHandler: @escaping ([Clue]) -> ()) {
+  func selectCluesFromCategory(id: Int, completionHandler: @escaping ([Clue], String) -> ()) {
     
     guard let categoryURL = URL(string: baseURL + categoryURLSegment + String(id)) else { return }
     let session = URLSession(configuration: .ephemeral)
@@ -57,7 +57,7 @@ class Networking {
         let category = try decoder.decode(Category.self, from: data)
         print(category.title)
         let clues = Array<Clue>(category.clues.shuffled().prefix(4))
-        completionHandler(clues)
+        completionHandler(clues, category.title)
 
       } catch let error {
         print(error)
