@@ -30,15 +30,11 @@ class ViewController: UIViewController {
         tableView.dataSource = self
         tableView.separatorStyle = .none
         
-        self.scoreLabel.text = "\(self.points)"
-
         if SoundManager.shared.isSoundEnabled == false {
             soundButton.setImage(UIImage(systemName: "speaker.slash"), for: .normal)
         } else {
             soundButton.setImage(UIImage(systemName: "speaker"), for: .normal)
         }
-
-        SoundManager.shared.playSound()
       
       logoImageView.load(url: imageURL!)
       fetchClues()
@@ -72,6 +68,7 @@ class ViewController: UIViewController {
       self.clueLabel.text = self.correctAnswerClue?.question
       self.scoreLabel.text = String(self.points)
       self.tableView.reloadData()
+      SoundManager.shared.playSound()
     }
   }
 
