@@ -36,8 +36,18 @@ class ViewController: UIViewController {
         }
 
         SoundManager.shared.playSound()
+      fetchClues()
         
     }
+  
+  func fetchClues() {
+    Networking.sharedInstance.getRandomCategory { (categoryID) in
+      Networking.sharedInstance.selectCluesFromCategory(id: categoryID) { (clues) in
+        self.clues = clues
+        print(clues[0].question)
+      }
+    }
+  }
 
     @IBAction func didPressVolumeButton(_ sender: Any) {
         SoundManager.shared.toggleSoundPreference()
