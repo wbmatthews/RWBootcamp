@@ -39,6 +39,7 @@ class ViewController: UIViewController {
         }
 
         SoundManager.shared.playSound()
+      
       logoImageView.load(url: imageURL!)
       fetchClues()
         
