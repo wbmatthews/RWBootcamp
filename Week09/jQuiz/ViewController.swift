@@ -16,12 +16,13 @@ class ViewController: UIViewController {
     @IBOutlet weak var clueLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var scoreLabel: UILabel!
+  
+  private let imageURL = URL(string: "https://cdn1.edgedatg.com/aws/v2/abc/ABCUpdates/blog/2900129/8484c3386d4378d7c826e3f3690b481b/1600x900-Q90_8484c3386d4378d7c826e3f3690b481b.jpg")
+  
 
     var clues: [Clue] = []
     var correctAnswerClue: Clue?
     var points: Int = 0
-  
-  
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +39,7 @@ class ViewController: UIViewController {
         }
 
         SoundManager.shared.playSound()
+      logoImageView.load(url: imageURL!)
       fetchClues()
         
     }
@@ -100,3 +102,17 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+
+extension UIImageView {
+    func load(url: URL) {
+        DispatchQueue.global().async { [weak self] in
+            if let data = try? Data(contentsOf: url) {
+                if let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        self?.image = image
+                    }
+                }
+            }
+        }
+    }
+}
