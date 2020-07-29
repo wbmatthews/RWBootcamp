@@ -36,7 +36,7 @@ class ViewController: UIViewController {
             soundButton.setImage(UIImage(systemName: "speaker"), for: .normal)
         }
       
-      logoImageView.image = UIImage.loadURL(logoImageURL)
+      logoImageView.loadURL(logoImageURL)
       fetchClues()
         
     }
@@ -88,8 +88,8 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
       let cell = tableView.dequeueReusableCell(withIdentifier: "AnswerOptionCell")!
       let answerLabel = cell.viewWithTag(1000) as! UILabel
       let clueString = "What is \(clues[indexPath.row].answer!)?"
-//      <span style="font-family: 'Times New Roman';">Times New Roman text</span>
       let formatStringData = "<span style=\"font-family: AvenirNextCondensed-Regular; font-size:20; color:white;\">\(clueString)</span>".data(using: .utf8)!
+      
       if let attributedClue = try? NSAttributedString(data: formatStringData, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
         answerLabel.attributedText = attributedClue
       } else {
@@ -108,22 +108,21 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 
-extension UIImage {
+extension UIImageView {
   
-  public static var imageStore: [URL:UIImage] = [:]
+  private static var imageStore: [URL:UIImage] = [:]
   
-  public class func loadURL(_ url: URL) -> UIImage? {
-    if let image = imageStore[url] {
-      return image
+  func loadURL(_ url: URL) {
+    if let image = UIImageView.imageStore[url] {
+      self.image = image
     } else {
       if let data = try? Data(contentsOf: url) {
         if let image = UIImage(data: data) {
-          imageStore[url] = image
-          return image
+          UIImageView.imageStore[url] = image
+          self.image = image
         }
       }
     }
-    return nil
   }
   
 }
