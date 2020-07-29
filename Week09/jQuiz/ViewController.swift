@@ -54,16 +54,18 @@ class ViewController: UIViewController {
     Networking.sharedInstance.getRandomCategory { (categoryID) in
       Networking.sharedInstance.selectCluesFromCategory(id: categoryID) { (clues, title) in
         self.clues = clues
-        self.setUpRound(with: title)
+        self.setUpView(with: title)
       }
     }
   }
   
-  func setUpRound(with title: String) {
+  func setUpView(with title: String) {
     correctAnswerClue = clues.randomElement()
     DispatchQueue.main.async {
       self.categoryLabel.text = title
       self.clueLabel.text = self.correctAnswerClue?.question
+      self.scoreLabel.text = String(self.points)
+      self.tableView.reloadData()
     }
   }
 
@@ -79,12 +81,20 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        return cell
+
+      
+      let cell = tableView.dequeueReusableCell(withIdentifier: "AnswerOptionCell")!
+      let answerLabel = cell.viewWithTag(1000) as! UILabel
+      answerLabel.text = "What is \(clues[indexPath.row].answer)?"
+      
+      return cell
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
+      if clues[indexPath.row].answer == correctAnswerClue?.answer {
+        points += correctAnswerClue!.value
+      }
+      fetchClues()
     }
 }
 
