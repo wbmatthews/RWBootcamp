@@ -8,10 +8,16 @@ PlaygroundPage.current.needsIndefiniteExecution = true
 //:
 //: **Step 1**: Implement this new `UIView` function:
 extension UIView {
-  static func animate(withDuration duration: TimeInterval, animations: @escaping () -> Void, group: DispatchGroup, completion: ((Bool) -> Void)?) {
-    
-  // TODO: Fill in this implementation
-  
+  static func animate(withDuration duration: TimeInterval, group: DispatchGroup, animations: @escaping () -> Void, completion: ((Bool) -> Void)? = nil) {
+    group.enter()
+    DispatchQueue.main.async(group: group) {
+      animate(withDuration: duration, animations: animations) { (bool) in
+        defer { group.leave() }
+        if let completion = completion {
+          completion(bool)
+        }
+      }
+    }
   }
 }
 //: ## Setup
@@ -29,7 +35,7 @@ view.addSubview(box)
 // Note: Enable Xcode▸Editor▸Live View to see the animation.
 PlaygroundPage.current.liveView = view
 //: **Step 2**: Rewrite the following animation to be notified when all sub-animations complete:
-UIView.animate(withDuration: 1, animations: {
+UIView.animate(withDuration: 1, group: animationGroup, animations: {
   // Move box to lower right corner
   box.center = CGPoint(x: 150, y: 150)
   }, completion: {
@@ -40,7 +46,7 @@ UIView.animate(withDuration: 1, animations: {
       }, completion: .none)
 })
 
-UIView.animate(withDuration: 4, animations: { () -> Void in
+UIView.animate(withDuration: 4, group: animationGroup, animations: { () -> Void in
   // Change background color to blue
   view.backgroundColor = UIColor.blue
 })
