@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Animaker" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0nm-et-zhc">
+                                <rect key="frame" x="177" y="762" width="60" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="0nm-et-zhc" secondAttribute="height" multiplier="1:1" id="Jcq-aJ-oHO"/>
+                                    <constraint firstAttribute="height" constant="60" id="cjl-z3-Tay"/>
+                                </constraints>
+                                <state key="normal" title="Play" image="play"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bz4-Zr-kz2">
+                                <rect key="frame" x="97" y="762" width="60" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Bz4-Zr-kz2" secondAttribute="height" multiplier="1:1" id="wQr-Cl-eZ8"/>
+                                </constraints>
+                                <state key="normal" title="Color" image="color"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qkz-jC-ZbW">
+                                <rect key="frame" x="257" y="762" width="60" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Qkz-jC-ZbW" secondAttribute="height" multiplier="1:1" id="PvP-s0-IcX"/>
+                                </constraints>
+                                <state key="normal" title="Scale" image="scale"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hd2-2u-adu">
+                                <rect key="frame" x="177" y="682" width="60" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="hd2-2u-adu" secondAttribute="height" multiplier="1:1" id="xeL-bV-hbM"/>
+                                </constraints>
+                                <state key="normal" title="Translate" image="translate"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="Qkz-jC-ZbW" firstAttribute="width" secondItem="hd2-2u-adu" secondAttribute="width" id="0iQ-b2-WAf"/>
+                            <constraint firstItem="Bz4-Zr-kz2" firstAttribute="width" secondItem="hd2-2u-adu" secondAttribute="width" id="2vd-Us-4JY"/>
+                            <constraint firstItem="0nm-et-zhc" firstAttribute="centerX" secondItem="hd2-2u-adu" secondAttribute="centerX" id="JQh-C3-kHt"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="0nm-et-zhc" secondAttribute="bottom" constant="40" id="PCB-be-aoq"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Qkz-jC-ZbW" secondAttribute="trailing" symbolic="YES" id="bcW-cL-sCW"/>
+                            <constraint firstItem="0nm-et-zhc" firstAttribute="leading" secondItem="Bz4-Zr-kz2" secondAttribute="trailing" constant="20" id="iZS-uy-0SF"/>
+                            <constraint firstItem="Bz4-Zr-kz2" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="leading" symbolic="YES" id="lLk-2d-d1n"/>
+                            <constraint firstItem="Qkz-jC-ZbW" firstAttribute="leading" secondItem="0nm-et-zhc" secondAttribute="trailing" constant="20" id="oyh-jd-eCn"/>
+                            <constraint firstItem="Qkz-jC-ZbW" firstAttribute="centerY" secondItem="0nm-et-zhc" secondAttribute="centerY" id="pei-2l-gSN"/>
+                            <constraint firstItem="0nm-et-zhc" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="tML-17-HXr"/>
+                            <constraint firstItem="0nm-et-zhc" firstAttribute="centerY" secondItem="Bz4-Zr-kz2" secondAttribute="centerY" id="uYS-xh-5q9"/>
+                            <constraint firstItem="0nm-et-zhc" firstAttribute="width" secondItem="hd2-2u-adu" secondAttribute="width" id="wJB-i3-avt"/>
+                            <constraint firstItem="0nm-et-zhc" firstAttribute="top" secondItem="hd2-2u-adu" secondAttribute="bottom" constant="20" id="zuZ-Ld-UFJ"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <connections>
+                        <outlet property="abovePlayConstraint" destination="zuZ-Ld-UFJ" id="fGc-jX-rVJ"/>
+                        <outlet property="leftOfPlayConstraint" destination="iZS-uy-0SF" id="a98-Xi-NS2"/>
+                        <outlet property="rightOfPlayConstraint" destination="oyh-jd-eCn" id="Uzv-e1-9O8"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="137.68115942028987" y="138.61607142857142"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="color" width="62" height="62"/>
+        <image name="play" width="62" height="62"/>
+        <image name="scale" width="62" height="62"/>
+        <image name="translate" width="62" height="62"/>
+    </resources>
+</document>
