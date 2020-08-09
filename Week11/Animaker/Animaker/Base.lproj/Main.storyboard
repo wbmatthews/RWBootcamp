@@ -15,6 +15,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nhW-jU-gv4">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="722"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2h4-oS-XYI">
+                                        <rect key="frame" x="107" y="196" width="200" height="200"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
+                                    </view>
+                                </subviews>
+                            </view>
                             <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bz4-Zr-kz2">
                                 <rect key="frame" x="97" y="762" width="60" height="60"/>
                                 <constraints>
@@ -63,11 +74,15 @@
                             <constraint firstItem="Bz4-Zr-kz2" firstAttribute="width" secondItem="hd2-2u-adu" secondAttribute="width" id="2vd-Us-4JY"/>
                             <constraint firstItem="0nm-et-zhc" firstAttribute="centerX" secondItem="hd2-2u-adu" secondAttribute="centerX" id="JQh-C3-kHt"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="0nm-et-zhc" secondAttribute="bottom" constant="40" id="PCB-be-aoq"/>
+                            <constraint firstItem="nhW-jU-gv4" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="ZMd-0E-MLV"/>
+                            <constraint firstItem="nhW-jU-gv4" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="aze-P0-neL"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Qkz-jC-ZbW" secondAttribute="trailing" symbolic="YES" id="bcW-cL-sCW"/>
                             <constraint firstItem="0nm-et-zhc" firstAttribute="leading" secondItem="Bz4-Zr-kz2" secondAttribute="trailing" constant="20" id="iZS-uy-0SF"/>
                             <constraint firstItem="Bz4-Zr-kz2" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="leading" symbolic="YES" id="lLk-2d-d1n"/>
+                            <constraint firstItem="0nm-et-zhc" firstAttribute="top" secondItem="nhW-jU-gv4" secondAttribute="bottom" constant="40" id="oWi-z3-L8B"/>
                             <constraint firstItem="Qkz-jC-ZbW" firstAttribute="leading" secondItem="0nm-et-zhc" secondAttribute="trailing" constant="20" id="oyh-jd-eCn"/>
                             <constraint firstItem="Qkz-jC-ZbW" firstAttribute="centerY" secondItem="0nm-et-zhc" secondAttribute="centerY" id="pei-2l-gSN"/>
+                            <constraint firstItem="nhW-jU-gv4" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailing" id="syw-sm-TMI"/>
                             <constraint firstItem="0nm-et-zhc" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="tML-17-HXr"/>
                             <constraint firstItem="0nm-et-zhc" firstAttribute="centerY" secondItem="Bz4-Zr-kz2" secondAttribute="centerY" id="uYS-xh-5q9"/>
                             <constraint firstItem="0nm-et-zhc" firstAttribute="width" secondItem="hd2-2u-adu" secondAttribute="width" id="wJB-i3-avt"/>
@@ -77,13 +92,14 @@
                     </view>
                     <connections>
                         <outlet property="abovePlayConstraint" destination="zuZ-Ld-UFJ" id="fGc-jX-rVJ"/>
+                        <outlet property="animationObject" destination="2h4-oS-XYI" id="AY1-c9-Vlh"/>
                         <outlet property="leftOfPlayConstraint" destination="iZS-uy-0SF" id="a98-Xi-NS2"/>
                         <outlet property="rightOfPlayConstraint" destination="oyh-jd-eCn" id="Uzv-e1-9O8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="137.68115942028987" y="138.61607142857142"/>
+            <point key="canvasLocation" x="144.92753623188406" y="120.53571428571428"/>
         </scene>
     </scenes>
     <resources>
