@@ -15,20 +15,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0nm-et-zhc">
-                                <rect key="frame" x="177" y="762" width="60" height="60"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="0nm-et-zhc" secondAttribute="height" multiplier="1:1" id="Jcq-aJ-oHO"/>
-                                    <constraint firstAttribute="height" constant="60" id="cjl-z3-Tay"/>
-                                </constraints>
-                                <state key="normal" title="Play" image="play"/>
-                            </button>
                             <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bz4-Zr-kz2">
                                 <rect key="frame" x="97" y="762" width="60" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="Bz4-Zr-kz2" secondAttribute="height" multiplier="1:1" id="wQr-Cl-eZ8"/>
                                 </constraints>
                                 <state key="normal" title="Color" image="color"/>
+                                <connections>
+                                    <action selector="controlPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Jdj-a5-8i1"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qkz-jC-ZbW">
                                 <rect key="frame" x="257" y="762" width="60" height="60"/>
@@ -36,6 +31,9 @@
                                     <constraint firstAttribute="width" secondItem="Qkz-jC-ZbW" secondAttribute="height" multiplier="1:1" id="PvP-s0-IcX"/>
                                 </constraints>
                                 <state key="normal" title="Scale" image="scale"/>
+                                <connections>
+                                    <action selector="controlPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Vfe-IS-g7e"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hd2-2u-adu">
                                 <rect key="frame" x="177" y="682" width="60" height="60"/>
@@ -43,6 +41,20 @@
                                     <constraint firstAttribute="width" secondItem="hd2-2u-adu" secondAttribute="height" multiplier="1:1" id="xeL-bV-hbM"/>
                                 </constraints>
                                 <state key="normal" title="Translate" image="translate"/>
+                                <connections>
+                                    <action selector="controlPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="As5-dj-OyK"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0nm-et-zhc">
+                                <rect key="frame" x="177" y="762" width="60" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="0nm-et-zhc" secondAttribute="height" multiplier="1:1" id="Jcq-aJ-oHO"/>
+                                    <constraint firstAttribute="height" constant="60" id="cjl-z3-Tay"/>
+                                </constraints>
+                                <state key="normal" title="Play" image="play"/>
+                                <connections>
+                                    <action selector="playPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="mm9-B1-fX3"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
