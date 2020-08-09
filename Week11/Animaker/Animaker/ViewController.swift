@@ -27,8 +27,13 @@ class ViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     animator = Animator(view: animationObject)
+    
+    let size = animationObject.superview!.frame.size.width / 4
+    animationObject.frame.size = CGSize(width: size, height: size)
     animationObject.center = animationObject.superview!.center
+    animationObject.layer.cornerRadius = size / 8
     animationObject.translatesAutoresizingMaskIntoConstraints = false
+    
     toggleControls()
   }
   

@@ -39,13 +39,14 @@ class Animator {
       initChoreography()
     }
 
-   choreography!.addAnimations {
-    let container = self.object.superview!
-      let xRange = container.frame.size.width / 2 - 100
-      let yRange = container.frame.size.height / 2 - 200
-    let randomX = self.object.center.x + CGFloat.random(in: -xRange...xRange)
-    let randomY = self.object.center.y + CGFloat.random(in: -yRange...yRange)
-    self.object.center = CGPoint(x: randomX, y: randomY)
+    choreography!.addAnimations {
+      let container = self.object.superview!
+      let scaleOffset = self.object.frame.size.width / 2
+      let xRangeMax = container.frame.size.width
+      let yRangeMax = container.frame.size.height
+      let randomX = CGFloat.random(in: scaleOffset...xRangeMax - scaleOffset)
+      let randomY = CGFloat.random(in: scaleOffset...yRangeMax - scaleOffset)
+      self.object.center = CGPoint(x: randomX, y: randomY)
     }
     print("Adding Translation step")
   }
@@ -56,9 +57,8 @@ class Animator {
     }
     
     choreography!.addAnimations {
-      let randomX = CGFloat.random(in: -1...1)
-      let randomY = CGFloat.random(in: -1...1)
-      self.object.transform = CGAffineTransform(scaleX: randomX, y: randomY)
+      let randomScale = CGFloat.random(in: 0.1...2)
+      self.object.transform = CGAffineTransform(scaleX: randomScale, y: randomScale)
     }
     print("Adding Scale step")
   }
@@ -68,7 +68,7 @@ class Animator {
   }
   
   private func initChoreography() {
-    choreography = UIViewPropertyAnimator(duration: TimeInterval.random(in: 0.25...2.0), curve: .easeInOut)
+    choreography = UIViewPropertyAnimator(duration: TimeInterval.random(in: 0.1...1.0), curve: .easeInOut)
     choreography?.addCompletion({ (_) in
       self.choreography = nil
     })
