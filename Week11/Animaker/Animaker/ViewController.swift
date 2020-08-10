@@ -58,17 +58,24 @@ class ViewController: UIViewController {
     }
   }
   
-  private func showConfirmation(from origin: CGPoint) {
+  private func showConfirmation(from button: UIButton) {
     let newConfirmation = UIImageView(frame: confirmationImageView.frame)
     newConfirmation.image = confirmationImageView.image
-    newConfirmation.center = origin
+    newConfirmation.center = button.center
     newConfirmation.isHidden = false
-    view.insertSubview(newConfirmation, aboveSubview: animationObject.superview!)
+    view.insertSubview(newConfirmation, belowSubview: button)
       
-    UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
-      newConfirmation.center.y -= 80
-      newConfirmation.transform = .init(scaleX: 3.0, y: 3.0)
-      newConfirmation.alpha = 0.75
+    UIView.animateKeyframes(withDuration: 0.5, delay: 0, options: [.allowUserInteraction], animations: {
+      UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.75) {
+        newConfirmation.center.y -= 60
+        newConfirmation.transform = .init(scaleX: 3.0, y: 3.0)
+      }
+      UIView.addKeyframe(withRelativeStartTime: 0.75, relativeDuration: 0.2) {
+        newConfirmation.center.y -= 20
+      }
+      UIView.addKeyframe(withRelativeStartTime: 0.95, relativeDuration: 0.05) {
+        newConfirmation.alpha = 0
+      }
     }, completion: { _ in
       newConfirmation.removeFromSuperview()
     })
@@ -91,13 +98,13 @@ class ViewController: UIViewController {
     switch sender.currentTitle {
     case "Color":
       animator.addColorChange()
-      showConfirmation(from: sender.center)
+      showConfirmation(from: sender)
     case "Translate":
       animator.addTranslation()
-      showConfirmation(from: sender.center)
+      showConfirmation(from: sender)
     case "Scale":
       animator.addScaling()
-      showConfirmation(from: sender.center)
+      showConfirmation(from: sender)
     default:
       print("Invalid Button")
     }
