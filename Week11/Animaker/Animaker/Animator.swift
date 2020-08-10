@@ -29,7 +29,7 @@ class Animator {
     }
     
     choreography!.addAnimations {
-      self.object.backgroundColor = UIColor.random
+      self.object.backgroundColor = UIColor.change(from: self.object.backgroundColor!)
     }
     print("Adding Color step")
   }
@@ -63,7 +63,7 @@ class Animator {
     print("Adding Scale step")
   }
   
-  func runScript() {
+  func dance() {
     choreography?.startAnimation()
   }
   
@@ -76,8 +76,8 @@ class Animator {
 }
 
 extension UIColor {
-    static var random: UIColor {
+  static func change(from color: UIColor) -> UIColor {
       let colors: [UIColor] = [.black, .blue, .brown, .cyan , .green, .magenta, .orange, .purple, .red, .yellow, .gray]
-      return colors.randomElement()!
+      return colors.filter { $0 != color }.randomElement()!
     }
 }

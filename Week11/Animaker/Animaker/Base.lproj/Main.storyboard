@@ -67,6 +67,10 @@
                                     <action selector="playPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="mm9-B1-fX3"/>
                                 </connections>
                             </button>
+                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nTy-Kf-gMd" userLabel="Confirmation">
+                                <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -93,6 +97,7 @@
                     <connections>
                         <outlet property="abovePlayConstraint" destination="zuZ-Ld-UFJ" id="fGc-jX-rVJ"/>
                         <outlet property="animationObject" destination="2h4-oS-XYI" id="AY1-c9-Vlh"/>
+                        <outlet property="confirmationImageView" destination="nTy-Kf-gMd" id="kpU-SB-HTz"/>
                         <outlet property="leftOfPlayConstraint" destination="iZS-uy-0SF" id="a98-Xi-NS2"/>
                         <outlet property="rightOfPlayConstraint" destination="oyh-jd-eCn" id="Uzv-e1-9O8"/>
                     </connections>

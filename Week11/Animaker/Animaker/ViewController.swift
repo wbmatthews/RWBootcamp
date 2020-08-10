@@ -15,6 +15,7 @@ class ViewController: UIViewController {
   @IBOutlet weak var abovePlayConstraint: NSLayoutConstraint!
   
   @IBOutlet weak var animationObject: UIView!
+  @IBOutlet weak var confirmationImageView: UIImageView!
   
   private var animator: Animator!
   
@@ -33,6 +34,9 @@ class ViewController: UIViewController {
     animationObject.center = animationObject.superview!.center
     animationObject.layer.cornerRadius = size / 8
     animationObject.translatesAutoresizingMaskIntoConstraints = false
+    
+    confirmationImageView.image = UIImage(systemName: "checkmark.circle.fill")
+    confirmationImageView.translatesAutoresizingMaskIntoConstraints = false
     
     toggleControls()
   }
@@ -53,11 +57,29 @@ class ViewController: UIViewController {
       isLaunched = true
     }
   }
+  
+  private func showConfirmation(from origin: CGPoint) {
+    let newConfirmation = UIImageView(frame: confirmationImageView.frame)
+    newConfirmation.image = confirmationImageView.image
+    newConfirmation.center = origin
+    newConfirmation.isHidden = false
+    view.insertSubview(newConfirmation, aboveSubview: animationObject.superview!)
+      
+    UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
+      newConfirmation.center.y -= 80
+      newConfirmation.transform = .init(scaleX: 3.0, y: 3.0)
+      newConfirmation.alpha = 0.75
+    }, completion: { _ in
+      newConfirmation.removeFromSuperview()
+    })
+  }
+  
+  
 
   @IBAction func playPressed(_ sender: UIButton) {
     toggleControls()
     if animator.hasChoreography {
-      animator.runScript()
+      animator.dance()
       print("Starting animation")
       let buttons = view.subviews.filter { $0 is UIButton } as! [UIButton]
       buttons.forEach { $0.isEnabled = true }
@@ -65,17 +87,17 @@ class ViewController: UIViewController {
   }
   
   @IBAction func controlPressed(_ sender: UIButton) {
-    
+    sender.isEnabled = false
     switch sender.currentTitle {
     case "Color":
       animator.addColorChange()
-      sender.isEnabled = false
+      showConfirmation(from: sender.center)
     case "Translate":
       animator.addTranslation()
-      sender.isEnabled = false
+      showConfirmation(from: sender.center)
     case "Scale":
       animator.addScaling()
-      sender.isEnabled = false
+      showConfirmation(from: sender.center)
     default:
       print("Invalid Button")
     }
