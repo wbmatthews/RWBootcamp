@@ -65,7 +65,7 @@ class ViewController: UIViewController {
     newConfirmation.isHidden = false
     view.insertSubview(newConfirmation, belowSubview: button)
       
-    UIView.animateKeyframes(withDuration: 0.5, delay: 0, options: [.allowUserInteraction], animations: {
+    UIView.animateKeyframes(withDuration: 0.6, delay: 0, options: [.allowUserInteraction], animations: {
       UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.75) {
         newConfirmation.center.y -= 60
         newConfirmation.transform = .init(scaleX: 3.0, y: 3.0)
