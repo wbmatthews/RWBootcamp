@@ -68,7 +68,7 @@ class Animator {
   }
   
   private func initChoreography() {
-    choreography = UIViewPropertyAnimator(duration: TimeInterval.random(in: 0.1...1.0), curve: .easeInOut)
+    choreography = UIViewPropertyAnimator(duration: TimeInterval.random(in: 0.75...2.0), dampingRatio: 0.575)
     choreography?.addCompletion({ (_) in
       self.choreography = nil
     })
