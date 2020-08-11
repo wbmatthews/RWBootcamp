@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		691649D824E315C300D92AAE /* TimerStackList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691649D724E315C300D92AAE /* TimerStackList.swift */; };
+		691649DA24E335C900D92AAE /* TickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691649D924E335C900D92AAE /* TickerView.swift */; };
 		69D1085524E2C8CE0033DB6D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69D1085424E2C8CE0033DB6D /* AppDelegate.swift */; };
 		69D1085724E2C8CE0033DB6D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69D1085624E2C8CE0033DB6D /* SceneDelegate.swift */; };
 		69D1085924E2C8CE0033DB6D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69D1085824E2C8CE0033DB6D /* ContentView.swift */; };
@@ -19,6 +20,7 @@
 
 /* Begin PBXFileReference section */
 		691649D724E315C300D92AAE /* TimerStackList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerStackList.swift; sourceTree = "<group>"; };
+		691649D924E335C900D92AAE /* TickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickerView.swift; sourceTree = "<group>"; };
 		69D1085124E2C8CE0033DB6D /* TimeStack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeStack.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		69D1085424E2C8CE0033DB6D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		69D1085624E2C8CE0033DB6D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -64,6 +66,7 @@
 				69D1085424E2C8CE0033DB6D /* AppDelegate.swift */,
 				69D1085624E2C8CE0033DB6D /* SceneDelegate.swift */,
 				69D1085824E2C8CE0033DB6D /* ContentView.swift */,
+				691649D924E335C900D92AAE /* TickerView.swift */,
 				69D1085A24E2C8D00033DB6D /* Assets.xcassets */,
 				69D1085F24E2C8D00033DB6D /* LaunchScreen.storyboard */,
 				69D1086224E2C8D00033DB6D /* Info.plist */,
@@ -162,6 +165,7 @@
 			files = (
 				69D1085524E2C8CE0033DB6D /* AppDelegate.swift in Sources */,
 				691649D824E315C300D92AAE /* TimerStackList.swift in Sources */,
+				691649DA24E335C900D92AAE /* TickerView.swift in Sources */,
 				69D1085724E2C8CE0033DB6D /* SceneDelegate.swift in Sources */,
 				69D1085924E2C8CE0033DB6D /* ContentView.swift in Sources */,
 				69D1086A24E2C9E90033DB6D /* Ticker.swift in Sources */,

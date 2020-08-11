@@ -10,21 +10,21 @@ import SwiftUI
 
 struct ContentView: View {
   
-//  @ObservedObject var list: TimerStackList
-  @ObservedObject var ticker: Ticker
+  @ObservedObject var list: TimerStackList
+//  @ObservedObject var ticker: Ticker
   
   var body: some View {
     VStack {
-      HStack {
-        Text(ticker.name ?? "Timer")
-        Text(ticker.remaining.compoundTimeString())
-          .font(.system(Font.TextStyle.body, design: Font.Design.monospaced))
-        Button(action: {
-          self.ticker.toggle()
-        }) {
-          Text(ticker.isInProgress ? "Stop" : "Start")
-        }
-      }
+//      HStack {
+//        Text(ticker.name ?? "Timer")
+//        Text(ticker.remaining.compoundTimeString())
+//          .font(.system(Font.TextStyle.body, design: Font.Design.monospaced))
+//        Button(action: {
+//          self.ticker.toggle()
+//        }) {
+//          Text(ticker.isInProgress ? "Stop" : "Start")
+//        }
+//      }
 //      HStack {
 //        Text(list.tickers[0].name ?? "Timer")
 //        Text(list.tickers[0].remaining.compoundTimeString())
@@ -35,26 +35,17 @@ struct ContentView: View {
 //          Text(list.tickers[0].isInProgress ? "Stop" : "Start")
 //        }
 //      }
-//      List {
-//        ForEach(list.tickers, id:\.id) { ticker in
-//              HStack {
-//                Text(ticker.name ?? "Timer")
-//                Text(ticker.remaining.compoundTimeString())
-//                  .font(.system(Font.TextStyle.body, design: Font.Design.monospaced))
-//                Button(action: {
-//                  ticker.toggle()
-//                }) {
-//                  Text(ticker.isInProgress ? "Stop" : "Start")
-//                }
-//              }
-//        }
-//      }
+      List {
+        ForEach(list.tickers, id:\.id) { ticker in
+          TickerRow(ticker: ticker)
+        }
+      }
     }
   }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-      ContentView(ticker: Ticker.demoTicker)
+      ContentView(list: TimerStackList.demoList)
     }
 }
