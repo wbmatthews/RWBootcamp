@@ -28,6 +28,7 @@ class Ticker: ObservableObject, Identifiable {
   
   var name: String?
   
+  private var lastTick: Date?
   private var duration: TimeInterval
   private var elapsed: TimeInterval = 0 {
     didSet {
@@ -86,11 +87,19 @@ class Ticker: ObservableObject, Identifiable {
       .autoconnect()
       .sink{ [unowned self] _ in
         print(self.remaining.compoundTimeString())
-        self.elapsed += 1
+        
+        var elapsedTick = TimeInterval(1)
+        
+        if let lastTick = self.lastTick {
+          let tickLength = Date().timeIntervalSince(lastTick).rounded()
+          if tickLength > 1 { elapsedTick = tickLength }
+        }
+        self.elapsed += elapsedTick
         if self.elapsed >= self.duration {
           self.tickerState = .done
           self.activeTimer?.cancel()
         }
+        self.lastTick = Date()
       }
     
     //TODO: Schedule notification for completion
@@ -101,6 +110,7 @@ class Ticker: ObservableObject, Identifiable {
     //TODO: Cancel active notification
     
     activeTimer?.cancel()
+    lastTick = nil
         
   }
   
