@@ -13,7 +13,7 @@
 		69D1085B24E2C8D00033DB6D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 69D1085A24E2C8D00033DB6D /* Assets.xcassets */; };
 		69D1085E24E2C8D00033DB6D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 69D1085D24E2C8D00033DB6D /* Preview Assets.xcassets */; };
 		69D1086124E2C8D00033DB6D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 69D1085F24E2C8D00033DB6D /* LaunchScreen.storyboard */; };
-		69D1086A24E2C9E90033DB6D /* TimeStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69D1086924E2C9E90033DB6D /* TimeStack.swift */; };
+		69D1086A24E2C9E90033DB6D /* TimerStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69D1086924E2C9E90033DB6D /* TimerStack.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,7 +25,7 @@
 		69D1085D24E2C8D00033DB6D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		69D1086024E2C8D00033DB6D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		69D1086224E2C8D00033DB6D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		69D1086924E2C9E90033DB6D /* TimeStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeStack.swift; sourceTree = "<group>"; };
+		69D1086924E2C9E90033DB6D /* TimerStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerStack.swift; sourceTree = "<group>"; };
 		69D1086B24E2D0E10033DB6D /* Scratchpad.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = Scratchpad.playground; path = "../../../../../../Library/Autosave Information/Scratchpad.playground"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 /* End PBXFileReference section */
 
@@ -83,7 +83,7 @@
 		69D1086824E2C9CB0033DB6D /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				69D1086924E2C9E90033DB6D /* TimeStack.swift */,
+				69D1086924E2C9E90033DB6D /* TimerStack.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -162,7 +162,7 @@
 				69D1085524E2C8CE0033DB6D /* AppDelegate.swift in Sources */,
 				69D1085724E2C8CE0033DB6D /* SceneDelegate.swift in Sources */,
 				69D1085924E2C8CE0033DB6D /* ContentView.swift in Sources */,
-				69D1086A24E2C9E90033DB6D /* TimeStack.swift in Sources */,
+				69D1086A24E2C9E90033DB6D /* TimerStack.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

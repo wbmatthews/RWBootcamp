@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  TimeStack
+//  TimerStack
 //
 //  Created by Bill Matthews on 2020-08-11.
 //  Copyright © 2020 Bill Matthews. All rights reserved.
