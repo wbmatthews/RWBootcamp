@@ -10,19 +10,19 @@ import SwiftUI
 
 struct ContentView: View {
   
-  @ObservedObject var list: TimerStackList
-  @State var newTicker = Ticker(duration: 10)
+//  @ObservedObject var list: TimerStackList
+  @ObservedObject var ticker: Ticker
   
   var body: some View {
     VStack {
       HStack {
-        Text(newTicker.name ?? "Timer")
-        Text(newTicker.remaining.compoundTimeString())
+        Text(ticker.name ?? "Timer")
+        Text(ticker.remaining.compoundTimeString())
           .font(.system(Font.TextStyle.body, design: Font.Design.monospaced))
         Button(action: {
-          self.newTicker.toggle()
+          self.ticker.toggle()
         }) {
-          Text(newTicker.isInProgress ? "Stop" : "Start")
+          Text(ticker.isInProgress ? "Stop" : "Start")
         }
       }
 //      HStack {
@@ -55,6 +55,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-      ContentView(list: TimerStackList.demoList)
+      ContentView(ticker: Ticker.demoTicker)
     }
 }
