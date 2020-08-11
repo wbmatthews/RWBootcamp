@@ -157,6 +157,11 @@ extension TimeInterval {
   }
   
   func compoundTimeString() -> String {
-    return String(format: "%02d:%02d:%02d", compoundTime().hours, compoundTime().minutes, compoundTime().seconds)
+    if compoundTime().hours > 0 {
+    return String(format: "%dh %02d:%02d", compoundTime().hours, compoundTime().minutes, compoundTime().seconds)
+    } else {
+      return String(format: "%02d:%02d", compoundTime().minutes, compoundTime().seconds)
+
+    }
   }
 }

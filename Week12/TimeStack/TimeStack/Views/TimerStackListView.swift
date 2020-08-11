@@ -18,6 +18,13 @@ struct TimerStackListView: View {
         ForEach(stack.tickers) { ticker in
           TickerRow(ticker: ticker)
         }
+        .onDelete { (indexSet) in
+          if stack.tickers.count > 1 {
+            stack.removeTickers(at: indexSet)
+          } else {
+            self.list.remove(stack: stack)
+          }
+        }
       }
     }
   }

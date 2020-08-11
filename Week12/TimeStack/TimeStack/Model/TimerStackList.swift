@@ -19,20 +19,26 @@ class TimerStackList: ObservableObject {
       self.id = id
       self.tickers = tickers
     }
+    
+    func removeTickers(at offsets: IndexSet) {
+      tickers.remove(atOffsets: offsets)
+    }
   }
   
   static let demoList = TimerStackList()
   static let demoStack: [Stack] = [
     Stack(tickers: [Ticker(duration: 10)]),
-    Stack(tickers: [Ticker(name: "Potatoes", duration: 60)]),
+    Stack(tickers: [Ticker(name: "Potatoes", duration: 86400)]),
     Stack(tickers: [Ticker(duration: 30)])
-  ]
-  static let demoTickerList: [Ticker] = [
-    Ticker(duration: 10),
-    Ticker(name: "Potatoes", duration: 60),
-    Ticker(duration: 30)
   ]
   
   @Published var stacks: [Stack] = TimerStackList.demoStack
-  @Published var tickers: [Ticker] = TimerStackList.demoTickerList
+  
+  func remove(stack: Stack) {
+    let index = stacks.firstIndex { $0.id == stack.id }
+    if let index = index {
+      stacks.remove(at: index)
+    }
+  }
+  
 }
