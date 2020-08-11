@@ -28,7 +28,7 @@ class TimerStack: ObservableObject {
   ]
   
   private let id: UUID
-  private var activeTimer: Timer? //Timer for completion
+  private var activeTimer: AnyCancellable? //Timer for completion
   
   var name: String?
   
@@ -39,14 +39,13 @@ class TimerStack: ObservableObject {
         remaining = duration - elapsed
       } else {
         remaining = 0
-        timerState = .done
       }
     }
   }
   
   @Published var remaining: TimeInterval
   
-  private(set) var timerState: TimerState = .pending {
+  @Published private(set) var timerState: TimerState = .pending {
     didSet {
       switch timerState {
       case .pending:
@@ -86,22 +85,35 @@ class TimerStack: ObservableObject {
     //TODO: Consider completion handlers
     
     //TODO: Schedule timer for duration
-    activeTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [unowned self] timer in
-      print(self.remaining.compoundTimeString())
-      self.elapsed += 1
-      if self.elapsed >= self.duration {
-        self.timerState = .done
-        timer.invalidate()
+    
+    activeTimer = Timer.publish(every: 1.0, on: .main, in: .common)
+      .autoconnect()
+      .sink{ [unowned self] _ in
+        print(self.remaining.compoundTimeString())
+        self.elapsed += 1
+        if self.elapsed >= self.duration {
+          self.timerState = .done
+          self.activeTimer?.cancel()
+        }
       }
-    }
+    
+//    activeTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [unowned self] timer in
+//      print(self.remaining.compoundTimeString())
+//      self.elapsed += 1
+//      if self.elapsed >= self.duration {
+//        self.timerState = .done
+//        timer.invalidate()
+//      }
+//    }
     
     //TODO: Schedule notification for completion
         
   }
   
   private func stop() {
-    //TODO: Cancel active timer
     //TODO: Cancel active notification
+    
+    activeTimer?.cancel()
         
   }
   
