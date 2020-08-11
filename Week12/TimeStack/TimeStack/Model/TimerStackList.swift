@@ -11,11 +11,21 @@ import Combine
 
 class TimerStackList: ObservableObject {
   
+  class Stack: ObservableObject, Identifiable {
+    let id: UUID
+    @Published var tickers: [Ticker]
+    
+    init(id: UUID = UUID(), tickers: [Ticker]) {
+      self.id = id
+      self.tickers = tickers
+    }
+  }
+  
   static let demoList = TimerStackList()
   static let demoStack: [Stack] = [
-    [Ticker(duration: 10)],
-    [Ticker(name: "Potatoes", duration: 60)],
-    [Ticker(duration: 30)]
+    Stack(tickers: [Ticker(duration: 10)]),
+    Stack(tickers: [Ticker(name: "Potatoes", duration: 60)]),
+    Stack(tickers: [Ticker(duration: 30)])
   ]
   static let demoTickerList: [Ticker] = [
     Ticker(duration: 10),

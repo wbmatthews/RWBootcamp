@@ -10,7 +10,6 @@ import Foundation
 import Combine
 
 typealias CompoundTime = (hours: Int, minutes: Int, seconds: Int)
-typealias Stack = [Ticker]
 
 class Ticker: ObservableObject, Identifiable {
   
