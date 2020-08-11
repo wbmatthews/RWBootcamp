@@ -1,6 +1,6 @@
 //
 //  TimerStack.swift
-//  TimerStack
+//  Ticker
 //
 //  Created by Bill Matthews on 2020-08-11.
 //  Copyright © 2020 Bill Matthews. All rights reserved.
@@ -10,10 +10,11 @@ import Foundation
 import Combine
 
 typealias CompoundTime = (hours: Int, minutes: Int, seconds: Int)
+typealias Stack = [Ticker]
 
-class TimerStack: ObservableObject {
+class Ticker: ObservableObject, Identifiable {
   
-  enum TimerState {
+  enum TickerState {
     case pending, inProgress, done
   }
   
@@ -21,13 +22,9 @@ class TimerStack: ObservableObject {
     case solo, first, last, stacked
   }
   
-  static let previewList: [TimerStack] = [
-    TimerStack(duration: 10),
-    TimerStack(name: "Potatoes", duration: 60),
-    TimerStack(duration: 30)
-  ]
+  static let demoTicker = Ticker(duration: 10)
   
-  private let id: UUID
+  let id: UUID
   private var activeTimer: AnyCancellable? //Timer for completion
   
   var name: String?
@@ -45,9 +42,9 @@ class TimerStack: ObservableObject {
   
   @Published var remaining: TimeInterval
   
-  @Published private(set) var timerState: TimerState = .pending {
+  @Published private(set) var tickerState: TickerState = .pending {
     didSet {
-      switch timerState {
+      switch tickerState {
       case .pending:
         print("Stopped timer")
         stop()
@@ -62,7 +59,7 @@ class TimerStack: ObservableObject {
   private(set) var stackState: StackState = .solo
   
   var isInProgress: Bool {
-    timerState == .inProgress
+    tickerState == .inProgress
   }
   
   //MARK: - Initializers
@@ -86,25 +83,16 @@ class TimerStack: ObservableObject {
     
     //TODO: Schedule timer for duration
     
-    activeTimer = Timer.publish(every: 1.0, on: .main, in: .common)
+    activeTimer = Timer.publish(every: 1.0, tolerance: 0.5, on: .main, in: .common)
       .autoconnect()
       .sink{ [unowned self] _ in
         print(self.remaining.compoundTimeString())
         self.elapsed += 1
         if self.elapsed >= self.duration {
-          self.timerState = .done
+          self.tickerState = .done
           self.activeTimer?.cancel()
         }
       }
-    
-//    activeTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [unowned self] timer in
-//      print(self.remaining.compoundTimeString())
-//      self.elapsed += 1
-//      if self.elapsed >= self.duration {
-//        self.timerState = .done
-//        timer.invalidate()
-//      }
-//    }
     
     //TODO: Schedule notification for completion
         
@@ -119,13 +107,14 @@ class TimerStack: ObservableObject {
   
   func toggle() {
     print("Toggling!")
-    switch timerState {
+    switch tickerState {
     case .pending:
-      timerState = .inProgress
+      tickerState = .inProgress
     case .inProgress:
-      timerState = .pending
+      tickerState = .pending
     case .done:
       print("Tried toggling \(name ?? "unnamed timer") but it was complete")
+      reset()
     }
   }
   

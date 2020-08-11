@@ -10,25 +10,51 @@ import SwiftUI
 
 struct ContentView: View {
   
-  @ObservedObject var timerStack: TimerStack
+  @ObservedObject var list: TimerStackList
+  @State var newTicker = Ticker(duration: 10)
   
-    var body: some View {
-      VStack {
-        HStack {
-          Text(timerStack.name ?? "Timer")
-          Text(timerStack.remaining.compoundTimeString())
-        }
+  var body: some View {
+    VStack {
+      HStack {
+        Text(newTicker.name ?? "Timer")
+        Text(newTicker.remaining.compoundTimeString())
+          .font(.system(Font.TextStyle.body, design: Font.Design.monospaced))
         Button(action: {
-          self.timerStack.toggle()
+          self.newTicker.toggle()
         }) {
-          Text(timerStack.isInProgress ? "Stop" : "Start")
+          Text(newTicker.isInProgress ? "Stop" : "Start")
         }
       }
+//      HStack {
+//        Text(list.tickers[0].name ?? "Timer")
+//        Text(list.tickers[0].remaining.compoundTimeString())
+//          .font(.system(Font.TextStyle.body, design: Font.Design.monospaced))
+//        Button(action: {
+//          self.list.tickers[0].toggle()
+//        }) {
+//          Text(list.tickers[0].isInProgress ? "Stop" : "Start")
+//        }
+//      }
+//      List {
+//        ForEach(list.tickers, id:\.id) { ticker in
+//              HStack {
+//                Text(ticker.name ?? "Timer")
+//                Text(ticker.remaining.compoundTimeString())
+//                  .font(.system(Font.TextStyle.body, design: Font.Design.monospaced))
+//                Button(action: {
+//                  ticker.toggle()
+//                }) {
+//                  Text(ticker.isInProgress ? "Stop" : "Start")
+//                }
+//              }
+//        }
+//      }
     }
+  }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-      ContentView(timerStack: TimerStack.previewList[0])
+      ContentView(list: TimerStackList.demoList)
     }
 }
