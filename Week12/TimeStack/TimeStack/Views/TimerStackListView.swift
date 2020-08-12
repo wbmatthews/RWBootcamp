@@ -13,19 +13,26 @@ struct TimerStackListView: View {
   @ObservedObject var list: TimerStackList
   
   var body: some View {
-    List {
-      ForEach(list.stacks) { stack in
-        ForEach(stack.tickers) { ticker in
-          TickerRow(ticker: ticker)
-        }
-        .onDelete { (indexSet) in
-          if stack.tickers.count > 1 {
-            stack.removeTickers(at: indexSet)
-          } else {
-            self.list.remove(stack: stack)
+    NavigationView {
+      List {
+        ForEach(list.stacks) { stack in
+          
+          Section(header: Text("Stack")) {
+            
+            ForEach(stack.tickers) { ticker in
+              TickerRow(ticker: ticker)
+            }
+            .onDelete { (indexSet) in
+              if stack.tickers.count > 1 {
+                stack.removeTickers(at: indexSet)
+              } else {
+                self.list.remove(stack: stack)
+              }
+            }
           }
         }
       }
+      .navigationBarTitle(Text("Stimers"), displayMode: .large)
     }
   }
 }
