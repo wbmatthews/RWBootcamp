@@ -34,6 +34,11 @@ class TimerStackList: ObservableObject {
   
   @Published var stacks: [Stack] = TimerStackList.demoStack
   
+  func addTicker(name: String? = nil, duration: CompoundTime, isRunning: Bool) {
+    let newTicker = Ticker(name: name, compoundTime: duration, isRunning: isRunning)
+    stacks.append(Stack(tickers: [newTicker]))
+  }
+  
   func remove(stack: Stack) {
     let index = stacks.firstIndex { $0.id == stack.id }
     if let index = index {

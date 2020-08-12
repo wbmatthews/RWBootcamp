@@ -42,7 +42,7 @@ class Ticker: ObservableObject, Identifiable {
   
   @Published var remaining: TimeInterval
   
-  @Published private(set) var tickerState: TickerState = .pending {
+  @Published private(set) var tickerState: TickerState {
     didSet {
       switch tickerState {
       case .pending:
@@ -64,12 +64,23 @@ class Ticker: ObservableObject, Identifiable {
   
   //MARK: - Initializers
   
-  init(id: UUID = UUID(), name: String? = nil, duration: TimeInterval) {
+  init(id: UUID = UUID(), name: String? = nil, duration: TimeInterval, state: TickerState = .pending) {
     self.id = id
     self.name = name
     self.duration = duration
     self.remaining = duration
+    self.tickerState = state
+    if self.tickerState == .inProgress {
+      self.start()
+    }
     print("Initializing \(id.uuidString) (\(name ?? "Unnamed")) - \(duration.compoundTimeString())")
+  }
+  
+  convenience init(name: String?, compoundTime: CompoundTime, isRunning: Bool) {
+    var state: TickerState = .pending
+    let duration = TimeInterval((3600 * compoundTime.hours) + (compoundTime.minutes * 60) + compoundTime.seconds)
+    if isRunning { state = .inProgress }
+    self.init(name: name, duration: duration, state: state)
   }
   
   deinit {
@@ -77,6 +88,25 @@ class Ticker: ObservableObject, Identifiable {
   }
   
   //MARK: - Public functions
+  
+  func toggle() {
+    print("Toggling!")
+    switch tickerState {
+    case .pending:
+      tickerState = .inProgress
+    case .inProgress:
+      tickerState = .pending
+    case .done:
+      print("Tried toggling \(name ?? "unnamed timer") but it was complete")
+      reset()
+    }
+  }
+  
+  func reset() {
+    elapsed = 0
+  }
+  
+  //MARK: - Private functions
   
   private func start() {
     //TODO: Consider completion handlers
@@ -113,27 +143,6 @@ class Ticker: ObservableObject, Identifiable {
     lastTick = nil
         
   }
-  
-  func toggle() {
-    print("Toggling!")
-    switch tickerState {
-    case .pending:
-      tickerState = .inProgress
-    case .inProgress:
-      tickerState = .pending
-    case .done:
-      print("Tried toggling \(name ?? "unnamed timer") but it was complete")
-      reset()
-    }
-  }
-  
-  func reset() {
-    elapsed = 0
-  }
-  
-  //MARK: - Private functions
-  
-  
   
 }
 

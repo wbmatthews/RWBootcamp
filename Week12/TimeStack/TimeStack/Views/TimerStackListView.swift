@@ -11,6 +11,7 @@ import SwiftUI
 struct TimerStackListView: View {
   
   @ObservedObject var list: TimerStackList
+  @State var showNewTickerSheet: Bool = false
   
   var body: some View {
     NavigationView {
@@ -32,7 +33,17 @@ struct TimerStackListView: View {
           }
         }
       }
-      .navigationBarTitle(Text("Stimers"), displayMode: .large)
+      .navigationBarTitle(Text("Stimers"), displayMode: .automatic)
+    .navigationBarItems(trailing:
+      Button(action: {
+        self.showNewTickerSheet.toggle()
+      }, label: {
+        Image(systemName: "plus.circle.fill")
+      })
+      )
+    }
+    .sheet(isPresented: $showNewTickerSheet) {
+      NewTicker(list: self.list)
     }
   }
 }
