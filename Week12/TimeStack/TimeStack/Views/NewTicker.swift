@@ -79,6 +79,6 @@ struct NewTicker: View {
 
 struct NewTicker_Previews: PreviewProvider {
   static var previews: some View {
-    NewTicker(list: TimerStackList.demoList)
+    NewTicker(list: TimerStackList())
   }
 }

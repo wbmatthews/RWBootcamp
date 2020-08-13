@@ -23,7 +23,11 @@ struct TickerRow: View {
         Text(ticker.isInProgress ? "Stop" : "Start")
       }
     }
+    .padding()
+    .frame(maxWidth: .infinity, alignment: .topLeading)
+    .background(Color.secondary.opacity(0.5))
   }
+  
 }
 
 struct TickerRow_Previews: PreviewProvider {

@@ -20,31 +20,47 @@ class TimerStackList: ObservableObject {
       self.tickers = tickers
     }
     
-    func removeTickers(at offsets: IndexSet) {
-      tickers.remove(atOffsets: offsets)
+    func removeTicker(at index: Int) {
+      print("Removing ticker from index \(index)")
+      tickers[index].cancel()
+      tickers.remove(at: index)
     }
   }
   
-  static let demoList = TimerStackList()
   static let demoStack: [Stack] = [
     Stack(tickers: [Ticker(name: "Demo1.0", duration: 10)]),
     Stack(tickers: [Ticker(name: "Demo2.0", duration: 86400)]),
     Stack(tickers: [Ticker(name: "Demo3.0", duration: 30), Ticker(name: "Demo3.1", duration: 40)])
   ]
   
-  @Published var stacks: [Stack] = []
+  @Published var stacks: [Stack]
+  
+  init(stacks: [Stack] = []) {
+    if stacks.isEmpty {
+      self.stacks = TimerStackList.demoStack
+    } else {
+      self.stacks = stacks
+    }
+  }
   
   func addTicker(name: String? = nil, duration: CompoundTime, isRunning: Bool) {
     stacks.append(Stack(tickers: [Ticker(name: name, compoundTime: duration, isRunning: isRunning)]))
   }
   
-  func remove(stack: Stack) {
-    let index = stacks.firstIndex { $0.id == stack.id }
-    if let index = index {
-      stacks[index].tickers.forEach { $0.cancel() }
-      stacks[index].tickers.removeAll()
-      stacks.remove(at: index)
-    }
+  private func getIndexOf(ticker: Ticker) -> (Int, Int) {
+    
+    let stackIndex = stacks.firstIndex { $0.tickers.contains { $0.id == ticker.id } }!
+    let tickerIndex = stacks[stackIndex].tickers.firstIndex { $0.id == ticker.id }!
+    
+    return (stackIndex, tickerIndex)
   }
   
+  func removeTicker(_ ticker: Ticker?) {
+    guard let ticker = ticker else { return }
+    let (stackIndex, tickerIndex) = getIndexOf(ticker: ticker)
+    stacks[stackIndex].removeTicker(at: tickerIndex)
+    if stacks[stackIndex].tickers.count == 0 {
+      stacks.remove(at: stackIndex)
+    }
+  }
 }
