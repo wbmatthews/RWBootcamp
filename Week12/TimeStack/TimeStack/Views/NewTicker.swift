@@ -64,11 +64,11 @@ struct NewTicker: View {
         }
         
         Button(action: {
-          self.list.addTicker(name: self.name, duration: self.entryDuration, isRunning: self.runTimer)
+          let tickerName = self.name.isEmpty ? nil : self.name
+          self.list.addTicker(name: tickerName, duration: self.entryDuration, isRunning: self.runTimer)
           self.presentationMode.wrappedValue.dismiss()
         }, label: {
           Text("Save new timer")
-            .multilineTextAlignment(.center)
         })
           .frame(maxWidth: .infinity)
       }

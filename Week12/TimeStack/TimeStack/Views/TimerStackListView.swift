@@ -39,6 +39,8 @@ struct TimerStackListView: View {
         self.showNewTickerSheet.toggle()
       }, label: {
         Image(systemName: "plus.circle.fill")
+        .resizable()
+        .frame(width: 40, height: 40)
       })
       )
     }

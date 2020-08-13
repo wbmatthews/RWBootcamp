@@ -27,21 +27,22 @@ class TimerStackList: ObservableObject {
   
   static let demoList = TimerStackList()
   static let demoStack: [Stack] = [
-    Stack(tickers: [Ticker(duration: 10)]),
-    Stack(tickers: [Ticker(name: "Potatoes", duration: 86400)]),
-    Stack(tickers: [Ticker(duration: 30)])
+    Stack(tickers: [Ticker(name: "Demo1.0", duration: 10)]),
+    Stack(tickers: [Ticker(name: "Demo2.0", duration: 86400)]),
+    Stack(tickers: [Ticker(name: "Demo3.0", duration: 30), Ticker(name: "Demo3.1", duration: 40)])
   ]
   
-  @Published var stacks: [Stack] = TimerStackList.demoStack
+  @Published var stacks: [Stack] = []
   
   func addTicker(name: String? = nil, duration: CompoundTime, isRunning: Bool) {
-    let newTicker = Ticker(name: name, compoundTime: duration, isRunning: isRunning)
-    stacks.append(Stack(tickers: [newTicker]))
+    stacks.append(Stack(tickers: [Ticker(name: name, compoundTime: duration, isRunning: isRunning)]))
   }
   
   func remove(stack: Stack) {
     let index = stacks.firstIndex { $0.id == stack.id }
     if let index = index {
+      stacks[index].tickers.forEach { $0.cancel() }
+      stacks[index].tickers.removeAll()
       stacks.remove(at: index)
     }
   }

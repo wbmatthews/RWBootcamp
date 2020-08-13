@@ -11,7 +11,7 @@ import Combine
 
 typealias CompoundTime = (hours: Int, minutes: Int, seconds: Int)
 
-class Ticker: ObservableObject, Identifiable {
+class Ticker: ObservableObject, Identifiable, Cancellable {
   
   enum TickerState {
     case pending, inProgress, done
@@ -106,6 +106,10 @@ class Ticker: ObservableObject, Identifiable {
     elapsed = 0
   }
   
+  func cancel() {
+    tickerState = .pending
+  }
+  
   //MARK: - Private functions
   
   private func start() {
@@ -138,7 +142,6 @@ class Ticker: ObservableObject, Identifiable {
   
   private func stop() {
     //TODO: Cancel active notification
-    
     activeTimer?.cancel()
     lastTick = nil
         
