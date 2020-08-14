@@ -109,12 +109,27 @@ class Ticker: ObservableObject, Identifiable, Cancellable {
     }
   }
   
+  func pause() {
+    tickerState = .pending
+  }
+  
   func reset() {
     elapsed = 0
+    tickerState = .pending
   }
   
   func cancel() {
     tickerState = .pending
+  }
+  
+  func update(newName: String? = nil, newDuration: CompoundTime? = nil) {
+    if let newName = newName {
+      self.name = newName.isEmpty ? nil : newName
+    }
+    if let newDuration = newDuration {
+      self.duration = TimeInterval((3600 * newDuration.hours) + (newDuration.minutes * 60) + newDuration.seconds)
+      self.elapsed = 0
+    }
   }
   
   //MARK: - Private functions
