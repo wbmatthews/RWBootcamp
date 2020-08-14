@@ -41,6 +41,13 @@ class Ticker: ObservableObject, Identifiable, Cancellable {
   }
   
   @Published var remaining: TimeInterval
+  var proportionRemaining: Double {
+    if remaining > 0 {
+      return Double(duration) / Double(remaining)
+    } else {
+      return 86400
+    }
+  }
   
   @Published private(set) var tickerState: TickerState {
     didSet {
