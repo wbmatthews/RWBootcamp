@@ -21,7 +21,7 @@ struct BackgroundProgressView: View {
             .fill(Color.green)
             .frame(height: geometry.size.height/CGFloat(self.proportion))
         }
-        .animation(.easeIn)
+        .animation(.easeOut)
         .opacity(0.4)
       }
     }

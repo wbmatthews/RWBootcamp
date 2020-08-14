@@ -47,6 +47,12 @@ class TimerStackList: ObservableObject {
     stacks.append(Stack(tickers: [Ticker(name: name, compoundTime: duration, isRunning: isRunning)]))
   }
   
+  func addTicker() -> Ticker {
+    let newTicker = Ticker(duration: 10)
+    stacks.append(Stack(tickers: [newTicker]))
+    return newTicker
+  }
+  
   private func getIndexOf(ticker: Ticker) -> (Int, Int) {
     
     let stackIndex = stacks.firstIndex { $0.tickers.contains { $0.id == ticker.id } }!

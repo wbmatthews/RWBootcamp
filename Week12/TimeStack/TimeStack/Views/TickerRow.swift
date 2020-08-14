@@ -13,23 +13,27 @@ struct TickerRow: View {
   @ObservedObject var ticker: Ticker
   
   var body: some View {
-    ZStack {
+    ZStack(alignment: .center) {
       
       BackgroundProgressView(proportion: ticker.proportionRemaining)
       
-      HStack {
-        Text(ticker.name ?? "Timer")
-        Text(ticker.remaining.compoundTimeString())
-          .font(.system(Font.TextStyle.body, design: Font.Design.monospaced))
-        Button(action: {
-          self.ticker.toggle()
-        }) {
-          Text(ticker.isInProgress ? "Stop" : "Start")
+      VStack(alignment: .center) {
+        HStack {
+          Text(ticker.name ?? "Timer")
+          Spacer()
+          Button(action: {
+            self.ticker.toggle()
+          }) {
+            Text(ticker.isInProgress ? "Stop" : "Start")
+          }
         }
+        .font(.system(size: 10, weight: Font.Weight.light, design: Font.Design.rounded))
+        Text(ticker.remaining.compoundTimeString())
+          .font(.system(size: 20, weight: Font.Weight.medium, design: Font.Design.monospaced))
+
       }
-    .layoutPriority(1)
-      .padding()
-      .frame(maxWidth: .infinity, alignment: .topLeading)
+    .padding(8)
+      .layoutPriority(1)
     }
   }
   

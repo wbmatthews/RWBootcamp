@@ -22,7 +22,7 @@ struct TimerStackListView: View {
     
     
     
-    ZStack(alignment: .bottomTrailing) {
+    ZStack(alignment: .center) {
       
       if showTickerEditor {
         
@@ -34,7 +34,7 @@ struct TimerStackListView: View {
           .zIndex(1)
           .transition(.opacity)
 
-        EditView(ticker: $selectedTicker, isDisplayed: $showTickerEditor)
+        EditTickerView(ticker: $selectedTicker, isDisplayed: $showTickerEditor)
           .animation(.easeInOut(duration: 0.1))
           .transition(.scale)
           .zIndex(2)
@@ -50,7 +50,12 @@ struct TimerStackListView: View {
           Spacer()
           
           Button(action: {
-            self.showNewTickerSheet.toggle()
+//            self.showNewTickerSheet.toggle()
+            
+            self.selectedTicker = self.list.addTicker()
+            withAnimation{
+              self.showTickerEditor = true
+            }
           }, label: {
             Image(systemName: "plus.circle.fill")
               .resizable()
@@ -102,9 +107,9 @@ struct TimerStackListView: View {
           }
           .animation(.easeIn)
           .padding(.horizontal)
-          .sheet(isPresented: $showNewTickerSheet) {
-            NewTicker(list: self.list)
-          }
+//          .sheet(isPresented: $showNewTickerSheet) {
+//            NewTicker(list: self.list)
+//          }
         }
       }
     .zIndex(0)
