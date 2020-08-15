@@ -17,8 +17,9 @@ class Ticker: ObservableObject, Identifiable, Cancellable {
     case paused, pending, inProgress, done
   }
   
-  enum StackState {
-    case solo, first, last, stacked
+  enum StackState: Equatable {
+    case solo, first, last
+    case stacked(Int)
   }
   
   static let demoTicker = Ticker(duration: 10)
@@ -73,12 +74,13 @@ class Ticker: ObservableObject, Identifiable, Cancellable {
   
   //MARK: - Initializers
   
-  init(id: UUID = UUID(), name: String? = nil, duration: TimeInterval, state: TickerState = .paused) {
+  init(id: UUID = UUID(), name: String? = nil, duration: TimeInterval, tickerState: TickerState = .paused, stackState: StackState = .solo) {
     self.id = id
     self.name = name
     self.duration = duration
     self.remaining = duration
-    self.tickerState = state
+    self.tickerState = tickerState
+    self.stackState = stackState
     if self.tickerState == .inProgress {
       self.start()
     }
@@ -86,10 +88,10 @@ class Ticker: ObservableObject, Identifiable, Cancellable {
   }
   
   convenience init(name: String?, compoundTime: CompoundTime, isRunning: Bool) {
-    var state: TickerState = .paused
+    var tickerState: TickerState = .paused
     let duration = TimeInterval((3600 * compoundTime.hours) + (compoundTime.minutes * 60) + compoundTime.seconds)
-    if isRunning { state = .inProgress }
-    self.init(name: name, duration: duration, state: state)
+    if isRunning { tickerState = .inProgress }
+    self.init(name: name, duration: duration, tickerState: tickerState)
   }
   
   deinit {

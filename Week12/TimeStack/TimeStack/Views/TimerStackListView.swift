@@ -13,8 +13,8 @@ struct TimerStackListView: View {
   @ObservedObject var list: TimerStackList
   
   @State var showNewTickerSheet: Bool = false
-  @State var showDeleteAlert: Bool = false
   @State var showTickerEditor: Bool  = false
+  @State var showLinkView: Bool = false
   
   @State var selectedTicker: Ticker? = nil
   
@@ -108,22 +108,12 @@ struct TimerStackListView: View {
                           self.showTickerEditor = true
                         }
                     }
-//                      .onLongPressGesture(minimumDuration: 1.0) {
-//                        print("Long pressed \(ticker.name ?? "unnamed")")
-//                        self.showDeleteAlert = true
-//                        self.selectedTicker = ticker
-//                    }
-//                    .alert(isPresented: self.$showDeleteAlert) {
-//                      Alert(
-//                        title: Text("Delete \(self.selectedTicker?.name ?? "timer")?"),
-//                        message: Text("This cannot be undone."),
-//                        primaryButton: Alert.Button.destructive(Text("Delete")) {
-//                          self.list.removeTicker(self.selectedTicker)
-//                          self.selectedTicker = nil
-//                        },
-//                        secondaryButton: Alert.Button.cancel()
-//                      )
-//                    }
+                      .onLongPressGesture(minimumDuration: 1.0) {
+                        print("Long pressed \(ticker.name ?? "unnamed")")
+                        self.selectedTicker = ticker
+                        self.showLinkView = true
+                    }
+                    .sheet(isPresented: self.$showLinkView) { LinkView(list: self.list, selectedTicker: self.selectedTicker!) }
                   }
                 }
               }

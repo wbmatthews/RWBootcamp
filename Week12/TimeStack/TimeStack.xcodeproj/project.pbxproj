@@ -10,6 +10,7 @@
 		691649D824E315C300D92AAE /* TimerStackList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691649D724E315C300D92AAE /* TimerStackList.swift */; };
 		691649DA24E335C900D92AAE /* TickerRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691649D924E335C900D92AAE /* TickerRow.swift */; };
 		694A3E9624E630E7006FCA80 /* BackgroundProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 694A3E9524E630E7006FCA80 /* BackgroundProgressView.swift */; };
+		699C6D8724E8403600FBED13 /* LinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699C6D8624E8403600FBED13 /* LinkView.swift */; };
 		69B42CE524E6B2D900CD7EA4 /* EditTickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69B42CE424E6B2D900CD7EA4 /* EditTickerView.swift */; };
 		69D1085524E2C8CE0033DB6D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69D1085424E2C8CE0033DB6D /* AppDelegate.swift */; };
 		69D1085724E2C8CE0033DB6D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69D1085624E2C8CE0033DB6D /* SceneDelegate.swift */; };
@@ -24,6 +25,7 @@
 		691649D724E315C300D92AAE /* TimerStackList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerStackList.swift; sourceTree = "<group>"; };
 		691649D924E335C900D92AAE /* TickerRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickerRow.swift; sourceTree = "<group>"; };
 		694A3E9524E630E7006FCA80 /* BackgroundProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundProgressView.swift; sourceTree = "<group>"; };
+		699C6D8624E8403600FBED13 /* LinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkView.swift; sourceTree = "<group>"; };
 		69B42CE424E6B2D900CD7EA4 /* EditTickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditTickerView.swift; sourceTree = "<group>"; };
 		69D1085124E2C8CE0033DB6D /* TimeStack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeStack.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		69D1085424E2C8CE0033DB6D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -54,6 +56,7 @@
 				69D1085824E2C8CE0033DB6D /* TimerStackListView.swift */,
 				691649D924E335C900D92AAE /* TickerRow.swift */,
 				69B42CE424E6B2D900CD7EA4 /* EditTickerView.swift */,
+				699C6D8624E8403600FBED13 /* LinkView.swift */,
 				694A3E9724E630F0006FCA80 /* Subviews */,
 			);
 			path = Views;
@@ -194,6 +197,7 @@
 				69B42CE524E6B2D900CD7EA4 /* EditTickerView.swift in Sources */,
 				69D1085924E2C8CE0033DB6D /* TimerStackListView.swift in Sources */,
 				69D1086A24E2C9E90033DB6D /* Ticker.swift in Sources */,
+				699C6D8724E8403600FBED13 /* LinkView.swift in Sources */,
 				694A3E9624E630E7006FCA80 /* BackgroundProgressView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
