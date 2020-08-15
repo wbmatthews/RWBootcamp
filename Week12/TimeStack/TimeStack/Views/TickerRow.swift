@@ -16,8 +16,9 @@ struct TickerRow: View {
     ZStack(alignment: .center) {
       
       BackgroundProgressView(proportion: ticker.proportionRemaining)
+      .cornerRadius(12)
       
-      VStack(alignment: .center) {
+      ZStack(alignment: .center) {
         HStack {
           Text(ticker.name ?? "Timer")
           Spacer()
@@ -27,20 +28,22 @@ struct TickerRow: View {
             Text(ticker.isInProgress ? "Stop" : "Start")
           }
         }
-        .font(.system(size: 10, weight: Font.Weight.light, design: Font.Design.rounded))
+        .font(.system(size: 12, weight: Font.Weight.light, design: Font.Design.rounded))
         Text(ticker.remaining.compoundTimeString())
           .font(.system(size: 20, weight: Font.Weight.medium, design: Font.Design.monospaced))
-
+        
       }
-    .padding(8)
+      .padding(8)
       .layoutPriority(1)
+      .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.secondary))
     }
+    .padding(.horizontal)
   }
   
 }
 
 struct TickerRow_Previews: PreviewProvider {
-    static var previews: some View {
-      TickerRow(ticker: Ticker.demoTicker)
-    }
+  static var previews: some View {
+    TickerRow(ticker: Ticker.demoTicker)
+  }
 }

@@ -14,7 +14,7 @@ typealias CompoundTime = (hours: Int, minutes: Int, seconds: Int)
 class Ticker: ObservableObject, Identifiable, Cancellable {
   
   enum TickerState {
-    case pending, inProgress, done
+    case paused, pending, inProgress, done
   }
   
   enum StackState {
@@ -52,9 +52,11 @@ class Ticker: ObservableObject, Identifiable, Cancellable {
   @Published private(set) var tickerState: TickerState {
     didSet {
       switch tickerState {
-      case .pending:
+      case .paused:
         print("Stopped timer")
         stop()
+      case .pending:
+        print("Timer waiting for turn in stack")
       case .inProgress:
         print("Started timer")
         start()
@@ -71,7 +73,7 @@ class Ticker: ObservableObject, Identifiable, Cancellable {
   
   //MARK: - Initializers
   
-  init(id: UUID = UUID(), name: String? = nil, duration: TimeInterval, state: TickerState = .pending) {
+  init(id: UUID = UUID(), name: String? = nil, duration: TimeInterval, state: TickerState = .paused) {
     self.id = id
     self.name = name
     self.duration = duration
@@ -84,7 +86,7 @@ class Ticker: ObservableObject, Identifiable, Cancellable {
   }
   
   convenience init(name: String?, compoundTime: CompoundTime, isRunning: Bool) {
-    var state: TickerState = .pending
+    var state: TickerState = .paused
     let duration = TimeInterval((3600 * compoundTime.hours) + (compoundTime.minutes * 60) + compoundTime.seconds)
     if isRunning { state = .inProgress }
     self.init(name: name, duration: duration, state: state)
@@ -97,29 +99,29 @@ class Ticker: ObservableObject, Identifiable, Cancellable {
   //MARK: - Public functions
   
   func toggle() {
-    print("Toggling!")
     switch tickerState {
     case .pending:
+      print("Tried toggling a stacked timer in pending state")
+    case .paused:
       tickerState = .inProgress
     case .inProgress:
-      tickerState = .pending
+      tickerState = .paused
     case .done:
-      print("Tried toggling \(name ?? "unnamed timer") but it was complete")
       reset()
     }
   }
   
   func pause() {
-    tickerState = .pending
+    tickerState = .paused
   }
   
   func reset() {
     elapsed = 0
-    tickerState = .pending
+    tickerState = .paused
   }
   
   func cancel() {
-    tickerState = .pending
+    tickerState = .paused
   }
   
   func update(newName: String? = nil, newDuration: CompoundTime? = nil) {
@@ -138,6 +140,8 @@ class Ticker: ObservableObject, Identifiable, Cancellable {
     //TODO: Consider completion handlers
     
     //TODO: Schedule timer for duration
+    
+//    let alertTimer = schedule
     
     activeTimer = Timer.publish(every: 1.0, tolerance: 0.5, on: .main, in: .common)
       .autoconnect()

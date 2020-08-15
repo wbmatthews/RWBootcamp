@@ -14,15 +14,20 @@ struct BackgroundProgressView: View {
     
     var body: some View {
       GeometryReader { geometry in
-        VStack(spacing: 0) {
+        HStack {
+          VStack(spacing: 0) {
+            Rectangle()
+              .fill(Color(UIColor.secondarySystemFill))
+            Rectangle()
+              .fill(Color(UIColor.systemGreen))
+              .frame(height: geometry.size.height/CGFloat(self.proportion))
+          }
+          .animation(.easeOut)
+          
           Rectangle()
-            .fill(Color.gray)
-          Rectangle()
-            .fill(Color.green)
-            .frame(height: geometry.size.height/CGFloat(self.proportion))
+            .fill(Color(UIColor.systemBackground))
+            .frame(width: geometry.size.width * 0.75)
         }
-        .animation(.easeOut)
-        .opacity(0.4)
       }
     }
 }

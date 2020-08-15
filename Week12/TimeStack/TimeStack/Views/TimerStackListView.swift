@@ -17,16 +17,16 @@ struct TimerStackListView: View {
   @State var showTickerEditor: Bool  = false
   
   @State var selectedTicker: Ticker? = nil
+  
+  @State var isEditing: Bool = false
     
   var body: some View {
-    
-    
     
     ZStack(alignment: .center) {
       
       if showTickerEditor {
         
-        Blur(style: .systemUltraThinMaterialDark)
+        Blur(style: .systemUltraThinMaterial)
           .animation(.easeIn(duration: 0.05))
           .transition(.opacity)
           .edgesIgnoringSafeArea(.all)
@@ -50,8 +50,15 @@ struct TimerStackListView: View {
           Spacer()
           
           Button(action: {
-//            self.showNewTickerSheet.toggle()
-            
+            withAnimation{
+              self.isEditing.toggle()
+            }
+          }, label: {
+            Image(systemName: "ellipsis.circle.fill")
+              .resizable()
+              .frame(width: 28, height: 28)
+          })
+          Button(action: {
             self.selectedTicker = self.list.addTicker()
             withAnimation{
               self.showTickerEditor = true
@@ -61,9 +68,9 @@ struct TimerStackListView: View {
               .resizable()
               .frame(width: 28, height: 28)
           })
+          .disabled(isEditing)
         }
         .padding([.top, .horizontal])
-        
         
         Divider()
 
@@ -76,40 +83,54 @@ struct TimerStackListView: View {
               Section(header: Text("")) {
                 
                 ForEach(stack.tickers) { ticker in
-                  TickerRow(ticker: ticker)
-                    .onTapGesture {
-                      print("Tapped \(ticker.name ?? "unnamed")")
-                      self.selectedTicker = ticker
-                      withAnimation {
-                        self.showTickerEditor = true
-                      }
-                  }
-                    .onLongPressGesture(minimumDuration: 1.0) {
-                      print("Long pressed \(ticker.name ?? "unnamed")")
-                      self.showDeleteAlert = true
-                      self.selectedTicker = ticker
-                  }
-                  .alert(isPresented: self.$showDeleteAlert) {
-                    Alert(
-                      title: Text("Delete \(self.selectedTicker?.name ?? "timer")?"),
-                      message: Text("This cannot be undone."),
-                      primaryButton: Alert.Button.destructive(Text("Delete")) {
-                        self.list.removeTicker(self.selectedTicker)
-                        self.selectedTicker = nil
-                      },
-                      secondaryButton: Alert.Button.cancel()
-                    )
+                  
+                  HStack {
+                    if self.isEditing {
+                      Button(action: {
+                        withAnimation{
+                            self.list.removeTicker(ticker)
+                        }
+                        self.list.objectWillChange.send()
+                      }, label: {
+                        Image(systemName: "trash.circle.fill")
+                          .resizable()
+                          .frame(width: 28, height: 28)
+                          .foregroundColor(.red)
+                      })
+                    }
+                    
+                    TickerRow(ticker: ticker)
+                      .transition(.scale)
+                      .onTapGesture {
+                        print("Tapped \(ticker.name ?? "unnamed")")
+                        self.selectedTicker = ticker
+                        withAnimation {
+                          self.showTickerEditor = true
+                        }
+                    }
+//                      .onLongPressGesture(minimumDuration: 1.0) {
+//                        print("Long pressed \(ticker.name ?? "unnamed")")
+//                        self.showDeleteAlert = true
+//                        self.selectedTicker = ticker
+//                    }
+//                    .alert(isPresented: self.$showDeleteAlert) {
+//                      Alert(
+//                        title: Text("Delete \(self.selectedTicker?.name ?? "timer")?"),
+//                        message: Text("This cannot be undone."),
+//                        primaryButton: Alert.Button.destructive(Text("Delete")) {
+//                          self.list.removeTicker(self.selectedTicker)
+//                          self.selectedTicker = nil
+//                        },
+//                        secondaryButton: Alert.Button.cancel()
+//                      )
+//                    }
                   }
                 }
               }
             }
             Spacer()
           }
-          .animation(.easeIn)
           .padding(.horizontal)
-//          .sheet(isPresented: $showNewTickerSheet) {
-//            NewTicker(list: self.list)
-//          }
         }
       }
     .zIndex(0)

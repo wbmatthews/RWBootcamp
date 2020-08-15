@@ -18,7 +18,6 @@
 		69D1085E24E2C8D00033DB6D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 69D1085D24E2C8D00033DB6D /* Preview Assets.xcassets */; };
 		69D1086124E2C8D00033DB6D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 69D1085F24E2C8D00033DB6D /* LaunchScreen.storyboard */; };
 		69D1086A24E2C9E90033DB6D /* Ticker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69D1086924E2C9E90033DB6D /* Ticker.swift */; };
-		69ECE72324E353D700B506DC /* NewTicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69ECE72224E353D700B506DC /* NewTicker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,7 +35,6 @@
 		69D1086224E2C8D00033DB6D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		69D1086924E2C9E90033DB6D /* Ticker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ticker.swift; sourceTree = "<group>"; };
 		69ECE72124E3439F00B506DC /* Scratchpad.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = Scratchpad.playground; path = "../../../../../Library/Autosave Information/Scratchpad.playground"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		69ECE72224E353D700B506DC /* NewTicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTicker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,7 +53,6 @@
 			children = (
 				69D1085824E2C8CE0033DB6D /* TimerStackListView.swift */,
 				691649D924E335C900D92AAE /* TickerRow.swift */,
-				69ECE72224E353D700B506DC /* NewTicker.swift */,
 				69B42CE424E6B2D900CD7EA4 /* EditTickerView.swift */,
 				694A3E9724E630F0006FCA80 /* Subviews */,
 			);
@@ -192,7 +189,6 @@
 			files = (
 				69D1085524E2C8CE0033DB6D /* AppDelegate.swift in Sources */,
 				691649D824E315C300D92AAE /* TimerStackList.swift in Sources */,
-				69ECE72324E353D700B506DC /* NewTicker.swift in Sources */,
 				691649DA24E335C900D92AAE /* TickerRow.swift in Sources */,
 				69D1085724E2C8CE0033DB6D /* SceneDelegate.swift in Sources */,
 				69B42CE524E6B2D900CD7EA4 /* EditTickerView.swift in Sources */,

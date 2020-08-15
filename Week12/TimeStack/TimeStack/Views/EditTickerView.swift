@@ -44,7 +44,6 @@ struct EditTickerView: View {
             if self.name != (self.ticker?.name ?? "") {
               self.nameWasEdited = true
             }
-            
             if self.entryDuration != (self.ticker?.remaining.compoundTime())! {
               self.durationWasEdited = true
             }
@@ -84,10 +83,23 @@ struct EditTickerView: View {
           }
         }
         .labelsHidden()
+        
+        HStack {
+          Button(action: {
+            
+          }, label: {
+            Image(systemName: "arrow.counterclockwise.circle.fill")
+              .resizable()
+              .frame(width: 28, height: 28)
+              .foregroundColor(.orange)
+          })
+
+        }
       }
       .zIndex(3)
       .layoutPriority(1)
       .padding(.vertical)
+      .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.secondary, lineWidth: 2))
     }
     .onAppear {
       self.ticker!.pause()
