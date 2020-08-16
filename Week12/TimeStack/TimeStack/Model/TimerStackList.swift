@@ -12,6 +12,7 @@ import Combine
 class TimerStackList: ObservableObject {
   
   class Stack: ObservableObject, Identifiable {
+    
     let id: UUID
     @Published var tickers: [Ticker]
     
@@ -21,16 +22,20 @@ class TimerStackList: ObservableObject {
     }
     
     func removeTicker(at index: Int) {
-      print("Removing ticker from index \(index)")
+      report("Removing ticker from index \(index)")
       tickers[index].cancel()
       tickers.remove(at: index)
+    }
+    
+    private func report(_ string: String){
+      print("🥞 Stack \(id.uuidString): \(string)")
     }
   }
   
   static let demoStack: [Stack] = [
     Stack(tickers: [Ticker(name: "Demo1.0", duration: 10)]),
     Stack(tickers: [Ticker(name: "Demo2.0", duration: 86400)]),
-    Stack(tickers: [Ticker(name: "Demo3.0", duration: 30, stackState: .first), Ticker(name: "Demo3.1", duration: 40, stackState: .last)])
+    Stack(tickers: [Ticker(name: "Demo3.0", duration: 30, tickerState: .paused, stackState: .first), Ticker(name: "Demo3.1", duration: 40, tickerState: .pending, stackState: .last)])
   ]
   
   typealias StackPostion = (ticker: Ticker?, position: Ticker.StackState)
@@ -58,6 +63,7 @@ class TimerStackList: ObservableObject {
     } else {
       self.stacks = stacks
     }
+    registerObservers()
   }
   
   //MARK: - Public functions
@@ -73,24 +79,28 @@ class TimerStackList: ObservableObject {
   }
   
   func moveTicker(_ ticker: Ticker, to target: StackPostion) {
-    let currentIndex = getIndexOf(ticker: ticker)
-    let targetIndex = getIndexOf(ticker: target.ticker ?? ticker)
+    guard let currentIndex = getIndexOf(ticker: ticker),
+      let targetIndex = getIndexOf(ticker: target.ticker ?? ticker) else { return }
+    
     stacks[currentIndex.stack].tickers.remove(at: currentIndex.ticker)
     switch target.position {
     case .solo:
+      ticker.tickerState = .paused
       stacks.append(Stack(tickers: [ticker]))
     case .first:
+      ticker.tickerState = .paused
       stacks[targetIndex.stack].tickers.insert(ticker, at: 0)
     case .last:
+      ticker.tickerState = .pending
       stacks[targetIndex.stack].tickers.append(ticker)
     case .stacked(let index):
+      ticker.tickerState = .pending
       stacks[targetIndex.stack].tickers.insert(ticker, at: index)
     }
   }
   
   func removeTicker(_ ticker: Ticker?) {
-    guard let ticker = ticker else { return }
-    let (stackIndex, tickerIndex) = getIndexOf(ticker: ticker)
+    guard let ticker = ticker, let (stackIndex, tickerIndex) = getIndexOf(ticker: ticker) else { return }
     stacks[stackIndex].removeTicker(at: tickerIndex)
     if stacks[stackIndex].tickers.count == 0 {
       stacks.remove(at: stackIndex)
@@ -99,12 +109,54 @@ class TimerStackList: ObservableObject {
   
   //MARK: - Private functions
   
-  private func getIndexOf(ticker: Ticker) -> (stack: Int, ticker: Int) {
+  private func getIndexOf(ticker: Ticker) -> (stack: Int, ticker: Int)? {
     
-    let stackIndex = stacks.firstIndex { $0.tickers.contains { $0.id == ticker.id } }!
-    let tickerIndex = stacks[stackIndex].tickers.firstIndex { $0.id == ticker.id }!
+    let index1 = stacks.firstIndex { $0.tickers.contains { $0.id == ticker.id } }
+    guard let stackIndex = index1 else { return nil }
+    let index2 = stacks[stackIndex].tickers.firstIndex { $0.id == ticker.id }
+    guard let tickerIndex = index2 else { return nil }
     
     return (stackIndex, tickerIndex)
   }
   
+  private func getIndexOf(tickerID id: UUID) -> (stack: Int, ticker: Int)? {
+    let matichingTicker = allTickers.first { $0.id == id }
+    guard let ticker = matichingTicker else { return nil }
+    
+    return getIndexOf(ticker: ticker)
+
+  }
+  
+  private func report(_ string: String){
+    print("📋 List: \(string)")
+  }
+  
+}
+
+//MARK: - Extensions for List and Stack
+
+extension Notification.Name {
+  static let timerDidFinish = Notification.Name.init("timerDidFinish")
+  static let timerWasPaused = Notification.Name.init("timerWasPaused")
+}
+
+extension TimerStackList {
+  func registerObservers() {
+    NotificationCenter.default.addObserver(self, selector: #selector(timerDidFinish), name: .timerDidFinish, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(timerWasPaused), name: .timerWasPaused, object: nil)
+  }
+  
+  @objc private func timerDidFinish(notification: Notification) {
+    guard let id = (notification.userInfo?["id"] as? UUID), let index = getIndexOf(tickerID: id) else { return }
+    
+    report("Ticker \(index.ticker) of stack \(index.stack) finished")
+    
+  }
+  
+  @objc private func timerWasPaused(notification: Notification) {
+    guard let id = (notification.userInfo?["id"] as? UUID), let index = getIndexOf(tickerID: id) else { return }
+    
+    report("Ticker \(index.ticker) of stack \(index.stack) was paused")
+    
+  }
 }

@@ -27,6 +27,7 @@ struct TickerRow: View {
           }) {
             Text(ticker.isInProgress ? "Stop" : "Start")
           }
+          .disabled(ticker.tickerState == .pending)
         }
         .font(.system(size: 12, weight: Font.Weight.light, design: Font.Design.rounded))
         Text(ticker.remaining.compoundTimeString())

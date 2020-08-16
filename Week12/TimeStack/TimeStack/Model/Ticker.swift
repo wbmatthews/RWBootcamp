@@ -25,7 +25,7 @@ class Ticker: ObservableObject, Identifiable, Cancellable {
   static let demoTicker = Ticker(duration: 10)
   
   let id: UUID
-  private var activeTimer: AnyCancellable? //Timer for completion
+  private var activeTimer: AnyCancellable?
   
   var name: String?
   
@@ -50,19 +50,21 @@ class Ticker: ObservableObject, Identifiable, Cancellable {
     }
   }
   
-  @Published private(set) var tickerState: TickerState {
+  @Published var tickerState: TickerState {
     didSet {
       switch tickerState {
       case .paused:
-        print("Stopped timer")
+        NotificationCenter.default.post(name: .timerWasPaused, object: nil, userInfo: ["id": id])
+        report("Paused")
         stop()
       case .pending:
-        print("Timer waiting for turn in stack")
+        report("Pending")
       case .inProgress:
-        print("Started timer")
+        report("Started for \(remaining.compoundTimeString())")
         start()
       case .done:
-        print("Timer completed")
+        NotificationCenter.default.post(name: .timerDidFinish, object: nil, userInfo: ["id": id])
+        report("Completed")
       }
     }
   }
@@ -103,7 +105,7 @@ class Ticker: ObservableObject, Identifiable, Cancellable {
   func toggle() {
     switch tickerState {
     case .pending:
-      print("Tried toggling a stacked timer in pending state")
+      report("Tried toggling a stacked timer in pending state")
     case .paused:
       tickerState = .inProgress
     case .inProgress:
@@ -111,10 +113,6 @@ class Ticker: ObservableObject, Identifiable, Cancellable {
     case .done:
       reset()
     }
-  }
-  
-  func pause() {
-    tickerState = .paused
   }
   
   func reset() {
@@ -143,12 +141,11 @@ class Ticker: ObservableObject, Identifiable, Cancellable {
     
     //TODO: Schedule timer for duration
     
-//    let alertTimer = schedule
+//    completionTimer = Timer.publish
     
-    activeTimer = Timer.publish(every: 1.0, tolerance: 0.5, on: .main, in: .common)
+    activeTimer = Timer.publish(every: 1.0, tolerance: 0.5, on: .current, in: .common)
       .autoconnect()
       .sink{ [unowned self] _ in
-        print(self.remaining.compoundTimeString())
         
         var elapsedTick = TimeInterval(1)
         
@@ -172,8 +169,12 @@ class Ticker: ObservableObject, Identifiable, Cancellable {
     //TODO: Cancel active notification
     activeTimer?.cancel()
     lastTick = nil
-        
   }
+  
+  private func report(_ string: String){
+    print("⏲ Timer \(id.uuidString): \(string)")
+  }
+  
   
 }
 

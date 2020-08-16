@@ -102,7 +102,7 @@ struct EditTickerView: View {
       .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.secondary, lineWidth: 2))
     }
     .onAppear {
-      self.ticker!.pause()
+      self.ticker!.tickerState = .paused
       self.name = self.ticker!.name ?? ""
       self.entryDuration = self.ticker!.remaining.compoundTime()
     }
