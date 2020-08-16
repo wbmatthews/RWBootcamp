@@ -17,7 +17,23 @@ class TimerStackList: ObservableObject {
     let id: UUID
     @Published var tickers: [Ticker]
     
-    var alarms: [TickerAlarm]?
+    var alarms: [TickerAlarm] = []
+    
+    //MARK: - Computed variables
+    
+    private var isInProgress: Bool {
+      if let _ = activeTicker {
+        return true
+      } else {
+        return false
+      }
+    }
+    
+    private var activeTicker: Ticker? {
+      tickers.first { $0.tickerState == .inProgress }
+    }
+    
+    //MARK: - Initializers
     
     init(id: UUID = UUID(), tickers: [Ticker]) {
       self.id = id
@@ -28,11 +44,35 @@ class TimerStackList: ObservableObject {
       report("Removing ticker from index \(index)")
       tickers[index].cancel()
       tickers.remove(at: index)
+      updateAlarms()
     }
     
     func startNextTicker() {
       if let ticker = (tickers.first { $0.tickerState == .pending }) {
         ticker.tickerState = .inProgress
+        updateAlarms()
+      }
+    }
+    
+    func toggle() {
+      updateAlarms()
+    }
+    
+    private func updateAlarms() {
+      
+      var totalInterval = TimeInterval(0)
+      
+      alarms.forEach { $0.cancel() }
+      alarms.removeAll()
+      
+      guard let activeTicker = activeTicker, let index = tickers.firstIndex(of: activeTicker) else { return }
+      
+      let remainingActiveTickers = Array<Ticker>(tickers[index...(tickers.count - 1)])
+      for ticker in remainingActiveTickers {
+        totalInterval += ticker.remaining
+        let alarm = TickerAlarm(id: ticker.id, title: "\(ticker.name ?? "Your timer") has completed!", targetTime: totalInterval)
+        alarm.schedule()
+        alarms.append(alarm)
       }
     }
     
@@ -152,13 +192,13 @@ class TimerStackList: ObservableObject {
 
 extension Notification.Name {
   static let timerDidFinish = Notification.Name.init("timerDidFinish")
-  static let timerWasPaused = Notification.Name.init("timerWasPaused")
+  static let timerWasToggled = Notification.Name.init("timerWasToggled")
 }
 
 extension TimerStackList {
   func registerObservers() {
     NotificationCenter.default.addObserver(self, selector: #selector(timerDidFinish), name: .timerDidFinish, object: nil)
-    NotificationCenter.default.addObserver(self, selector: #selector(timerWasPaused), name: .timerWasPaused, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(timerWasToggled), name: .timerWasToggled, object: nil)
   }
   
   @objc private func timerDidFinish(notification: Notification) {
@@ -169,10 +209,10 @@ extension TimerStackList {
     
   }
   
-  @objc private func timerWasPaused(notification: Notification) {
+  @objc private func timerWasToggled(notification: Notification) {
     guard let id = (notification.userInfo?["id"] as? UUID), let index = getIndexOf(tickerID: id) else { return }
-    
-    report("Ticker \(index.ticker) of stack \(index.stack) was paused")
+    stacks[index.stack].toggle()
+    report("Ticker \(index.ticker) of stack \(index.stack) was toggled")
     
   }
 }

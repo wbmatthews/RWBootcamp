@@ -54,12 +54,13 @@ class Ticker: ObservableObject, Identifiable, Cancellable {
     didSet {
       switch tickerState {
       case .paused:
-        NotificationCenter.default.post(name: .timerWasPaused, object: nil, userInfo: ["id": id])
+        NotificationCenter.default.post(name: .timerWasToggled, object: nil, userInfo: ["id": id])
         report("Paused")
         stopTicking()
       case .pending:
         report("Pending")
       case .inProgress:
+        NotificationCenter.default.post(name: .timerWasToggled, object: nil, userInfo: ["id": id])
         report("Started for \(remaining.compoundTimeString())")
         startTicking()
       case .done:
