@@ -29,8 +29,17 @@ class TimerStackList: ObservableObject {
       }
     }
     
-    private var activeTicker: Ticker? {
+    fileprivate var activeTicker: Ticker? {
       tickers.first { $0.tickerState == .inProgress }
+    }
+    
+    private var nextTicker: Ticker? {
+      tickers.first { $0.tickerState == .pending }
+    }
+    
+    private var remainingPendingTickers: [Ticker] {
+      guard let nextTicker = nextTicker, let index = tickers.firstIndex(of: nextTicker) else { return [] }
+      return Array<Ticker>(tickers[index...(tickers.count - 1)])
     }
     
     //MARK: - Initializers
@@ -38,6 +47,11 @@ class TimerStackList: ObservableObject {
     init(id: UUID = UUID(), tickers: [Ticker]) {
       self.id = id
       self.tickers = tickers
+      report("Initialized")
+    }
+    
+    deinit {
+      report("Deinitialized")
     }
     
     func removeTicker(at index: Int) {
@@ -47,9 +61,10 @@ class TimerStackList: ObservableObject {
       updateAlarms()
     }
     
-    func startNextTicker() {
-      if let ticker = (tickers.first { $0.tickerState == .pending }) {
-        ticker.tickerState = .inProgress
+    func startNextTicker(elapsed: TimeInterval) {
+      if let ticker = nextTicker {
+        ticker.elapsed = elapsed
+        ticker.tickerState = (ticker.remaining > 0) ? .inProgress : .done
         updateAlarms()
       }
     }
@@ -88,7 +103,7 @@ class TimerStackList: ObservableObject {
     Stack(tickers: [Ticker(name: "Demo2.0", duration: 86400)]),
     Stack(tickers: [Ticker(name: "Demo3.0", duration: 30, tickerState: .paused, stackState: .first), Ticker(name: "Demo3.1", duration: 40, tickerState: .pending, stackState: .last)])
   ]
-  
+
   typealias StackPostion = (ticker: Ticker?, position: Ticker.StackState)
   
   @Published var stacks: [Stack]
@@ -111,12 +126,8 @@ class TimerStackList: ObservableObject {
   
   //MARK: - Initializers
   
-  init(stacks: [Stack] = []) {
-    if stacks.isEmpty {
-      self.stacks = TimerStackList.demoStack
-    } else {
-      self.stacks = stacks
-    }
+  init(stacks: [Stack] = [Stack(tickers: [Ticker(name: "Your first timer!", duration: 10)])]) {
+    self.stacks = stacks
     registerObservers()
   }
   
@@ -157,8 +168,10 @@ class TimerStackList: ObservableObject {
   func removeTicker(_ ticker: Ticker?) {
     guard let ticker = ticker, let (stackIndex, tickerIndex) = getIndexOf(ticker: ticker) else { return }
     stacks[stackIndex].removeTicker(at: tickerIndex)
+    
     if stacks[stackIndex].tickers.count == 0 {
-      stacks.remove(at: stackIndex)
+      let removed = stacks.remove(at: stackIndex)
+      report("Removed: \(removed)")
     }
     if stacks.count == 0 {
       stacks = []
@@ -203,8 +216,7 @@ extension TimerStackList {
   
   @objc private func timerDidFinish(notification: Notification) {
     guard let id = (notification.userInfo?["id"] as? UUID), let index = getIndexOf(tickerID: id) else { return }
-    
-    stacks[index.stack].startNextTicker()
+    stacks[index.stack].startNextTicker(elapsed: stacks[index.stack].tickers[index.ticker].elapsedPastDuration)
     report("Ticker \(index.ticker) of stack \(index.stack) finished")
     
   }

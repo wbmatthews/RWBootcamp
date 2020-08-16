@@ -25,13 +25,13 @@ struct TickerAlarm: Identifiable, Equatable, Codable {
     
     let notificationRequest = UNNotificationRequest(identifier: alarmID, content: alarmContent, trigger: alarmTrigger)
     UNUserNotificationCenter.current().add(notificationRequest) { _ in
-      self.report("\(self.title) scheduled in \(self.targetTime.compoundTimeString())")
+//      self.report("\(self.title) scheduled in \(self.targetTime.compoundTimeString())")
     }
   }
     
   func cancel() {
     UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [id.uuidString])
-    report("Cancelling \(title)")
+//    report("Cancelling \(title)")
   }
   
   private func report(_ string: String){

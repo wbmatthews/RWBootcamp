@@ -35,7 +35,8 @@ struct HeaderView: View {
         .disabled(list.isEmpty)
       
       Button(action: {
-        self.selectedTicker = self.list.addTicker()
+        unowned let newTicker = self.list.addTicker()
+        self.selectedTicker = newTicker
         withAnimation{
           self.showTickerEditor = true
         }

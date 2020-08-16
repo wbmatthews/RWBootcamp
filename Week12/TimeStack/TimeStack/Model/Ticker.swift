@@ -31,7 +31,7 @@ class Ticker: ObservableObject, Identifiable, Cancellable {
   
   private var lastTick: Date?
   private var duration: TimeInterval
-  private var elapsed: TimeInterval = 0 {
+  var elapsed: TimeInterval = 0 {
     didSet {
       if elapsed < duration {
         remaining = duration - elapsed
@@ -40,16 +40,9 @@ class Ticker: ObservableObject, Identifiable, Cancellable {
       }
     }
   }
-  
+    
   @Published var remaining: TimeInterval
-  var proportionRemaining: Double {
-    if remaining > 0 {
-      return Double(duration) / Double(remaining)
-    } else {
-      return 86400
-    }
-  }
-  
+
   @Published var tickerState: TickerState {
     didSet {
       switch tickerState {
@@ -69,10 +62,23 @@ class Ticker: ObservableObject, Identifiable, Cancellable {
       }
     }
   }
+  
   private(set) var stackState: StackState = .solo
   
   var isInProgress: Bool {
     tickerState == .inProgress
+  }
+  
+  var proportionRemaining: Double {
+    if remaining > 0 {
+      return Double(duration) / Double(remaining)
+    } else {
+      return 86400
+    }
+  }
+  
+  var elapsedPastDuration: TimeInterval {
+    elapsed > duration ? elapsed - duration : 0
   }
   
   //MARK: - Initializers
@@ -87,7 +93,7 @@ class Ticker: ObservableObject, Identifiable, Cancellable {
     if self.tickerState == .inProgress {
       self.startTicking()
     }
-    print("Initializing \(id.uuidString) (\(name ?? "Unnamed")) - \(duration.compoundTimeString())")
+    report("Initialized (\(name ?? "Unnamed")) - \(duration.compoundTimeString())")
   }
   
   convenience init(name: String?, compoundTime: CompoundTime, isRunning: Bool) {
@@ -98,7 +104,7 @@ class Ticker: ObservableObject, Identifiable, Cancellable {
   }
   
   deinit {
-    print("Deinitializing \(id.uuidString) (\(name ?? "Unnamed"))")
+    report("Deinitialized: (\(name ?? "Unnamed"))")
   }
   
   //MARK: - Public functions
@@ -156,8 +162,8 @@ class Ticker: ObservableObject, Identifiable, Cancellable {
         }
         self.elapsed += elapsedTick
         if self.elapsed >= self.duration {
-          self.tickerState = .done
           self.activeTimer?.cancel()
+          self.tickerState = .done
         }
         self.lastTick = Date()
       }
