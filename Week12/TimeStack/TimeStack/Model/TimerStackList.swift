@@ -11,10 +11,13 @@ import Combine
 
 class TimerStackList: ObservableObject {
   
+  //MARK: - Stack declaration
   class Stack: ObservableObject, Identifiable {
     
     let id: UUID
     @Published var tickers: [Ticker]
+    
+    var alarms: [TickerAlarm]?
     
     init(id: UUID = UUID(), tickers: [Ticker]) {
       self.id = id
@@ -27,10 +30,18 @@ class TimerStackList: ObservableObject {
       tickers.remove(at: index)
     }
     
+    func startNextTicker() {
+      if let ticker = (tickers.first { $0.tickerState == .pending }) {
+        ticker.tickerState = .inProgress
+      }
+    }
+    
     private func report(_ string: String){
       print("🥞 Stack \(id.uuidString): \(string)")
     }
   }
+  
+  //MARK:- TimerStackList declaration begins
   
   static let demoStack: [Stack] = [
     Stack(tickers: [Ticker(name: "Demo1.0", duration: 10)]),
@@ -39,7 +50,10 @@ class TimerStackList: ObservableObject {
   ]
   
   typealias StackPostion = (ticker: Ticker?, position: Ticker.StackState)
+  
   @Published var stacks: [Stack]
+  @Published var isEditing: Bool = false
+  @Published var isEmpty: Bool = false
   
   //MARK: - Computed variables
   
@@ -75,6 +89,7 @@ class TimerStackList: ObservableObject {
   func addTicker() -> Ticker {
     let newTicker = Ticker(duration: 10)
     stacks.append(Stack(tickers: [newTicker]))
+    isEmpty = false
     return newTicker
   }
   
@@ -105,26 +120,26 @@ class TimerStackList: ObservableObject {
     if stacks[stackIndex].tickers.count == 0 {
       stacks.remove(at: stackIndex)
     }
+    if stacks.count == 0 {
+      stacks = []
+      isEmpty = true
+    }
   }
   
   //MARK: - Private functions
   
   private func getIndexOf(ticker: Ticker) -> (stack: Int, ticker: Int)? {
-    
-    let index1 = stacks.firstIndex { $0.tickers.contains { $0.id == ticker.id } }
-    guard let stackIndex = index1 else { return nil }
-    let index2 = stacks[stackIndex].tickers.firstIndex { $0.id == ticker.id }
-    guard let tickerIndex = index2 else { return nil }
+    guard
+      let stackIndex = (stacks.firstIndex { $0.tickers.contains { $0 == ticker } }),
+      let tickerIndex = (stacks[stackIndex].tickers.firstIndex { $0 == ticker })
+      else { return nil }
     
     return (stackIndex, tickerIndex)
   }
   
   private func getIndexOf(tickerID id: UUID) -> (stack: Int, ticker: Int)? {
-    let matichingTicker = allTickers.first { $0.id == id }
-    guard let ticker = matichingTicker else { return nil }
-    
+    guard let ticker = (allTickers.first { $0.id == id })  else { return nil }
     return getIndexOf(ticker: ticker)
-
   }
   
   private func report(_ string: String){
@@ -149,6 +164,7 @@ extension TimerStackList {
   @objc private func timerDidFinish(notification: Notification) {
     guard let id = (notification.userInfo?["id"] as? UUID), let index = getIndexOf(tickerID: id) else { return }
     
+    stacks[index.stack].startNextTicker()
     report("Ticker \(index.ticker) of stack \(index.stack) finished")
     
   }

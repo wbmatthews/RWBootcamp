@@ -56,12 +56,12 @@ class Ticker: ObservableObject, Identifiable, Cancellable {
       case .paused:
         NotificationCenter.default.post(name: .timerWasPaused, object: nil, userInfo: ["id": id])
         report("Paused")
-        stop()
+        stopTicking()
       case .pending:
         report("Pending")
       case .inProgress:
         report("Started for \(remaining.compoundTimeString())")
-        start()
+        startTicking()
       case .done:
         NotificationCenter.default.post(name: .timerDidFinish, object: nil, userInfo: ["id": id])
         report("Completed")
@@ -84,7 +84,7 @@ class Ticker: ObservableObject, Identifiable, Cancellable {
     self.tickerState = tickerState
     self.stackState = stackState
     if self.tickerState == .inProgress {
-      self.start()
+      self.startTicking()
     }
     print("Initializing \(id.uuidString) (\(name ?? "Unnamed")) - \(duration.compoundTimeString())")
   }
@@ -136,7 +136,7 @@ class Ticker: ObservableObject, Identifiable, Cancellable {
   
   //MARK: - Private functions
   
-  private func start() {
+  private func startTicking() {
     //TODO: Consider completion handlers
     
     //TODO: Schedule timer for duration
@@ -165,7 +165,7 @@ class Ticker: ObservableObject, Identifiable, Cancellable {
         
   }
   
-  private func stop() {
+  private func stopTicking() {
     //TODO: Cancel active notification
     activeTimer?.cancel()
     lastTick = nil
@@ -179,6 +179,12 @@ class Ticker: ObservableObject, Identifiable, Cancellable {
 }
 
 //MARK: - Extensions
+
+extension Ticker: Equatable {
+  static func == (lhs: Ticker, rhs: Ticker) -> Bool {
+    lhs.id == rhs.id
+  }
+}
 
 extension TimeInterval {
   private func hoursFromTotalSeconds() -> Int {
