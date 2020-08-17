@@ -17,7 +17,7 @@ struct HeaderView: View {
   var body: some View {
     
     HStack {
-      Text("TimerStacks")
+      Text("TickStacks")
         .font(.largeTitle)
         .bold()
       
