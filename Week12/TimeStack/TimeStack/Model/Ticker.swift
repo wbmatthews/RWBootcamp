@@ -11,22 +11,23 @@ import Combine
 
 typealias CompoundTime = (hours: Int, minutes: Int, seconds: Int)
 
-class Ticker: ObservableObject, Identifiable, Cancellable {
+class Ticker: ObservableObject, Identifiable, Codable, Cancellable {
   
-  enum TickerState {
+  enum CodingKeys: CodingKey {
+    case id, name, duration, elapsed, lastTick, tickerState, stackState
+  }
+  
+  enum TickerState: String, Codable {
     case paused, pending, inProgress, done
   }
   
-  enum StackState: Equatable {
-    case solo, first, last
-    case stacked(Int)
+  enum StackState: String, Equatable, Codable {
+    case solo, first, last, stacked
   }
   
   static let demoTicker = Ticker(duration: 10)
   
   let id: UUID
-  private var activeTimer: AnyCancellable?
-  
   var name: String?
   
   private var lastTick: Date?
@@ -40,6 +41,8 @@ class Ticker: ObservableObject, Identifiable, Cancellable {
       }
     }
   }
+  
+  private var activeTimer: AnyCancellable?
     
   @Published var remaining: TimeInterval
 
@@ -63,7 +66,7 @@ class Ticker: ObservableObject, Identifiable, Cancellable {
     }
   }
   
-  private(set) var stackState: StackState = .solo
+  var stackState: StackState = .solo
   
   var isInProgress: Bool {
     tickerState == .inProgress
@@ -96,6 +99,20 @@ class Ticker: ObservableObject, Identifiable, Cancellable {
     report("Initialized (\(name ?? "Unnamed")) - \(duration.compoundTimeString())")
   }
   
+  required init(from decoder: Decoder) throws {
+    let container = try decoder.container(keyedBy: CodingKeys.self)
+
+    self.id = try container.decode(UUID.self, forKey: .id)
+    self.name = try container.decode(String?.self, forKey: .name)
+    self.duration = try container.decode(TimeInterval.self, forKey: .duration)
+    self.elapsed = try container.decode(TimeInterval.self, forKey: .elapsed)
+    self.lastTick = try container.decode(Date?.self, forKey: .lastTick)
+    self.tickerState = try container.decode(TickerState.self, forKey: .tickerState)
+    self.stackState = try container.decode(StackState.self, forKey: .stackState)
+    
+    self.remaining = TimeInterval(-999) // Will recalculate when inited
+  }
+  
   convenience init(name: String?, compoundTime: CompoundTime, isRunning: Bool) {
     var tickerState: TickerState = .paused
     let duration = TimeInterval((3600 * compoundTime.hours) + (compoundTime.minutes * 60) + compoundTime.seconds)
@@ -109,6 +126,18 @@ class Ticker: ObservableObject, Identifiable, Cancellable {
   
   //MARK: - Public functions
   
+  func encode(to encoder: Encoder) throws {
+    var container = encoder.container(keyedBy: CodingKeys.self)
+
+    try container.encode(id, forKey: .id)
+    try container.encode(name, forKey: .name)
+    try container.encode(duration, forKey: .duration)
+    try container.encode(elapsed, forKey: .elapsed)
+    try container.encode(lastTick, forKey: .lastTick)
+    try container.encode(tickerState, forKey: .tickerState)
+    try container.encode(stackState, forKey: .stackState)
+  }
+  
   func toggle() {
     switch tickerState {
     case .pending:
@@ -118,13 +147,14 @@ class Ticker: ObservableObject, Identifiable, Cancellable {
     case .inProgress:
       tickerState = .paused
     case .done:
-      reset()
+      report("Tried toggling a complete timer")
     }
   }
   
-  func reset() {
+  func reset() -> TimeInterval {
     elapsed = 0
     tickerState = .paused
+    return duration
   }
   
   func cancel() {
@@ -134,10 +164,12 @@ class Ticker: ObservableObject, Identifiable, Cancellable {
   func update(newName: String? = nil, newDuration: CompoundTime? = nil) {
     if let newName = newName {
       self.name = newName.isEmpty ? nil : newName
+      NotificationCenter.default.post(name: .timerWasUpdated, object: nil)
     }
     if let newDuration = newDuration {
       self.duration = TimeInterval((3600 * newDuration.hours) + (newDuration.minutes * 60) + newDuration.seconds)
       self.elapsed = 0
+      NotificationCenter.default.post(name: .timerWasUpdated, object: nil)
     }
   }
   
@@ -145,10 +177,6 @@ class Ticker: ObservableObject, Identifiable, Cancellable {
   
   private func startTicking() {
     //TODO: Consider completion handlers
-    
-    //TODO: Schedule timer for duration
-    
-//    completionTimer = Timer.publish
     
     activeTimer = Timer.publish(every: 1.0, tolerance: 0.5, on: .current, in: .common)
       .autoconnect()
@@ -166,10 +194,9 @@ class Ticker: ObservableObject, Identifiable, Cancellable {
           self.tickerState = .done
         }
         self.lastTick = Date()
+        NotificationCenter.default.post(name: .timerWasUpdated, object: nil)
       }
-    
-    //TODO: Schedule notification for completion
-        
+            
   }
   
   private func stopTicking() {

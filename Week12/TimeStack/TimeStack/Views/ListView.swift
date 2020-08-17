@@ -9,9 +9,9 @@
 import SwiftUI
 
 struct ListView: View {
-  
-  @EnvironmentObject var list: TimerStackList
     
+  @EnvironmentObject var list: TimerStackList
+      
   @State var showNewTickerSheet: Bool = false
   @State var showTickerEditor: Bool  = false
   
@@ -39,10 +39,11 @@ struct ListView: View {
       
       VStack {
         HeaderView(selectedTicker: $selectedTicker, showTickerEditor: $showTickerEditor)
+          .padding(.top, 30)
         Divider()
 
         ScrollView {
-          VStack(alignment: .leading, spacing: 8) {
+          VStack(alignment: .center, spacing: 8) {
             ForEach(list.stacks) { stack in
               StackView(stack: stack, selectedTicker: self.$selectedTicker, showTickerEditor: self.$showTickerEditor)
             }
@@ -53,6 +54,8 @@ struct ListView: View {
       }
     .zIndex(0)
     }
+    .background(Color(hue: 0.15, saturation: 0.001, brightness: 0.975))
+    .edgesIgnoringSafeArea(.all)
   }
 }
 

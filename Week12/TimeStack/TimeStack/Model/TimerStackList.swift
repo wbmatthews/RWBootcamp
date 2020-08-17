@@ -12,7 +12,11 @@ import Combine
 class TimerStackList: ObservableObject {
   
   //MARK: - Stack declaration
-  class Stack: ObservableObject, Identifiable {
+  class Stack: ObservableObject, Identifiable, Codable {
+    
+    enum CodingKeys: CodingKey {
+      case id, tickers
+    }
     
     let id: UUID
     @Published var tickers: [Ticker]
@@ -50,10 +54,37 @@ class TimerStackList: ObservableObject {
       report("Initialized")
     }
     
+    required init(from decoder: Decoder) throws {
+      let container = try decoder.container(keyedBy: CodingKeys.self)
+
+      self.id = try container.decode(UUID.self, forKey: .id)
+      let decodedTickers = try container.decode([Ticker].self, forKey: .tickers)
+      var reloadedTickers = [Ticker]()
+      decodedTickers.forEach { ticker in
+        //retriggering updates
+        let elapsed = ticker.elapsed
+        let tickerState = ticker.tickerState
+        ticker.elapsed = elapsed
+        ticker.tickerState = tickerState
+        reloadedTickers.append(ticker)
+      }
+      self.tickers = reloadedTickers
+      updateStackStates()
+    }
+    
     deinit {
       report("Deinitialized")
     }
     
+    //MARK: - Public functions
+    
+    func encode(to encoder: Encoder) throws {
+       var container = encoder.container(keyedBy: CodingKeys.self)
+
+      try container.encode(id, forKey: .id)
+      try container.encode(tickers, forKey: .tickers)
+    }
+
     func removeTicker(at index: Int) {
       report("Removing ticker from index \(index)")
       tickers[index].cancel()
@@ -91,12 +122,28 @@ class TimerStackList: ObservableObject {
       }
     }
     
+    private func updateStackStates() {
+      if tickers.count > 1 {
+        tickers.forEach { $0.stackState = .stacked }
+        tickers.first!.stackState = .first
+        tickers.last!.stackState = .last
+      } else {
+        tickers[0].stackState = .solo
+      }
+    }
+    
     private func report(_ string: String){
       print("🥞 Stack \(id.uuidString): \(string)")
     }
   }
   
+  
+  
   //MARK:- TimerStackList declaration begins
+  
+  enum CodingKeys: CodingKey {
+    case stacks
+  }
   
   static let demoStack: [Stack] = [
     Stack(tickers: [Ticker(name: "Demo1.0", duration: 10)]),
@@ -106,7 +153,11 @@ class TimerStackList: ObservableObject {
 
   typealias StackPostion = (ticker: Ticker?, position: Ticker.StackState)
   
-  @Published var stacks: [Stack]
+  @Published var stacks: [Stack] {
+    didSet {
+      saveData()
+    }
+  }
   @Published var isEditing: Bool = false
   @Published var isEmpty: Bool = false
   
@@ -126,8 +177,19 @@ class TimerStackList: ObservableObject {
   
   //MARK: - Initializers
   
-  init(stacks: [Stack] = [Stack(tickers: [Ticker(name: "Your first timer!", duration: 10)])]) {
-    self.stacks = stacks
+  init () {
+    if let data = UserDefaults.standard.data(forKey: CodingKeys.stacks.stringValue) {
+      do {
+        let decoded = try JSONDecoder().decode([Stack].self, from: data)
+        self.stacks = decoded
+        self.registerObservers()
+        print("Successfully decoded saved data")
+        return
+      } catch (let error as NSError) {
+        print("Decoding error: \(error), \(error.userInfo)")
+      }
+    }
+    self.stacks = [Stack(tickers: [Ticker(name: "Intro", duration: 45, tickerState: .paused, stackState: .first),Ticker(name: "Cooking case", duration: 60, tickerState: .pending, stackState: .stacked),Ticker(name: "Workout case", duration: 45, tickerState: .pending, stackState: .stacked), Ticker(name: "Presentation", duration: 45, tickerState: .pending, stackState: .stacked),Ticker(name: "Wrap up", duration: 30, tickerState: .pending, stackState: .stacked)])]
     registerObservers()
   }
   
@@ -159,9 +221,11 @@ class TimerStackList: ObservableObject {
     case .last:
       ticker.tickerState = .pending
       stacks[targetIndex.stack].tickers.append(ticker)
-    case .stacked(let index):
-      ticker.tickerState = .pending
-      stacks[targetIndex.stack].tickers.insert(ticker, at: index)
+       //   case .stacked(let index):
+      //    ticker.tickerState = .pending
+     //     stacks[targetIndex.stack].tickers.insert(ticker, at: index)
+    case .stacked:
+      report("Tried to insert into a stack")
     }
   }
   
@@ -180,6 +244,20 @@ class TimerStackList: ObservableObject {
   }
   
   //MARK: - Private functions
+  
+  private func refresh() {
+    objectWillChange.send()
+    saveData()
+  }
+  
+  private func saveData() {
+    if let data = try? JSONEncoder().encode(stacks) {
+      UserDefaults.standard.set(data, forKey: CodingKeys.stacks.stringValue)
+      report("Encoded data")
+    } else {
+      report("❗️Failed to encode data")
+    }
+  }
   
   private func getIndexOf(ticker: Ticker) -> (stack: Int, ticker: Int)? {
     guard
@@ -206,25 +284,32 @@ class TimerStackList: ObservableObject {
 extension Notification.Name {
   static let timerDidFinish = Notification.Name.init("timerDidFinish")
   static let timerWasToggled = Notification.Name.init("timerWasToggled")
+  static let timerWasUpdated = Notification.Name.init("timerWasUpdated")
 }
 
 extension TimerStackList {
   func registerObservers() {
     NotificationCenter.default.addObserver(self, selector: #selector(timerDidFinish), name: .timerDidFinish, object: nil)
     NotificationCenter.default.addObserver(self, selector: #selector(timerWasToggled), name: .timerWasToggled, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(timerWasUpdated), name: .timerWasUpdated, object: nil)
   }
   
   @objc private func timerDidFinish(notification: Notification) {
     guard let id = (notification.userInfo?["id"] as? UUID), let index = getIndexOf(tickerID: id) else { return }
     stacks[index.stack].startNextTicker(elapsed: stacks[index.stack].tickers[index.ticker].elapsedPastDuration)
+    refresh()
     report("Ticker \(index.ticker) of stack \(index.stack) finished")
-    
   }
   
   @objc private func timerWasToggled(notification: Notification) {
     guard let id = (notification.userInfo?["id"] as? UUID), let index = getIndexOf(tickerID: id) else { return }
     stacks[index.stack].toggle()
+    refresh()
     report("Ticker \(index.ticker) of stack \(index.stack) was toggled")
-    
+  }
+  
+  @objc private func timerWasUpdated(notification: Notification) {
+    refresh()
   }
 }
+

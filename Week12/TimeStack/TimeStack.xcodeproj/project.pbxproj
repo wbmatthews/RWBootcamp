@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		691649D824E315C300D92AAE /* TimerStackList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691649D724E315C300D92AAE /* TimerStackList.swift */; };
 		691649DA24E335C900D92AAE /* TickerRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691649D924E335C900D92AAE /* TickerRow.swift */; };
-		694A3E9624E630E7006FCA80 /* BackgroundProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 694A3E9524E630E7006FCA80 /* BackgroundProgressView.swift */; };
+		694A3E9624E630E7006FCA80 /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 694A3E9524E630E7006FCA80 /* ProgressView.swift */; };
 		699C6D8724E8403600FBED13 /* LinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699C6D8624E8403600FBED13 /* LinkView.swift */; };
 		69B42CE524E6B2D900CD7EA4 /* EditTickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69B42CE424E6B2D900CD7EA4 /* EditTickerView.swift */; };
 		69C4A47324E98E3D0085A878 /* StackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C4A47224E98E3D0085A878 /* StackView.swift */; };
@@ -21,6 +21,7 @@
 		69D1085E24E2C8D00033DB6D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 69D1085D24E2C8D00033DB6D /* Preview Assets.xcassets */; };
 		69D1086124E2C8D00033DB6D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 69D1085F24E2C8D00033DB6D /* LaunchScreen.storyboard */; };
 		69D1086A24E2C9E90033DB6D /* Ticker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69D1086924E2C9E90033DB6D /* Ticker.swift */; };
+		69D687E124E9F45B00CA4716 /* StandardViewValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69D687E024E9F45B00CA4716 /* StandardViewValues.swift */; };
 		69EA95D024E97A1300B56A1A /* TickerAlarms.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69EA95CF24E97A1300B56A1A /* TickerAlarms.swift */; };
 		69EA95D424E9816000B56A1A /* DeleteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69EA95D324E9816000B56A1A /* DeleteButton.swift */; };
 /* End PBXBuildFile section */
@@ -28,7 +29,7 @@
 /* Begin PBXFileReference section */
 		691649D724E315C300D92AAE /* TimerStackList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerStackList.swift; sourceTree = "<group>"; };
 		691649D924E335C900D92AAE /* TickerRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickerRow.swift; sourceTree = "<group>"; };
-		694A3E9524E630E7006FCA80 /* BackgroundProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundProgressView.swift; sourceTree = "<group>"; };
+		694A3E9524E630E7006FCA80 /* ProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
 		699C6D8624E8403600FBED13 /* LinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkView.swift; sourceTree = "<group>"; };
 		69B42CE424E6B2D900CD7EA4 /* EditTickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditTickerView.swift; sourceTree = "<group>"; };
 		69C4A47224E98E3D0085A878 /* StackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackView.swift; sourceTree = "<group>"; };
@@ -42,6 +43,7 @@
 		69D1086024E2C8D00033DB6D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		69D1086224E2C8D00033DB6D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		69D1086924E2C9E90033DB6D /* Ticker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ticker.swift; sourceTree = "<group>"; };
+		69D687E024E9F45B00CA4716 /* StandardViewValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardViewValues.swift; sourceTree = "<group>"; };
 		69EA95CF24E97A1300B56A1A /* TickerAlarms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickerAlarms.swift; sourceTree = "<group>"; };
 		69EA95D324E9816000B56A1A /* DeleteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteButton.swift; sourceTree = "<group>"; };
 		69ECE72124E3439F00B506DC /* Scratchpad.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = Scratchpad.playground; path = "../../../../../Library/Autosave Information/Scratchpad.playground"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -67,8 +69,9 @@
 				691649D924E335C900D92AAE /* TickerRow.swift */,
 				69B42CE424E6B2D900CD7EA4 /* EditTickerView.swift */,
 				699C6D8624E8403600FBED13 /* LinkView.swift */,
-				694A3E9524E630E7006FCA80 /* BackgroundProgressView.swift */,
+				694A3E9524E630E7006FCA80 /* ProgressView.swift */,
 				69EA95D324E9816000B56A1A /* DeleteButton.swift */,
+				69D687E024E9F45B00CA4716 /* StandardViewValues.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -197,6 +200,7 @@
 				69D1085524E2C8CE0033DB6D /* AppDelegate.swift in Sources */,
 				691649D824E315C300D92AAE /* TimerStackList.swift in Sources */,
 				691649DA24E335C900D92AAE /* TickerRow.swift in Sources */,
+				69D687E124E9F45B00CA4716 /* StandardViewValues.swift in Sources */,
 				69D1085724E2C8CE0033DB6D /* SceneDelegate.swift in Sources */,
 				69B42CE524E6B2D900CD7EA4 /* EditTickerView.swift in Sources */,
 				69D1085924E2C8CE0033DB6D /* ListView.swift in Sources */,
@@ -204,7 +208,7 @@
 				69EA95D424E9816000B56A1A /* DeleteButton.swift in Sources */,
 				69EA95D024E97A1300B56A1A /* TickerAlarms.swift in Sources */,
 				699C6D8724E8403600FBED13 /* LinkView.swift in Sources */,
-				694A3E9624E630E7006FCA80 /* BackgroundProgressView.swift in Sources */,
+				694A3E9624E630E7006FCA80 /* ProgressView.swift in Sources */,
 				69C4A47324E98E3D0085A878 /* StackView.swift in Sources */,
 				69C4A47724E998BE0085A878 /* HeaderView.swift in Sources */,
 			);

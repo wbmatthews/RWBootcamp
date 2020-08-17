@@ -17,7 +17,7 @@ struct StackView: View {
   @Binding var showTickerEditor: Bool
   
   @State var showLinkView: Bool = false
-
+  
   
   var body: some View {
     VStack(spacing: 0) {
@@ -26,7 +26,7 @@ struct StackView: View {
           .onTapGesture {
             print("Tapped \(ticker.name ?? "unnamed")")
             self.selectedTicker = ticker
-            withAnimation {
+            withAnimation(.easeIn(duration:0.5)) {
               self.showTickerEditor = true
             }
         }
@@ -38,11 +38,16 @@ struct StackView: View {
         .sheet(isPresented: self.$showLinkView) { LinkView(selectedTicker: self.selectedTicker!).environmentObject(self.list) }
       }
     }
+    .background(Color(UIColor.systemBackground))
+    .mask(RoundedRectangle(cornerRadius: StandardViewValues.cornerRadius))
+    .shadow(color: Color.black.opacity(0.2), radius: 5, x: 3, y: 3)
+    .shadow(color: Color.white.opacity(0.5), radius: 5, x: -1, y: -1)
+    
   }
 }
 
 struct StackView_Previews: PreviewProvider {
-    static var previews: some View {
-      StackView(stack: TimerStackList.demoStack[2], selectedTicker: .constant(nil), showTickerEditor: .constant(false)).environmentObject(TimerStackList())
-    }
+  static var previews: some View {
+    StackView(stack: TimerStackList.demoStack[2], selectedTicker: .constant(nil), showTickerEditor: .constant(false)).environmentObject(TimerStackList())
+  }
 }

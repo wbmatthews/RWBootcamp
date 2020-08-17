@@ -25,7 +25,7 @@ struct TickerAlarm: Identifiable, Equatable, Codable {
     
     let notificationRequest = UNNotificationRequest(identifier: alarmID, content: alarmContent, trigger: alarmTrigger)
     UNUserNotificationCenter.current().add(notificationRequest) { _ in
-//      self.report("\(self.title) scheduled in \(self.targetTime.compoundTimeString())")
+      self.report("\(self.title) scheduled in \(self.targetTime.compoundTimeString())")
     }
   }
     

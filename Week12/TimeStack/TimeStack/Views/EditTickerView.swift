@@ -20,14 +20,14 @@ struct EditTickerView: View {
   @State var durationWasEdited = false
   
   var body: some View {
-    ZStack(alignment: .center) {
-      
-      BackgroundProgressView(proportion: self.ticker!.proportionRemaining)
-        .background(Color.white)
-        .cornerRadius(15)
-        .zIndex(2)
-      
-      VStack(alignment: .center) {
+    
+    HStack(alignment: .center) {
+      VStack {
+        ProgressView(proportion: self.ticker!.proportionRemaining)
+          .background(Color.white)
+          .frame(width: 20)
+      }
+      VStack {
         HStack {
           TextField("Timer name (optional)", text: self.$name)
             .font(.system(size: 18, weight: Font.Weight.light, design: Font.Design.rounded))
@@ -35,7 +35,17 @@ struct EditTickerView: View {
             .padding(4)
             .padding(.leading, 12)
             .background(Color.secondary.opacity(0.5).blendMode(.darken))
-            .cornerRadius(12)
+            .cornerRadius(StandardViewValues.cornerRadius)
+          
+          Button(action: {
+            let duration = self.ticker?.reset()
+            self.entryDuration = duration!.compoundTime()
+          }, label: {
+            Image(systemName: "arrow.counterclockwise.circle.fill")
+              .resizable()
+              .frame(width: 28, height: 28)
+              .foregroundColor(.orange)
+          })
           
           Button(action: {
             withAnimation{
@@ -74,6 +84,7 @@ struct EditTickerView: View {
             Stepper("hours", value: self.$entryDuration.minutes, in: 0...59)
           }
           Text(":").font(.system(size: 46, weight: .medium, design: .rounded))
+            .layoutPriority(1)
           
           VStack() {
             Text(String(format: "%02d",self.entryDuration.seconds))
@@ -83,28 +94,18 @@ struct EditTickerView: View {
           }
         }
         .labelsHidden()
-        
-        HStack {
-          Button(action: {
-            
-          }, label: {
-            Image(systemName: "arrow.counterclockwise.circle.fill")
-              .resizable()
-              .frame(width: 28, height: 28)
-              .foregroundColor(.orange)
-          })
-
-        }
       }
-      .zIndex(3)
-      .layoutPriority(1)
-      .padding(.vertical)
-      .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.secondary, lineWidth: 2))
+
     }
-    .onAppear {
-      self.ticker!.tickerState = .paused
-      self.name = self.ticker!.name ?? ""
-      self.entryDuration = self.ticker!.remaining.compoundTime()
+    .frame(height:200)
+    .background(Color(UIColor.systemBackground))
+    .mask(RoundedRectangle(cornerRadius: StandardViewValues.cornerRadius))
+    .shadow(color: Color.black.opacity(0.3), radius: 5, x: 5, y: 5)
+    .shadow(color: Color.white.opacity(0.7), radius: 5, x: -2, y: -2)
+      .onAppear {
+        self.ticker!.tickerState = .paused
+        self.name = self.ticker!.name ?? ""
+        self.entryDuration = self.ticker!.remaining.compoundTime()
     }
   }
 }

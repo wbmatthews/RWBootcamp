@@ -17,37 +17,35 @@ struct TickerRow: View {
     HStack {
       if list.isEditing {
         DeleteButton(ticker: ticker, isEditing: $list.isEditing)
+          .padding(.horizontal,8)
       }
-      
-      ZStack(alignment: .center) {
-        
-        BackgroundProgressView(proportion: ticker.proportionRemaining)
-          .cornerRadius(12)
-        
-        ZStack(alignment: .center) {
-          HStack {
-            Text(ticker.name ?? "Timer")
-            Spacer()
-            Button(action: {
-              self.ticker.toggle()
-            }) {
-              Text(ticker.isInProgress ? "Stop" : "Start")
-            }
-            .disabled(ticker.tickerState == .pending)
+      ZStack(alignment: .leading){
+        ProgressView(proportion: ticker.proportionRemaining)
+          .frame(width: 28)
+          .zIndex(0)
+        Text(ticker.remaining.compoundTimeString())
+          .frame(maxWidth: .infinity)
+          .font(.system(size: 20, weight: Font.Weight.medium, design: Font.Design.monospaced))
+          .zIndex(2)
+        HStack {
+          Text(ticker.name ?? "Timer")
+          Spacer()
+          Button(action: {
+            self.ticker.toggle()
+          }) {
+            Text(ticker.isInProgress ? "Stop" : "Start")
           }
-          .font(.system(size: 12, weight: Font.Weight.light, design: Font.Design.rounded))
-          Text(ticker.remaining.compoundTimeString())
-            .font(.system(size: 20, weight: Font.Weight.medium, design: Font.Design.monospaced))
-          
+          .disabled(ticker.tickerState == .pending)
         }
-        .padding(8)
         .layoutPriority(1)
-        .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.secondary))
+        .frame(height:20)
+        .background(Color(UIColor.systemBackground))
+        .font(.system(size: 12, weight: Font.Weight.light, design: Font.Design.rounded))
+      .padding(12)
+        .padding(.leading, 22)
       }
-      .padding(.horizontal)
     }
   }
-  
 }
 
 struct TickerRow_Previews: PreviewProvider {
