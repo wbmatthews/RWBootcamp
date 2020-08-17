@@ -103,7 +103,9 @@ struct EditTickerView: View {
     .shadow(color: Color.black.opacity(0.3), radius: 5, x: 5, y: 5)
     .shadow(color: Color.white.opacity(0.7), radius: 5, x: -2, y: -2)
       .onAppear {
-        self.ticker!.tickerState = .paused
+        if self.ticker!.tickerState == .inProgress {
+          self.ticker!.tickerState = .paused
+        }
         self.name = self.ticker!.name ?? ""
         self.entryDuration = self.ticker!.remaining.compoundTime()
     }

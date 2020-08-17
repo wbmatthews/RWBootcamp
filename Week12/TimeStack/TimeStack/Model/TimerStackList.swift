@@ -64,12 +64,14 @@ class TimerStackList: ObservableObject {
         //retriggering updates
         let elapsed = ticker.elapsed
         let tickerState = ticker.tickerState
+        let stackState = ticker.stackState
         ticker.elapsed = elapsed
         ticker.tickerState = tickerState
+        ticker.stackState = stackState
         reloadedTickers.append(ticker)
       }
       self.tickers = reloadedTickers
-      updateStackStates()
+//      updateStackStates()
     }
     
     deinit {
@@ -122,9 +124,10 @@ class TimerStackList: ObservableObject {
       }
     }
     
-    private func updateStackStates() {
+    fileprivate func updateStackStates() {
       if tickers.count > 1 {
         tickers.forEach { $0.stackState = .stacked }
+        tickers.dropFirst().forEach { $0.tickerState = .pending }
         tickers.first!.stackState = .first
         tickers.last!.stackState = .last
       } else {
@@ -147,7 +150,7 @@ class TimerStackList: ObservableObject {
   
   static let demoStack: [Stack] = [
     Stack(tickers: [Ticker(name: "Demo1.0", duration: 10)]),
-    Stack(tickers: [Ticker(name: "Demo2.0", duration: 86400)]),
+    Stack(tickers: [Ticker(name: "Demo2.0", duration: 86399)]),
     Stack(tickers: [Ticker(name: "Demo3.0", duration: 30, tickerState: .paused, stackState: .first), Ticker(name: "Demo3.1", duration: 40, tickerState: .pending, stackState: .last)])
   ]
 
@@ -213,13 +216,10 @@ class TimerStackList: ObservableObject {
     stacks[currentIndex.stack].tickers.remove(at: currentIndex.ticker)
     switch target.position {
     case .solo:
-      ticker.tickerState = .paused
       stacks.append(Stack(tickers: [ticker]))
     case .first:
-      ticker.tickerState = .paused
       stacks[targetIndex.stack].tickers.insert(ticker, at: 0)
     case .last:
-      ticker.tickerState = .pending
       stacks[targetIndex.stack].tickers.append(ticker)
        //   case .stacked(let index):
       //    ticker.tickerState = .pending
@@ -227,6 +227,8 @@ class TimerStackList: ObservableObject {
     case .stacked:
       report("Tried to insert into a stack")
     }
+    cleanStacks()
+    stacks.forEach { $0.updateStackStates() }
   }
   
   func removeTicker(_ ticker: Ticker?) {
@@ -250,7 +252,17 @@ class TimerStackList: ObservableObject {
     saveData()
   }
   
+  private func cleanStacks() {
+    for stack in stacks.enumerated().reversed() {
+      if stack.element.tickers.count == 0 {
+        stacks.remove(at: stack.offset)
+      }
+    }
+  }
+  
   private func saveData() {
+    cleanStacks()
+    
     if let data = try? JSONEncoder().encode(stacks) {
       UserDefaults.standard.set(data, forKey: CodingKeys.stacks.stringValue)
       report("Encoded data")

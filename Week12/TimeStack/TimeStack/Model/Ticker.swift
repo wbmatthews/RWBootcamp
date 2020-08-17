@@ -66,7 +66,7 @@ class Ticker: ObservableObject, Identifiable, Codable, Cancellable {
     }
   }
   
-  var stackState: StackState = .solo
+   @Published var stackState: StackState = .solo
   
   var isInProgress: Bool {
     tickerState == .inProgress
