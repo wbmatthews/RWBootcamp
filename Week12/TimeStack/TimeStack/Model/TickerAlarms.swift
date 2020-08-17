@@ -31,7 +31,7 @@ struct TickerAlarm: Identifiable, Equatable, Codable {
     
   func cancel() {
     UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [id.uuidString])
-//    report("Cancelling \(title)")
+    report("Cancelling \(title)")
   }
   
   private func report(_ string: String){

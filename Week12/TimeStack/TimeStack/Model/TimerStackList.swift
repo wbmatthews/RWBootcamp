@@ -91,22 +91,23 @@ class TimerStackList: ObservableObject {
       report("Removing ticker from index \(index)")
       tickers[index].cancel()
       tickers.remove(at: index)
-      updateAlarms()
+      refreshAllAlarms()
     }
     
     func startNextTicker(elapsed: TimeInterval) {
+      alarms.remove(at: 0)
       if let ticker = nextTicker {
         ticker.elapsed = elapsed
         ticker.tickerState = (ticker.remaining > 0) ? .inProgress : .done
-        updateAlarms()
+//        refreshAllAlarms()
       }
     }
     
     func toggle() {
-      updateAlarms()
+      refreshAllAlarms()
     }
     
-    private func updateAlarms() {
+    private func refreshAllAlarms() {
       
       var totalInterval = TimeInterval(0)
       
@@ -265,7 +266,7 @@ class TimerStackList: ObservableObject {
     
     if let data = try? JSONEncoder().encode(stacks) {
       UserDefaults.standard.set(data, forKey: CodingKeys.stacks.stringValue)
-      report("Encoded data")
+//      report("Encoded data")
     } else {
       report("❗️Failed to encode data")
     }
